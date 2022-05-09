@@ -1,6 +1,17 @@
 {
     "replace": false,
     "values": [
-      "melonslabs:frankenmelon"
+        "melonslabs:frankenmelon",
+        "melonslabs:cactus_slab",
+        "melonslabs:jill_o_lantern",
+        "melonslabs:carved_melon",
+        "melonslabs:melon_stairs",
+        "melonslabs:melon_slab",
+        "melonslabs:carved_melon_slab",
+        "melonslabs:jill_o_slab",
+        "melonslabs:pumpkin_stairs",
+        "melonslabs:pumpkin_slab",
+        "melonslabs:carved_pumpkin_slab",
+        "melonslabs:jack_o_slab"
     ]
   }
