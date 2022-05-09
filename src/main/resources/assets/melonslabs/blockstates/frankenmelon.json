@@ -1,0 +1,12 @@
+{
+	"variants": {
+        "lit=false,facing=east": { "model": "melonslabs:block/frankenmelon_unlit"},
+        "lit=false,facing=west": { "model": "melonslabs:block/frankenmelon_unlit"},
+        "lit=false,facing=south": { "model": "melonslabs:block/frankenmelon_unlit"},
+        "lit=false,facing=north": { "model": "melonslabs:block/frankenmelon_unlit"},
+        "lit=true,facing=east": { "model": "melonslabs:block/frankenmelon_lit","y" : 90},
+		"lit=true,facing=west": { "model": "melonslabs:block/frankenmelon_lit", "y": 270},
+		"lit=true,facing=south": { "model": "melonslabs:block/frankenmelon_lit", "y": 180},
+        "lit=true,facing=north": { "model": "melonslabs:block/frankenmelon_lit"}
+	}
+}

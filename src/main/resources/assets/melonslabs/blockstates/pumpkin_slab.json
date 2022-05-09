@@ -1,0 +1,7 @@
+{
+	"variants": {
+		"type=bottom": { "model": "melonslabs:block/pumpkin_slab" },
+		"type=top": { "model": "melonslabs:block/pumpkin_slab_top" },
+		"type=double": { "model": "block/pumpkin" }
+	}
+}

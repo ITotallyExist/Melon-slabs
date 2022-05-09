@@ -1,0 +1,34 @@
+{
+    "parent": "minecraft:recipes/root",
+    "rewards": {
+      "recipes": [
+        "melonslabs:campfire_pumpkin_slice",
+        "melonslabs:furnace_pumpkin_slice",
+        "melonslabs:smoker_pumpkin_slice"
+      ]
+    },
+    "criteria": {
+      "has_pumpkin_slice": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+          "items": [
+            {
+              "item": "melonslabs:pumpkin_slice"
+            }
+          ]
+        }
+      },
+      "has_the_recipe": {
+        "trigger": "minecraft:recipe_unlocked",
+        "conditions": {
+          "recipe": "melonslabs:smoker_pumpkin_slice"
+        }
+      }
+    },
+    "requirements": [
+      [
+        "has_pumpkin_slice",
+        "has_the_recipe"
+      ]
+    ]
+  }

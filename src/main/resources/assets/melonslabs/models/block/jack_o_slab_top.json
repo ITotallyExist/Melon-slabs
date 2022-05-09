@@ -1,0 +1,10 @@
+{
+    "parent": "melonslabs:block/orientable_slab_torch_top",
+    "textures": {
+      "bottom": "melonslabs:block/carved_pumpkin_slab_middle",
+      "top": "minecraft:block/pumpkin_top",
+      "side": "minecraft:block/pumpkin_side",
+      "front": "minecraft:block/carved_pumpkin",
+      "torch": "minecraft:block/torch"
+    }
+  }

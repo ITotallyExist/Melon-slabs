@@ -1,0 +1,33 @@
+{
+    "parent": "minecraft:recipes/root",
+    "rewards": {
+      "recipes": [
+        "melonslabs:cactus_slab",
+        "melonslabs:stonecutter_cactus_slab"
+      ]
+    },
+    "criteria": {
+      "has_cactus": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+          "items": [
+            {
+              "item": "minecraft:cactus"
+            }
+          ]
+        }
+      },
+      "has_the_recipe": {
+        "trigger": "minecraft:recipe_unlocked",
+        "conditions": {
+          "recipe": "melonslabs:cactus_slab"
+        }
+      }
+    },
+    "requirements": [
+      [
+        "has_cactus",
+        "has_the_recipe"
+      ]
+    ]
+  }

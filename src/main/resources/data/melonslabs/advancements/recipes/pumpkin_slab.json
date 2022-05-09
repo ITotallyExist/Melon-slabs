@@ -1,0 +1,33 @@
+{
+    "parent": "minecraft:recipes/root",
+    "rewards": {
+      "recipes": [
+        "melonslabs:pumpkin_seeds",
+        "melonslabs:stonecutter_pumpkin_slice"
+      ]
+    },
+    "criteria": {
+      "has_pumpkin_slab": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+          "items": [
+            {
+              "item": "melonslabs:pumpkin_slab"
+            }
+          ]
+        }
+      },
+      "has_the_recipe": {
+        "trigger": "minecraft:recipe_unlocked",
+        "conditions": {
+          "recipe": "melonslabs:pumpkin_seeds"
+        }
+      }
+    },
+    "requirements": [
+      [
+        "has_pumpkin_slab",
+        "has_the_recipe"
+      ]
+    ]
+  }

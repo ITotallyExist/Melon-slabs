@@ -1,0 +1,12 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "melonslabs:melon_slab"
+        }
+    ],
+    "result": {
+        "item": "minecraft:melon_seeds",
+        "count": 3
+    }
+}

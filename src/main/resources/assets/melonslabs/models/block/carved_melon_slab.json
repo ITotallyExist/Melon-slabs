@@ -1,0 +1,9 @@
+{
+    "parent": "melonslabs:block/orientable_slab",
+    "textures": {
+      "bottom": "minecraft:block/melon_top",
+      "top": "melonslabs:block/carved_melon_slab_middle",
+      "side": "minecraft:block/melon_side",
+      "front": "melonslabs:block/carved_melon"
+    }
+  }

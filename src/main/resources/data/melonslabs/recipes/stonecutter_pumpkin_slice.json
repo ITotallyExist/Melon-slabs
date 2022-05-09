@@ -1,0 +1,8 @@
+{
+    "type": "minecraft:stonecutting",
+    "ingredient": {
+        "item": "melonslabs:pumpkin_slab"
+    },
+    "result": "melonslabs:pumpkin_slice",
+    "count": 3
+}

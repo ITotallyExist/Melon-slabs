@@ -1,0 +1,8 @@
+{
+    "parent": "minecraft:block/slab_top",
+    "textures": {
+      "bottom": "melonslabs:block/melon_slab_middle",
+      "top": "minecraft:block/melon_top",
+      "side": "minecraft:block/melon_side"
+    }
+  }

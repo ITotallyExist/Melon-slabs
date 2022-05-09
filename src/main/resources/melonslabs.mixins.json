@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.melon.slabs.mixin",
+  "compatibilityLevel": "JAVA_16",
+  "mixins": ["ComposterMixin",
+    "CactusMixin",
+    "MelonMixin",
+    "TridentMixin",
+    "CriteriaMixin"
+  ],
+  "client": [],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

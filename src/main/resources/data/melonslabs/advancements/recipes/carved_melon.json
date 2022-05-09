@@ -1,0 +1,32 @@
+{
+    "parent": "minecraft:recipes/root",
+    "rewards": {
+      "recipes": [
+        "melonslabs:jill_o_lantern"
+      ]
+    },
+    "criteria": {
+      "has_carved_melon": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+          "items": [
+            {
+              "item": "melonslabs:carved_melon"
+            }
+          ]
+        }
+      },
+      "has_the_recipe": {
+        "trigger": "minecraft:recipe_unlocked",
+        "conditions": {
+          "recipe": "melonslabs:jill_o_lantern"
+        }
+      }
+    },
+    "requirements": [
+      [
+        "has_carved_melon",
+        "has_the_recipe"
+      ]
+    ]
+  }

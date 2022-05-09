@@ -1,0 +1,19 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "#",
+        "C"
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:torch"
+        },
+        "C": {
+            "item": "melonslabs:carved_melon_slab"
+        }
+    },
+    "result": {
+        "item": "melonslabs:jill_o_slab",
+        "count": 1
+    }
+}

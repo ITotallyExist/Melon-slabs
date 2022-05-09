@@ -1,0 +1,19 @@
+{
+    "variants": {
+      "facing=east": {
+        "model": "melonslabs:block/carved_melon",
+        "y": 90
+      },
+      "facing=north": {
+        "model": "melonslabs:block/carved_melon"
+      },
+      "facing=south": {
+        "model": "melonslabs:block/carved_melon",
+        "y": 180
+      },
+      "facing=west": {
+        "model": "melonslabs:block/carved_melon",
+        "y": 270
+      }
+    }
+  }

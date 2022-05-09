@@ -1,0 +1,8 @@
+{
+    "type": "minecraft:stonecutting",
+    "ingredient": {
+        "item": "minecraft:carved_pumpkin"
+    },
+    "result": "melonslabs:carved_pumpkin_slab",
+    "count": 2
+}

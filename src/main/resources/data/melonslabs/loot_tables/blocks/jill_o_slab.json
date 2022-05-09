@@ -1,0 +1,52 @@
+{
+    "type": "minecraft:block",
+    "pools": [
+      {
+        "rolls": 1,
+        "entries": [
+          {
+            "type": "minecraft:item",
+            "name": "melonslabs:carved_melon_slab",
+            "conditions": [
+              {
+                "condition": "minecraft:inverted",
+                "term": {
+                  "condition": "minecraft:alternative",
+                  "terms": [
+                    {
+                      "condition": "minecraft:inverted",
+                      "term": {
+                        "condition": "minecraft:block_state_property",
+                        "block": "melonslabs:jill_o_slab",
+                        "properties": { "type": "double" }
+                      }
+                    },
+                    {
+                      "condition": "minecraft:inverted",
+                      "term": {
+                        "condition": "minecraft:survives_explosion"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "rolls": 1,
+        "entries": [
+          {
+            "type":"minecraft:item",
+            "name":"melonslabs:jill_o_slab",
+            "conditions": [
+              {
+                "condition": "minecraft:survives_explosion"
+              }
+            ]            
+          }
+        ]
+      }
+    ]
+  }

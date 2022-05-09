@@ -1,0 +1,16 @@
+{
+	"variants": {
+        "type=bottom,facing=east": { "model": "melonslabs:block/jack_o_slab","y" : 90},
+		"type=bottom,facing=west": { "model": "melonslabs:block/jack_o_slab", "y":270 },
+		"type=bottom,facing=south": { "model": "melonslabs:block/jack_o_slab", "y":180 },
+        "type=bottom,facing=north": { "model": "melonslabs:block/jack_o_slab" },
+        "type=top,facing=east": { "model": "melonslabs:block/jack_o_slab_top","y" : 90, "x": 180},
+		"type=top,facing=west": { "model": "melonslabs:block/jack_o_slab_top", "y":270, "x": 180 },
+		"type=top,facing=south": { "model": "melonslabs:block/jack_o_slab_top", "y":180, "x": 180 },
+        "type=top,facing=north": { "model": "melonslabs:block/jack_o_slab_top", "x": 180 },
+        "type=double,facing=east": { "model": "minecraft:block/jack_o_lantern","y" : 90},
+		"type=double,facing=west": { "model": "minecraft:block/jack_o_lantern", "y":270 },
+		"type=double,facing=south": { "model": "minecraft:block/jack_o_lantern", "y":180 },
+        "type=double,facing=north": { "model": "minecraft:block/jack_o_lantern" }
+	}
+}

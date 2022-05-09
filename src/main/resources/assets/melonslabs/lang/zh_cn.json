@@ -1,0 +1,12 @@
+{
+    "block.melonslabs.melon_stairs": "西瓜楼梯",
+    "block.melonslabs.melon_slab": "西瓜台阶",
+    "block.melonslabs.pumpkin_stairs": "南瓜楼梯",
+    "block.melonslabs.pumpkin_slab": "南瓜台阶",
+    "block.melonslabs.carved_pumpkin_slab": "雕刻过的南瓜台阶",
+    "block.melonslabs.jack_o_slab": "南瓜烛台阶",
+    "block.melonslabs.cactus_slab": "仙人掌台阶",
+    "itemGroup.melonslabs.group": "西瓜台阶",
+    "item.melonslabs.pumpkin_slice": "南瓜片",
+    "item.melonslabs.cooked_pumpkin_slice": "烤南瓜片"
+}

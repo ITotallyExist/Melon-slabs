@@ -1,0 +1,9 @@
+{
+  "parent": "melonslabs:block/template_inner_stairs",
+  "textures": {
+    "bottom": "minecraft:block/melon_top",
+    "top": "minecraft:block/melon_top",
+    "side": "minecraft:block/melon_side",
+    "middle": "melonslabs:block/melon_slab_middle"
+  }
+}

@@ -1,0 +1,32 @@
+{
+    "parent": "minecraft:recipes/root",
+    "rewards": {
+      "recipes": [
+        "melonslabs:jack_o_slab"
+      ]
+    },
+    "criteria": {
+      "has_carved_pumpkin_slab": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+          "items": [
+            {
+              "item": "melonslabs:carved_pumpkin_slab"
+            }
+          ]
+        }
+      },
+      "has_the_recipe": {
+        "trigger": "minecraft:recipe_unlocked",
+        "conditions": {
+          "recipe": "melonslabs:jack_o_slab"
+        }
+      }
+    },
+    "requirements": [
+      [
+        "has_carved_pumpkin_slab",
+        "has_the_recipe"
+      ]
+    ]
+  }

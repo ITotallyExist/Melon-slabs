@@ -1,0 +1,10 @@
+{
+    "parent": "melonslabs:block/double_slab",
+    "textures": {
+      "bottom": "minecraft:block/pumpkin_top",
+      "top": "minecraft:block/melon_top",
+      "sideBottom": "minecraft:block/pumpkin_side",
+      "sideTop": "minecraft:block/melon_side",
+      "particle": "melonslabs:block/frankenmelon_side"
+    }
+  }

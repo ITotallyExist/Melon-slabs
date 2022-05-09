@@ -1,0 +1,6 @@
+{
+    "parent":"item/generated",
+    "textures": {
+        "layer0":"melonslabs:item/cooked_pumpkin_slice"
+    }
+}

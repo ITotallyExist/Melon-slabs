@@ -1,0 +1,9 @@
+{
+  "parent": "melonslabs:block/template_stairs",
+  "textures": {
+    "bottom": "minecraft:block/pumpkin_top",
+    "top": "minecraft:block/pumpkin_top",
+    "side": "minecraft:block/pumpkin_side",
+    "middle": "melonslabs:block/pumpkin_slab_middle"
+  }
+}

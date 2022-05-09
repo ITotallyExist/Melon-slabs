@@ -1,0 +1,55 @@
+{
+    "type":"minecraft:block",
+    "pools":[
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                "type": "minecraft:item",
+                "conditions": [
+                    {
+                        "condition": "minecraft:block_state_property",
+                        "block": "melonslabs:frankenmelon",
+                        "properties": { "lit": "true" }
+                    }
+                ],
+                "name": "melonslabs:frankenmelon"
+                }
+            ]
+        },
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                "type": "minecraft:item",
+                "conditions": [
+                    {
+                        "condition": "minecraft:block_state_property",
+                        "block": "melonslabs:frankenmelon",
+                        "properties": { "lit": "false" }
+                    }
+                ],
+                "name": "melonslabs:pumpkin_slab"
+                }
+            ]
+        },
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                "type": "minecraft:item",
+                "conditions": [
+                    {
+                        "condition": "minecraft:block_state_property",
+                        "block": "melonslabs:frankenmelon",
+                        "properties": { "lit": "false" }
+                    }
+                ],
+                "name": "melonslabs:melon_slab"
+                }
+            ]
+        }
+
+
+    ]
+}

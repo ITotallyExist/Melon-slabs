@@ -1,0 +1,19 @@
+{
+    "variants": {
+      "facing=east": {
+        "model": "melonslabs:block/jill_o_lantern",
+        "y": 90
+      },
+      "facing=north": {
+        "model": "melonslabs:block/jill_o_lantern"
+      },
+      "facing=south": {
+        "model": "melonslabs:block/jill_o_lantern",
+        "y": 180
+      },
+      "facing=west": {
+        "model": "melonslabs:block/jill_o_lantern",
+        "y": 270
+      }
+    }
+  }

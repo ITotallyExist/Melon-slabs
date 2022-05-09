@@ -1,0 +1,10 @@
+{
+    "parent": "melonslabs:block/orientable_slab_torch_top",
+    "textures": {
+      "bottom": "melonslabs:block/carved_melon_slab_middle",
+      "top": "minecraft:block/melon_top",
+      "side": "minecraft:block/melon_side",
+      "front": "melonslabs:block/carved_melon",
+      "torch": "minecraft:block/torch"
+    }
+  }

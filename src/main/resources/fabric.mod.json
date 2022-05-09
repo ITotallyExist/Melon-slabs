@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "melonslabs",
+  "version": "${version}",
+
+  "name": "Melon Slabs",
+  "description": "Adds melon slabs.",
+  "authors": [
+    "I Totally Exist"
+  ],
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/FabricMC/fabric-example-mod"
+  },
+
+  "license": "SPDX: 0BSD",
+  "icon": "assets/modid/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.melon.slabs.MelonSlabs"
+    ]
+  },
+  "mixins": [
+    "melonslabs.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.11.3",
+    "fabric": "*",
+    "minecraft": "1.17.x"
+  },
+  "suggests": {
+    "flamingo": "*"
+  }
+}

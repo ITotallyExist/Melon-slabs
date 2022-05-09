@@ -1,0 +1,33 @@
+{
+    "parent": "minecraft:recipes/root",
+    "rewards": {
+      "recipes": [
+        "melonslabs:melon_seeds",
+        "melonslabs:stonecutter_melon_slice"
+      ]
+    },
+    "criteria": {
+      "has_melon_slab": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+          "items": [
+            {
+              "item": "melonslabs:melon_slab"
+            }
+          ]
+        }
+      },
+      "has_the_recipe": {
+        "trigger": "minecraft:recipe_unlocked",
+        "conditions": {
+          "recipe": "melonslabs:melon_seeds"
+        }
+      }
+    },
+    "requirements": [
+      [
+        "has_melon_slab",
+        "has_the_recipe"
+      ]
+    ]
+  }
