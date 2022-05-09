@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.melon.slabs.criteria.MelonSlabsCriteria;
 import net.melon.slabs.mixin.TridentMixin;
 import net.melon.slabs.sounds.MelonSlabsSounds;
@@ -36,7 +35,7 @@ public class FrankenMelon extends Block{
     public static final DirectionProperty FACING;
     public static final BooleanProperty LIT;
     public FrankenMelon() {
-        super(FabricBlockSettings.of(Material.GOURD).ticksRandomly().breakByTool(FabricToolTags.AXES).sounds(BlockSoundGroup.WOOD).hardness(1.0f).resistance(1.0f));
+        super(FabricBlockSettings.of(Material.GOURD).ticksRandomly().sounds(BlockSoundGroup.WOOD).hardness(1.0f).resistance(1.0f));
         this.setDefaultState((BlockState)((BlockState)this.stateManager.getDefaultState()).with(LIT, true).with(FACING, Direction.NORTH));
     }
 

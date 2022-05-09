@@ -14,6 +14,7 @@ import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
+import net.minecraft.world.tick.OrderedTick;
 
 import java.util.Random;
 
@@ -81,7 +82,7 @@ public class JillOSlab extends SlabBlock{
 
     public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
         if (!scheduled){
-            world.getBlockTickScheduler().schedule(pos, this, 1);
+            world.getBlockTickScheduler().scheduleTick(new OrderedTick(this, pos, 1, 1));
             scheduled = false;
         }
     }
@@ -91,7 +92,7 @@ public class JillOSlab extends SlabBlock{
         super.neighborUpdate(state, world, pos, block, fromPos, notify);
         if (!scheduled){
             scheduled = true;
-            world.getBlockTickScheduler().schedule(pos, this, 1);
+            world.getBlockTickScheduler().scheduleTick(new OrderedTick(this, pos, 1, 1));
         }
     }
 
@@ -120,7 +121,7 @@ public class JillOSlab extends SlabBlock{
 
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if (state.get(TYPE) != SlabType.DOUBLE){
-            world.getBlockTickScheduler().schedule(pos, this, 1);
+            world.getBlockTickScheduler().scheduleTick(new OrderedTick(this, pos, 1, 1));
         } else{
             scheduled = false;
         }
