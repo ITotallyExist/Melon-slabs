@@ -1,0 +1,19 @@
+{
+    "variants": {
+      "facing=east": {
+        "model": "melonslabs:block/juicer",
+        "y": 270
+      },
+      "facing=north": {
+        "model": "melonslabs:block/juicer",
+        "y": 180
+      },
+      "facing=south": {
+        "model": "melonslabs:block/juicer"
+      },
+      "facing=west": {
+        "model": "melonslabs:block/juicer",
+        "y": 90
+      }
+    }
+  }

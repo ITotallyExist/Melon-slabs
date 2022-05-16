@@ -27,6 +27,7 @@ public class MelonSlabsItems {
         public static final Item CARVED_PUMPKIN_SLAB = new BlockItem(MelonSlabsBlocks.CARVED_PUMPKIN_SLAB, new Item.Settings().group(GROUP));
         public static final Item JACK_O_SLAB = new BlockItem(MelonSlabsBlocks.JACK_O_SLAB, new Item.Settings().group(GROUP));
         public static final Item FRANKENMELON = new BlockItem(MelonSlabsBlocks.FRANKENMELON, new Item.Settings().group(GROUP));
+        public static final Item JUICER = new BlockItem(MelonSlabsBlocks.JUICER, new Item.Settings().group(GROUP));
 
         //Food Items
         public static final Item PUMPKIN_SLICE = new Item(new Item.Settings().group(GROUP).food(new FoodComponent.Builder().hunger(1).saturationModifier(0.3f).snack().build()));
@@ -49,5 +50,6 @@ public class MelonSlabsItems {
             Registry.register(Registry.ITEM, "melonslabs:pumpkin_slice", PUMPKIN_SLICE);
             Registry.register(Registry.ITEM, "melonslabs:cooked_pumpkin_slice", COOKED_PUMPKIN_SLICE);
             Registry.register(Registry.ITEM, "melonslabs:frankenmelon", FRANKENMELON);
+            Registry.register(Registry.ITEM, "melonslabs:juicer", JUICER);
         }
 }
