@@ -15,6 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldView;
+import net.minecraft.world.tick.OrderedTick;
 
 
 public class CactusSlab extends CactusBlock{
@@ -44,28 +45,39 @@ public class CactusSlab extends CactusBlock{
 
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        if (Blocks.CACTUS.canPlaceAt(state, world, pos)){
-            int i;
-            for(i = 1; world.getBlockState(pos.down(i)).isOf(Blocks.CACTUS); ++i) {
-            }
+        int i;
+        for(i = 1; world.getBlockState(pos.down(i)).isOf(Blocks.CACTUS); ++i) {
+        }
 
-            if (i < 4) {
-                int j = (Integer)state.get(AGE);
-                if (j >= 7) {
-                    world.setBlockState(pos, Blocks.CACTUS.getDefaultState().with(AGE,0));
-                    state.neighborUpdate(world, pos, this, pos, false);
-                } else {
-                    world.setBlockState(pos, (BlockState)state.with(AGE, j + 1), 4);
+        if (i < 4) {
+            int j = (Integer)state.get(AGE);
+            if (j >= 7) {
+                world.setBlockState(pos, Blocks.CACTUS.getDefaultState().with(AGE,0));
+                
+                //here we destroy the cactus block if it grew in an unallowed area (so vanilla cactus farms will still work)
+                if (!world.getBlockState(pos).canPlaceAt(world, pos)){
+                    world.breakBlock(pos, true);
                 }
+
+            } else {
+                world.setBlockState(pos, (BlockState)state.with(AGE, j + 1), 4);
             }
         }
     }
 
+    @Override
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) { 
         BlockPos blockPos = pos.down();
         BlockState blockState = world.getBlockState(blockPos);
         return (blockState.getMaterial().isSolid() && blockState.isFullCube(world, blockPos)) || blockState.isOf(Blocks.CACTUS);
         //return false;   
+    }
+
+    @Override
+    public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+        if (!state.canPlaceAt(world, pos)) {
+            world.breakBlock(pos, true);
+        }
     }
 
 
