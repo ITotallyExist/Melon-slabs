@@ -1,8 +1,6 @@
 package net.melon.slabs.blocks;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.melon.slabs.entities.JuicerBlockEntity;
-import net.melon.slabs.screens.JuicerScreenHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
@@ -16,9 +14,9 @@ import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.SimpleNamedScreenHandlerFactory;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
-import net.minecraft.text.LiteralText;
+import net.minecraft.text.LiteralTextContent;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.TranslatableTextContent;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
@@ -52,7 +50,7 @@ public class Juicer extends Block {
 		if(world.isClient) {
 			return ActionResult.SUCCESS;
 		} else {
-            player.sendMessage(new LiteralText("WIP, check back later"), false);
+            player.sendMessage(new LiteralTextContent("WIP, check back later"), false);
 
 			// player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
 			return ActionResult.CONSUME;
@@ -74,7 +72,7 @@ public class Juicer extends Block {
 
     static{
         FACING = HorizontalFacingBlock.FACING;
-        TITLE = new TranslatableText("container.crafting");
+        TITLE = new TranslatableTextContent("container.crafting");
     }
 
 
