@@ -1,0 +1,13 @@
+{
+    "inputA" : {
+      "item": "minecraft:redstone"
+    },
+    "inputB": {
+      "tag": "minecraft:logs"
+    },
+    "inputC": {
+        "tag": "melonslabs:melon-slab"
+    },
+    "outputItem": "minecraft:cobblestone",
+    "outputAmount": "20"
+  }
