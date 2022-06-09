@@ -85,7 +85,7 @@ public class FrankenMelon extends Block{
     }
 
     //randomly teleports one block at a time
-    @Override
+    //@Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if (state.get(LIT)){
             ArrayList<BlockPos> posList = new ArrayList<BlockPos>();

@@ -15,7 +15,9 @@ import net.minecraft.screen.SimpleNamedScreenHandlerFactory;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.text.LiteralTextContent;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
+import net.minecraft.text.TextContent;
 import net.minecraft.text.TranslatableTextContent;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -27,7 +29,7 @@ import net.minecraft.world.World;
 
 public class Juicer extends Block {
     public static final DirectionProperty FACING;
-    private static final Text TITLE;
+    // private static final Text TITLE;
 
     public Juicer() {
         super(FabricBlockSettings.copy(Blocks.OAK_WOOD));
@@ -50,7 +52,9 @@ public class Juicer extends Block {
 		if(world.isClient) {
 			return ActionResult.SUCCESS;
 		} else {
-            player.sendMessage(new LiteralTextContent("WIP, check back later"), false);
+            //TODO, fix message
+            // player.sendMessage(MutableText.of(new TextContent("WIP, check back later")), false);
+            // player.sendMessage(new LiteralTextContent("WIP, check back later"), false);
 
 			// player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
 			return ActionResult.CONSUME;
@@ -72,7 +76,7 @@ public class Juicer extends Block {
 
     static{
         FACING = HorizontalFacingBlock.FACING;
-        TITLE = new TranslatableTextContent("container.crafting");
+        // TITLE = new TranslatableTextContent("container.crafting");
     }
 
 

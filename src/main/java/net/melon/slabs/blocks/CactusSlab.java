@@ -42,7 +42,7 @@ public class CactusSlab extends CactusBlock{
         return OUTLINE_SHAPE;
     }
 
-    @Override
+    //@Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         int i;
         for(i = 1; world.getBlockState(pos.down(i)).isOf(Blocks.CACTUS); ++i) {
@@ -72,7 +72,7 @@ public class CactusSlab extends CactusBlock{
         //return false;   
     }
 
-    @Override
+    //@Override
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if (!state.canPlaceAt(world, pos)) {
             world.breakBlock(pos, true);
