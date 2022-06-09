@@ -1,7 +1,5 @@
 package net.melon.slabs.blocks;
 
-import java.util.Random;
-
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 
 import net.minecraft.block.Block;
@@ -12,6 +10,7 @@ import net.minecraft.block.CactusBlock;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldView;
@@ -42,7 +41,12 @@ public class CactusSlab extends CactusBlock{
         return OUTLINE_SHAPE;
     }
 
-    //@Override
+    @Override
+    public boolean hasRandomTicks(BlockState state) {
+        return true;
+    }
+
+    @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         int i;
         for(i = 1; world.getBlockState(pos.down(i)).isOf(Blocks.CACTUS); ++i) {
@@ -51,15 +55,16 @@ public class CactusSlab extends CactusBlock{
         if (i < 4) {
             int j = (Integer)state.get(AGE);
             if (j >= 7) {
-                world.setBlockState(pos, Blocks.CACTUS.getDefaultState().with(AGE,0));
-                
+                world.setBlockState(pos, Blocks.CACTUS.getDefaultState().with(AGE,0), Block.NOTIFY_LISTENERS);
+                world.updateNeighbor(Blocks.CACTUS.getDefaultState().with(AGE,0), pos, this, pos, false);
+
                 //here we destroy the cactus block if it grew in an unallowed area (so vanilla cactus farms will still work)
                 if (!world.getBlockState(pos).canPlaceAt(world, pos)){
                     world.breakBlock(pos, true);
                 }
 
             } else {
-                world.setBlockState(pos, (BlockState)state.with(AGE, j + 1), 4);
+                world.setBlockState(pos, (BlockState)state.with(AGE, j + 1));
             }
         }
     }
@@ -72,7 +77,7 @@ public class CactusSlab extends CactusBlock{
         //return false;   
     }
 
-    //@Override
+    @Override
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if (!state.canPlaceAt(world, pos)) {
             world.breakBlock(pos, true);
