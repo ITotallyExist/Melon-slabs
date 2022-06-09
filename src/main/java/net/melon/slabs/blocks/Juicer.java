@@ -53,6 +53,7 @@ public class Juicer extends Block {
 			return ActionResult.SUCCESS;
 		} else {
             //TODO, fix message
+            player.sendMessage(Text.literal("WIP, check back later"), false);
             // player.sendMessage(MutableText.of(new TextContent("WIP, check back later")), false);
             // player.sendMessage(new LiteralTextContent("WIP, check back later"), false);
 
