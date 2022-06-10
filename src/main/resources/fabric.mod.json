@@ -20,6 +20,9 @@
   "entrypoints": {
     "main": [
       "net.melon.slabs.MelonSlabs"
+    ],
+    "client": [
+      "net.melon.slabs.MelonSlabsClient"
     ]
   },
   "mixins": [
