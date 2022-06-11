@@ -24,7 +24,7 @@ public class MelonSlabs implements ModInitializer {
         //blocks
         MelonSlabsBlocks.registerBlocks();
             //transparent blocks and such
-            MelonSlabsBlocks.putRenderLayers();
+            //MelonSlabsBlocks.putRenderLayers();
 
         //items
         MelonSlabsItems.registerItems();

@@ -17,7 +17,7 @@ public class MelonSlabsClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
  
-            MelonSlabsBlocks.putRenderLayers();
+        MelonSlabsBlocks.putRenderLayers();
 
     }
 }
