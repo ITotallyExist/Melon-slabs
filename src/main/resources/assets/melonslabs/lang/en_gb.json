@@ -10,11 +10,16 @@
     "block.melonslabs.carved_melon": "Carved Melon",
     "block.melonslabs.jill_o_slab": "Jill O'Slab",
     "block.melonslabs.jill_o_lantern": "Jill O'Lantern",
+    "block.melonslabs.frankenmelon": "Frankenmelon",
+    "block.melonslabs.juicer": "Juicer",
     "itemGroup.melonslabs.group": "Melon Slabs",
     "item.melonslabs.pumpkin_slice": "Pumpkin Slice",
     "item.melonslabs.cooked_pumpkin_slice": "Cooked Pumpkin Slice",
     "advancements.melonslabs.frankenmelon.title": "The Spark Of Life",
     "advancements.melonslabs.frankenmelon.description": "Create a frankenmelon by channeling life into a half pumpkin half melon block.",
-    "block.melonslabs.frankenmelon": "Frankenmelon",
-    "subtitles.melonslabs.frankenmelon_hurt": "Frankenmelon gets hurt"
+    "subtitles.melonslabs.frankenmelon_hurt": "Frankenmelon gets hurt",
+    "item.melonslabs.melon_juice": "Melon Juice",
+    "item.melonslabs.apple_juice": "Apple Juice",
+    "item.melonslabs.golden_apple_juice": "Golden Apple Juice",
+    "item.melonslabs.enchanted_golden_apple_juice": "Enchanted Golden Apple Juice"
 }

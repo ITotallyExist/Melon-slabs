@@ -18,6 +18,7 @@ public class MelonSlabsBlocks {
     public static final Block CACTUS_SLAB = new CactusSlab();
     public static final Block MELON_STAIRS = new MelonStairs();
     public static final Block FRANKENMELON = new FrankenMelon();
+    public static final Block JUICER = new Juicer();
 
     public static void registerBlocks(){
         Registry.register(Registry.BLOCK, "melonslabs:cactus_slab", CACTUS_SLAB);
@@ -32,6 +33,7 @@ public class MelonSlabsBlocks {
         Registry.register(Registry.BLOCK, "melonslabs:carved_pumpkin_slab", CARVED_PUMPKIN_SLAB);
         Registry.register(Registry.BLOCK, "melonslabs:jack_o_slab", JACK_O_SLAB);
         Registry.register(Registry.BLOCK, "melonslabs:frankenmelon", FRANKENMELON);
+        Registry.register(Registry.BLOCK, "melonslabs:juicer", JUICER);
     }
 
     public static void putRenderLayers(){

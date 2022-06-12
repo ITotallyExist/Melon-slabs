@@ -1,0 +1,14 @@
+{
+  "type": "melonslabs:juicer_recipe",
+    "inputA" : {
+      "item": "minecraft:melon_slice"
+    },
+    "inputB": {
+      "item": "minecraft:melon_slice"
+    },
+    "inputC": {
+      "item": "minecraft:melon_slice"
+    },
+    "outputItem": "melonslabs:melon_juice",
+    "outputAmount": "1"
+}

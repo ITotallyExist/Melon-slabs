@@ -2,10 +2,8 @@ package net.melon.slabs.blocks;
 
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.melon.slabs.criteria.MelonSlabsCriteria;
 import net.melon.slabs.mixin.TridentMixin;
 import net.melon.slabs.sounds.MelonSlabsSounds;
@@ -30,13 +28,14 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 
 public class FrankenMelon extends Block{
     public static final DirectionProperty FACING;
     public static final BooleanProperty LIT;
     public FrankenMelon() {
-        super(FabricBlockSettings.of(Material.GOURD).ticksRandomly().breakByTool(FabricToolTags.AXES).sounds(BlockSoundGroup.WOOD).hardness(1.0f).resistance(1.0f));
+        super(FabricBlockSettings.of(Material.GOURD).ticksRandomly().sounds(BlockSoundGroup.WOOD).hardness(1.0f).resistance(1.0f));
         this.setDefaultState((BlockState)((BlockState)this.stateManager.getDefaultState()).with(LIT, true).with(FACING, Direction.NORTH));
     }
 
@@ -45,6 +44,10 @@ public class FrankenMelon extends Block{
     }
 
     private Direction getRandomDirection(){
+        return(getRandomDirection(Random.create()));
+    }
+
+    private Direction getRandomDirection(Random random){
         Direction[] directions = new Direction[4];
 
         directions[0] = Direction.NORTH;
@@ -52,7 +55,7 @@ public class FrankenMelon extends Block{
         directions[2] = Direction.SOUTH;
         directions[3] = Direction.WEST;
 
-        return(directions[new Random().nextInt(4)]);
+        return(directions[Random.create().nextInt(4)]);
     }
 
     @Override
@@ -62,7 +65,7 @@ public class FrankenMelon extends Block{
             if (!state.get(LIT)){
                 if (entity instanceof net.minecraft.entity.projectile.TridentEntity){
                     if (world.isThundering() && EnchantmentHelper.hasChanneling(((TridentMixin) entity).getTridentStack()) && world.isSkyVisible(pos.up())){
-                        world.setBlockState(pos, state.with(LIT, true).with(FACING, this.getRandomDirection()));
+                        world.setBlockState(pos, state.with(LIT, true).with(FACING, this.getRandomDirection()), Block.NOTIFY_LISTENERS);
 
                         Entity ownerEntity = ((net.minecraft.entity.projectile.TridentEntity) entity).getOwner();
                         MelonSlabsCriteria.CREATED_FRANKENMELON.trigger((ownerEntity instanceof ServerPlayerEntity ? (ServerPlayerEntity)ownerEntity : null));
@@ -83,6 +86,11 @@ public class FrankenMelon extends Block{
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         Direction direction = ctx.getPlayerFacing().getOpposite();
         return (BlockState) this.getDefaultState().with(FACING, direction);
+    }
+
+    @Override
+    public boolean hasRandomTicks(BlockState state) {
+        return true;
     }
 
     //randomly teleports one block at a time
@@ -115,7 +123,7 @@ public class FrankenMelon extends Block{
             //place the block (facing the same direction) at new location after removing old location
             world.removeBlock(pos, false);
             world.updateNeighbors(pos, this);
-            world.setBlockState(randomPos, this.getDefaultState().with(FACING, this.getRandomDirection()));
+            world.setBlockState(randomPos, this.getDefaultState().with(FACING, this.getRandomDirection(random)), Block.NOTIFY_LISTENERS);
             world.updateNeighbors(randomPos, this);
         }
     }
@@ -136,7 +144,7 @@ public class FrankenMelon extends Block{
     //makes the sound of the frankenmelon getting hurt
     private void getHurt (BlockState state, World world, BlockPos pos){
         if (!world.isClient && state.get(LIT)) {
-            Random rd = new Random();
+            Random rd = Random.create();
             world.playSound(null, pos, MelonSlabsSounds.FRANKENMELON_HURT_EVENT, SoundCategory.BLOCKS, 0.2f + rd.nextFloat()/10f, 0.8f + + rd.nextFloat()/2.5f);
         }
     }

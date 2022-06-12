@@ -9,17 +9,20 @@
     "I Totally Exist"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/melon-slabs",
+    "sources": "https://github.com/ITotallyExist/Melon-slabs"
   },
 
   "license": "SPDX: 0BSD",
-  "icon": "assets/modid/icon.png",
+  "icon": "assets/melonslabs/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
       "net.melon.slabs.MelonSlabs"
+    ],
+    "client": [
+      "net.melon.slabs.MelonSlabsClient"
     ]
   },
   "mixins": [
@@ -27,9 +30,10 @@
   ],
 
   "depends": {
-    "fabricloader": ">=0.11.3",
+    "fabricloader": ">=0.13.3",
     "fabric": "*",
-    "minecraft": "1.17.x"
+    "minecraft": "~1.19",
+    "java": ">=17"
   },
   "suggests": {
     "flamingo": "*"
