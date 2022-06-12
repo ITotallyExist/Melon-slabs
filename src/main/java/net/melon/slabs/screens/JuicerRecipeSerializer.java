@@ -51,7 +51,7 @@ public class JuicerRecipeSerializer implements RecipeSerializer<JuicerRecipe>{
         if (recipeJson.inputC != null){
             inputC = Ingredient.fromJson(recipeJson.inputC);
         }
-        
+
         Item outputItem = Registry.ITEM.getOrEmpty(new Identifier(recipeJson.outputItem))
             // Validate the inputted item actually exists
             .orElseThrow(() -> new JsonSyntaxException("No such item " + recipeJson.outputItem));
@@ -64,6 +64,7 @@ public class JuicerRecipeSerializer implements RecipeSerializer<JuicerRecipe>{
     public void write(PacketByteBuf packetData, JuicerRecipe recipe) {
         recipe.getInputA().write(packetData);
         recipe.getInputB().write(packetData);
+        recipe.getInputC().write(packetData);
         packetData.writeItemStack(recipe.getOutput());
     }
 
