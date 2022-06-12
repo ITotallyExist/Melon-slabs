@@ -17,5 +17,9 @@
     "item.melonslabs.cooked_pumpkin_slice": "Cooked Pumpkin Slice",
     "advancements.melonslabs.frankenmelon.title": "The Spark Of Life",
     "advancements.melonslabs.frankenmelon.description": "Create a frankenmelon by channeling life into a half pumpkin half melon block.",
-    "subtitles.melonslabs.frankenmelon_hurt": "Frankenmelon gets hurt"
+    "subtitles.melonslabs.frankenmelon_hurt": "Frankenmelon gets hurt",
+    "item.melonslabs.melon_juice": "Melon Juice",
+    "item.melonslabs.apple_juice": "Apple Juice",
+    "item.melonslabs.golden_apple_juice": "Golden Apple Juice",
+    "item.melonslabs.enchanted_golden_apple_juice": "Enchanted Golden Apple Juice"
 }
