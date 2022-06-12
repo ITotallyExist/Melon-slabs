@@ -109,8 +109,6 @@ public class JuicerScreenHandler extends ScreenHandler  {
 
                 int i;
                 for (i=0; i<maxTotalCrafts; i++){
-                    System.out.println("here"+i);
-                    //if(player.giveItemStack(newS))
                     if (!this.insertItem(newStack.copy(), this.inventory.size(), this.slots.size(), true)) {
                         final int finalCrafts = i;
                         this.inventory.getItems().forEach((item) -> {item.setCount(item.getCount()-finalCrafts);});
@@ -127,10 +125,13 @@ public class JuicerScreenHandler extends ScreenHandler  {
             } else {
 
                 if (invSlot < this.inventory.size()) {
+                    //this.inventory.size - 1 is because we dont want to insert into results slot
                     if (!this.insertItem(originalStack, this.inventory.size(), this.slots.size(), true)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (!this.insertItem(originalStack, 0, this.inventory.size(), false)) {
+
+                //this.inventory.size - 1 is because we dont want to insert into results slot
+                } else if (!this.insertItem(originalStack, 0, this.inventory.size()-1, false)) {
                     return ItemStack.EMPTY;
                 }
     
