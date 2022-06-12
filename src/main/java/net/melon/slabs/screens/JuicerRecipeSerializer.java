@@ -34,15 +34,24 @@ public class JuicerRecipeSerializer implements RecipeSerializer<JuicerRecipe>{
         JuicerRecipe.JuicerRecipeJsonFormat recipeJson = new Gson().fromJson(json, JuicerRecipeJsonFormat.class);
 
         // Validate all fields are there
-        if (recipeJson.inputA == null || recipeJson.inputB == null  || recipeJson.inputC == null || recipeJson.outputItem == null) {
+        if (recipeJson.inputA == null || recipeJson.outputItem == null) {
             throw new JsonSyntaxException("A required attribute is missing!");
         }
         // We'll allow to not specify the output, and default it to 1.
         if (recipeJson.outputAmount == 0) recipeJson.outputAmount = 1;
 
         Ingredient inputA = Ingredient.fromJson(recipeJson.inputA);
-        Ingredient inputB = Ingredient.fromJson(recipeJson.inputB);
-        Ingredient inputC = Ingredient.fromJson(recipeJson.inputC);
+        //they dont need to have all three
+        Ingredient inputB = Ingredient.empty();
+        if (recipeJson.inputB != null){
+            inputB = Ingredient.fromJson(recipeJson.inputB);
+        }
+
+        Ingredient inputC = Ingredient.empty();
+        if (recipeJson.inputC != null){
+            inputC = Ingredient.fromJson(recipeJson.inputC);
+        }
+        
         Item outputItem = Registry.ITEM.getOrEmpty(new Identifier(recipeJson.outputItem))
             // Validate the inputted item actually exists
             .orElseThrow(() -> new JsonSyntaxException("No such item " + recipeJson.outputItem));

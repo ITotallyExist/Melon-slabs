@@ -68,7 +68,24 @@ public class JuicerRecipe implements Recipe<JuicerInventory> {
 	public boolean matches(JuicerInventory inv, World world) {
 		// System.out.println("match test");
 		if(inv.size() < 4) return false;
-		return inputA.test(inv.getStack(0)) && inputB.test(inv.getStack(1))&& inputC.test(inv.getStack(2)) && inv.getStack(3).isOf(Items.GLASS_BOTTLE);
+
+		//no bottle in bottle slot
+		if (!inv.getStack(3).isOf(Items.GLASS_BOTTLE)) return false;
+
+		boolean result = false;
+		//we check all possible setups where each slot corresponds to each of the inputs for a mach because this is shapeless
+		int i,j,k;
+		for (i=0; i<3; i++){
+			for (j=1; j<3; j++){
+				int jIndex = (j+i)%3;//so its not the same as i, but covers all other possiblities given all possibilities of j one to one
+				if (inputA.test(inv.getStack(i)) && inputB.test(inv.getStack(jIndex)) && inputC.test(inv.getStack((2*(i+jIndex))%3))){
+					//match made!
+					result = true;
+				}
+			}
+		}
+
+		return result;
 	}
 
     @Override

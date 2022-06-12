@@ -1,0 +1,11 @@
+{
+  "type":"melonslabs:juicer_recipe",
+    "inputA" : {
+      "item": "minecraft:apple"
+    },
+    "inputB": {
+      "item": "minecraft:apple"
+    },
+    "outputItem": "melonslabs:apple_juice",
+    "outputAmount": "1"
+}
