@@ -11,7 +11,7 @@ import net.minecraft.util.Identifier;
 
 public class JuicerScreen extends HandledScreen<JuicerScreenHandler> {
     //A path to the gui texture. In this example we use the texture from the dispenser
-    private static final Identifier TEXTURE = new Identifier("minecraft", "textures/gui/container/dispenser.png");
+    private static final Identifier TEXTURE = new Identifier("melonslabs", "textures/gui/juicer.png");
  
     public JuicerScreen(JuicerScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
