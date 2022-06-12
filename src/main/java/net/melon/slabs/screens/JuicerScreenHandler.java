@@ -100,9 +100,16 @@ public class JuicerScreenHandler extends ScreenHandler  {
 
             if (invSlot == 4){//taking from result slot
                 //get the ingredient slot witht the minimum number of items in it
-                int maxTotalCrafts = Math.min(this.slots.get(0).getStack().getCount(), this.slots.get(1).getStack().getCount());
-                maxTotalCrafts = Math.min(maxTotalCrafts, this.slots.get(2).getStack().getCount());
-                maxTotalCrafts = Math.min(maxTotalCrafts, this.slots.get(3).getStack().getCount());
+                //as long as that slot is not empty
+                int maxTotalCrafts = Integer.MAX_VALUE;
+
+                int slotNum;
+                for (slotNum = 0; slotNum < 4; slotNum ++){
+                    if (!this.slots.get(slotNum).getStack().isEmpty()){
+                        maxTotalCrafts = Math.min(maxTotalCrafts, this.slots.get(slotNum).getStack().getCount());
+                    }
+                }
+
 
                 // newStack.setCount(originalStack.getCount()*totalCrafts);
                 
@@ -116,8 +123,8 @@ public class JuicerScreenHandler extends ScreenHandler  {
                         return ItemStack.EMPTY;
                     }
                 }
+                
                 final int finalTotalCrafts = i;
-
                 this.inventory.getItems().forEach((item) -> {item.setCount(item.getCount()-finalTotalCrafts);});
                 this.doCrafting();
 
