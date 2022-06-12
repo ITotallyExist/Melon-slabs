@@ -1,184 +1,181 @@
-// package net.melon.slabs.screens;
+package net.melon.slabs.screens;
 
-// import java.util.Optional;
+import java.util.Optional;
 
-// import net.melon.slabs.blocks.MelonSlabsBlocks;
-// import net.minecraft.block.Blocks;
-// import net.minecraft.entity.player.PlayerEntity;
-// import net.minecraft.entity.player.PlayerInventory;
-// import net.minecraft.inventory.CraftingInventory;
-// import net.minecraft.inventory.CraftingResultInventory;
-// import net.minecraft.inventory.Inventory;
-// import net.minecraft.item.ItemStack;
-// import net.minecraft.network.packet.s2c.play.ScreenHandlerSlotUpdateS2CPacket;
-// import net.minecraft.recipe.CraftingRecipe;
-// import net.minecraft.recipe.Recipe;
-// import net.minecraft.recipe.RecipeMatcher;
-// import net.minecraft.recipe.RecipeType;
-// import net.minecraft.recipe.book.RecipeBookCategory;
-// import net.minecraft.screen.AbstractRecipeScreenHandler;
-// import net.minecraft.screen.ScreenHandler;
-// import net.minecraft.screen.ScreenHandlerContext;
-// import net.minecraft.screen.ScreenHandlerType;
-// import net.minecraft.screen.slot.CraftingResultSlot;
-// import net.minecraft.screen.slot.Slot;
-// import net.minecraft.server.network.ServerPlayerEntity;
-// import net.minecraft.world.World;
+import net.melon.slabs.blocks.MelonSlabsBlocks;
+import net.minecraft.block.Blocks;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.CraftingInventory;
+import net.minecraft.inventory.CraftingResultInventory;
+import net.minecraft.inventory.Inventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.network.packet.s2c.play.ScreenHandlerSlotUpdateS2CPacket;
+import net.minecraft.recipe.CraftingRecipe;
+import net.minecraft.recipe.Recipe;
+import net.minecraft.recipe.RecipeMatcher;
+import net.minecraft.recipe.RecipeType;
+import net.minecraft.recipe.book.RecipeBookCategory;
+import net.minecraft.screen.AbstractRecipeScreenHandler;
+import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.ScreenHandlerContext;
+import net.minecraft.screen.ScreenHandlerType;
+import net.minecraft.screen.slot.CraftingResultSlot;
+import net.minecraft.screen.slot.Slot;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.world.World;
 
-// public class JuicerScreenHandler extends AbstractRecipeScreenHandler<JuicerInventory> {
-//     public static final int field_30781 = 0;
-//     private static final int field_30782 = 1;
-//     private static final int field_30783 = 10;
-//     private static final int field_30784 = 10;
-//     private static final int field_30785 = 37;
-//     private static final int field_30786 = 37;
-//     private static final int field_30787 = 46;
-//     private final JuicerInventory input = new JuicerInventory(this, 4, 1);
-//     private final CraftingResultInventory result = new CraftingResultInventory();
-//     private final ScreenHandlerContext context;
-//     private final PlayerEntity player;
+public class JuicerScreenHandler extends ScreenHandler  {
+    private final JuicerInventory inventory;
+ 
+    //just to access crafting recipes
+    private final World world;
 
-//     public JuicerScreenHandler(int syncId, PlayerInventory playerInventory) {
-//         this(syncId, playerInventory, ScreenHandlerContext.EMPTY);
-//     }
 
-//     public JuicerScreenHandler(int syncId, PlayerInventory playerInventory, ScreenHandlerContext context) {
-//         super(ScreenHandlerType.CRAFTING, syncId);
-//         int j;
-//         int i;
-//         this.context = context;
-//         this.player = playerInventory.player;
-//         this.addSlot(new CraftingResultSlot(playerInventory.player, this.input, this.result, 0, 124, 35));
+    //This constructor gets called on the client when the server wants it to open the screenHandler,
+    //The client will call the other constructor with an empty Inventory and the screenHandler will automatically
+    //sync this empty inventory with the inventory on the server.
+    public JuicerScreenHandler(int syncId, PlayerInventory playerInventory) {
+        this(syncId, playerInventory, JuicerInventory.empty());
+    }
+ 
+    //This constructor gets called from the BlockEntity on the server without calling the other constructor first, the server knows the inventory of the container
+    //and can therefore directly provide it as an argument. This inventory will then be synced to the client.
+    public JuicerScreenHandler(int syncId, PlayerInventory playerInventory, JuicerInventory inventory) {
 
-//         //adding the crafting slots
-//         this.addSlot(new Slot(this.input, 0, 30 , 17 + 9));
-//         this.addSlot(new Slot(this.input, 1, 48 , 17));
-//         this.addSlot(new Slot(this.input, 2, 66 , 17 + 9));
-//         this.addSlot(new Slot(this.input, 3, 48 , 17 + (2*18)));
+        
+        super(MelonSlabsScreens.JUICER_SCREEN_HANDLER, syncId);
+        this.world = playerInventory.player.world;
 
-//         for (i = 0; i < 3; ++i) {
-//             for (j = 0; j < 9; ++j) {
-//                 this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
-//             }
-//         }
-//         for (i = 0; i < 9; ++i) {
-//             this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
-//         }
-//     }
+        checkSize(inventory, 5);
+        this.inventory = inventory;
+        //some inventories do custom logic when a player opens it.
+        inventory.onOpen(playerInventory.player);
+ 
+        //places slots
+        int m;
+        int l;
+        //Our inventory
+        this.addSlot(new IngredientSlot(inventory, 0, 52, 22));
+        this.addSlot(new IngredientSlot(inventory, 1, 71, 17));
+        this.addSlot(new IngredientSlot(inventory, 2, 90, 22));
+        this.addSlot(new BottleSlot(inventory, 3, 71, 53));
+        this.addSlot(new ResultSlot(inventory, 4, 125, 35));
 
-//     protected static void updateResult(ScreenHandler handler, World world, PlayerEntity player, CraftingInventory craftingInventory, CraftingResultInventory resultInventory) {
-//         CraftingRecipe craftingRecipe;
-//         if (world.isClient) {
-//             return;
-//         }
-//         ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity)player;
-//         ItemStack itemStack = ItemStack.EMPTY;
-//         Optional<CraftingRecipe> optional = world.getServer().getRecipeManager().getFirstMatch(RecipeType.CRAFTING, craftingInventory, world);
-//         if (optional.isPresent() && resultInventory.shouldCraftRecipe(world, serverPlayerEntity, craftingRecipe = optional.get())) {
-//             itemStack = craftingRecipe.craft(craftingInventory);
-//         }
-//         resultInventory.setStack(0, itemStack);
-//         handler.setPreviousTrackedSlot(0, itemStack);
-//         serverPlayerEntity.networkHandler.sendPacket(new ScreenHandlerSlotUpdateS2CPacket(handler.syncId, handler.nextRevision(), 0, itemStack));
-//     }
+        // for (m = 0; m < 3; ++m) {
+        //     for (l = 0; l < 3; ++l) {
+        //         this.addSlot(new Slot(inventory, l + m * 3, 62 + l * 18, 17 + m * 18));
+        //     }
+        // }
+        //The player inventory
+        for (m = 0; m < 3; ++m) {
+            for (l = 0; l < 9; ++l) {
+                this.addSlot(new Slot(playerInventory, l + m * 9 + 9, 8 + l * 18, 84 + m * 18));
+            }
+        }
+        //The player Hotbar
+        for (m = 0; m < 9; ++m) {
+            this.addSlot(new Slot(playerInventory, m, 8 + m * 18, 142));
+        }
+ 
+    }
+ 
+    @Override
+    public boolean canUse(PlayerEntity player) {
+        return this.inventory.canPlayerUse(player);
+    }
+ 
+    // Shift + Player Inv Slot
+    @Override
+    public ItemStack transferSlot(PlayerEntity player, int invSlot) {
+        ItemStack newStack = ItemStack.EMPTY;
+        Slot slot = this.slots.get(invSlot);
+        if (slot != null && slot.hasStack()) {
+            ItemStack originalStack = slot.getStack();
+            newStack = originalStack.copy();
+            if (invSlot < this.inventory.size()) {
+                if (!this.insertItem(originalStack, this.inventory.size(), this.slots.size(), true)) {
+                    return ItemStack.EMPTY;
+                }
+            } else if (!this.insertItem(originalStack, 0, this.inventory.size(), false)) {
+                return ItemStack.EMPTY;
+            }
+ 
+            if (originalStack.isEmpty()) {
+                slot.setStack(ItemStack.EMPTY);
+            } else {
+                slot.markDirty();
+            }
+        }
+        return newStack;
+    }
 
-//     @Override
-//     public void onContentChanged(Inventory inventory) {
-//         this.context.run((world, pos) -> JuicerScreenHandler.updateResult(this, world, this.player, this.input, this.result));
-//     }
 
-//     @Override
-//     public void populateRecipeFinder(RecipeMatcher finder) {
-//         this.input.provideRecipeInputs(finder);
-//     }
+    @Override
+    public void onContentChanged(Inventory inventory) {
+        doCrafting();
+    }
 
-//     @Override
-//     public void clearCraftingSlots() {
-//         this.input.clear();
-//         this.result.clear();
-//     }
+    private void doCrafting(){
+        //System.out.println("crafting");
+        //Optional<JuicerRecipe> match = (Optional<JuicerRecipe>) this.world.getRecipeManager().get(new Identifier("melonslabs",JuicerRecipe.ID)).stream().findFirst();
+        Optional<JuicerRecipe> match = this.world.getRecipeManager().getFirstMatch(MelonSlabsScreens.JUICER_RECIPE_TYPE, inventory, world);
+        if (match.isPresent()){
+            this.slots.get(4).setStack(match.get().getOutput().copy());
+            //System.out.println("match");
 
-//     @Override
-//     public boolean matches(Recipe<? super JuicerInventory> recipe) {
-//         return recipe.matches(this.input, this.player.world);
-//     }
+        } else {
+            //System.out.println("nomatch");
+            this.slots.get(4).setStack(ItemStack.EMPTY);
+        }
+    }
 
-//     @Override
-//     public void close(PlayerEntity player) {
-//         super.close(player);
-//         this.context.run((world, pos) -> this.dropInventory(player, this.input));
-//     }
+    static class IngredientSlot
+    extends Slot {
+        public IngredientSlot(Inventory inventory, int i, int j, int k) {
+            super(inventory, i, j, k);
+        }
+    }
 
-//     @Override
-//     public boolean canUse(PlayerEntity player) {
-//         return JuicerScreenHandler.canUse(this.context, player, MelonSlabsBlocks.JUICER);
-//     }
+    static class BottleSlot
+    extends Slot {
+        public BottleSlot(Inventory inventory, int i, int j, int k) {
+            super(inventory, i, j, k);
+        }
 
-//     @Override
-//     public ItemStack transferSlot(PlayerEntity player, int index) {
-//         ItemStack itemStack = ItemStack.EMPTY;
-//         Slot slot = (Slot)this.slots.get(index);
-//         if (slot != null && slot.hasStack()) {
-//             ItemStack itemStack2 = slot.getStack();
-//             itemStack = itemStack2.copy();
-//             if (index == 0) {
-//                 this.context.run((world, pos) -> itemStack2.getItem().onCraft(itemStack2, (World)world, player));
-//                 if (!this.insertItem(itemStack2, 10, 46, true)) {
-//                     return ItemStack.EMPTY;
-//                 }
-//                 slot.onQuickTransfer(itemStack2, itemStack);
-//             } else if (index >= 10 && index < 46 ? !this.insertItem(itemStack2, 1, 10, false) && (index < 37 ? !this.insertItem(itemStack2, 37, 46, false) : !this.insertItem(itemStack2, 10, 37, false)) : !this.insertItem(itemStack2, 10, 46, false)) {
-//                 return ItemStack.EMPTY;
-//             }
-//             if (itemStack2.isEmpty()) {
-//                 slot.setStack(ItemStack.EMPTY);
-//             } else {
-//                 slot.markDirty();
-//             }
-//             if (itemStack2.getCount() == itemStack.getCount()) {
-//                 return ItemStack.EMPTY;
-//             }
-//             slot.onTakeItem(player, itemStack2);
-//             if (index == 0) {
-//                 player.dropItem(itemStack2, false);
-//             }
-//         }
-//         return itemStack;
-//     }
+        @Override
+        public boolean canInsert(ItemStack stack) {
+            return BottleSlot.matches(stack);
+        }
 
-//     @Override
-//     public boolean canInsertIntoSlot(ItemStack stack, Slot slot) {
-//         return slot.inventory != this.result && super.canInsertIntoSlot(stack, slot);
-//     }
+        public static boolean matches(ItemStack stack) {
+            return stack.isOf(Items.GLASS_BOTTLE);
+        }
+    }
 
-//     @Override
-//     public int getCraftingResultSlotIndex() {
-//         return 0;
-//     }
+    static class ResultSlot
+    extends Slot {
+        //TODO: make it so that if the item gets removed, every other item in the inventory gets minused one
+        public ResultSlot(Inventory inventory, int i, int j, int k) {
+            super(inventory, i, j, k);
+        }
 
-//     @Override
-//     public int getCraftingWidth() {
-//         return this.input.getWidth();
-//     }
+        //overriding this slot so that it doesnt mark as dirty weh
+        @Override
+        public void setStack(ItemStack stack) {
+            this.inventory.setStack(4, stack);
+            //this.markDirty();
+        }
+    
 
-//     @Override
-//     public int getCraftingHeight() {
-//         return this.input.getHeight();
-//     }
-
-//     @Override
-//     public int getCraftingSlotCount() {
-//         return 4;
-//     }
-
-//     @Override
-//     public RecipeBookCategory getCategory() {
-//         return RecipeBookCategory.CRAFTING;
-//     }
-
-//     @Override
-//     public boolean canInsertIntoSlot(int index) {
-//         return index != this.getCraftingResultSlotIndex();
-//     }
-// }
+        //make it so that you cant put things into the results stack
+        @Override
+        public boolean canInsert(ItemStack stack) {
+            return false;
+        }
+    }
+}
 

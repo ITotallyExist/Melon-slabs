@@ -31,7 +31,7 @@ public class JuicerRecipeSerializer implements RecipeSerializer<JuicerRecipe>{
     @Override
     // Turns json into Recipe
     public JuicerRecipe read(Identifier id, JsonObject json) {
-        JuicerRecipeJsonFormat recipeJson = new Gson().fromJson(json, JuicerRecipeJsonFormat.class);
+        JuicerRecipe.JuicerRecipeJsonFormat recipeJson = new Gson().fromJson(json, JuicerRecipeJsonFormat.class);
 
         // Validate all fields are there
         if (recipeJson.inputA == null || recipeJson.inputB == null  || recipeJson.inputC == null || recipeJson.outputItem == null) {

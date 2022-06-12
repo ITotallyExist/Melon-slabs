@@ -19,5 +19,6 @@ public class MelonSlabsClient implements ClientModInitializer {
  
         MelonSlabsBlocks.putRenderLayers();
 
+        MelonSlabsScreens.registerScreensAndRecipesClient();
     }
 }

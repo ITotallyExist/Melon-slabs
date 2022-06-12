@@ -4,6 +4,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.screen.ScreenHandler;
 import net.minecraft.util.collection.DefaultedList;
 
 //TODO, MAKE IT HERE SO THAT YOU CAN SEPCIFY THAT A CERTAIN SLOT CAN ONLY HOLD A CERTIAN TYPE OF ITEM
@@ -23,7 +25,7 @@ public interface JuicerInventory extends Inventory {
      * Must return the same instance every time it's called.
      */
     DefaultedList<ItemStack> getItems();
- 
+
     /**
      * Creates an inventory from the item list.
      */
@@ -82,11 +84,20 @@ public interface JuicerInventory extends Inventory {
      */
     @Override
     default ItemStack removeStack(int slot, int count) {
-        ItemStack result = Inventories.splitStack(getItems(), slot, count);
-        if (!result.isEmpty()) {
-            markDirty();
+        //here we do an if slot == 4 thing so that if you are taking from the result it removes the ingredients;
+
+        if (slot != 4){
+
+            ItemStack result = Inventories.splitStack(getItems(), slot, count);
+            if (!result.isEmpty()) {
+                markDirty();
+                //doCrafting();
+                //this.handler.onContentChanged(this);
+            }
+            return result;
+        } else {
+            return removeStack(slot);
         }
-        return result;
     }
  
     /**
@@ -95,9 +106,24 @@ public interface JuicerInventory extends Inventory {
      */
     @Override
     default ItemStack removeStack(int slot) {
-        return Inventories.removeStack(getItems(), slot);
+        //here we do an if slot == 4 thing so that if you are taking from the result it removes the ingredients;
+
+        ItemStack result = Inventories.removeStack(getItems(), slot);
+        
+        if (slot == 4){
+            getItems().forEach((item) -> {item.setCount(item.getCount()-1);});
+        }
+
+        markDirty();
+        return result;
     }
  
+    // private void doCrafting(){
+    //     Optional<JuicerRecipe> match = world.getRecipeManager()
+    //     .getFirstMatch(ExampleRecipe.Type.INSTANCE, inventory, world);
+    //     markDirty();
+    // }
+
     /**
      * Replaces the current stack in an inventory slot with the provided stack.
      * @param slot  The inventory slot of which to replace the itemstack.
@@ -111,6 +137,12 @@ public interface JuicerInventory extends Inventory {
         if (stack.getCount() > getMaxCountPerStack()) {
             stack.setCount(getMaxCountPerStack());
         }
+
+        //just to stop infinite loops, we dont mark dirty when its the crafting result
+        if (slot != 4){
+            markDirty();
+        }
+
     }
  
     /**
@@ -136,6 +168,17 @@ public interface JuicerInventory extends Inventory {
      */ 
     @Override
     default boolean canPlayerUse(PlayerEntity player) {
+        return true;
+    }
+
+    //makes it so you can only put glass bottles into slot index 3 and nothing into index 4 (the result slot)
+    @Override
+    default public boolean isValid(int slot, ItemStack stack) {
+        if (slot == 4){//the result slot
+            return false;
+        } else if (slot == 3 && !stack.isOf(Items.GLASS_BOTTLE)){
+            return false;
+        }
         return true;
     }
 }

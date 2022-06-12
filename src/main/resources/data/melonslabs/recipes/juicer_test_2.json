@@ -1,0 +1,14 @@
+{
+  "type":"melonslabs:juicer_recipe",
+    "inputA" : {
+      "item": "minecraft:redstone"
+    },
+    "inputB": {
+      "item": "minecraft:redstone"
+    },
+    "inputC": {
+        "item": "minecraft:redstone"
+    },
+    "outputItem": "minecraft:redstone",
+    "outputAmount": "20"
+}

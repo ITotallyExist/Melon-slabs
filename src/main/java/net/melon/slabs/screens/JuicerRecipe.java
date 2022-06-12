@@ -3,7 +3,10 @@ package net.melon.slabs.screens;
 import com.google.gson.JsonObject;
 
 import net.minecraft.inventory.CraftingInventory;
+import net.minecraft.inventory.Inventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
@@ -19,7 +22,8 @@ public class JuicerRecipe implements Recipe<JuicerInventory> {
 	private final Ingredient inputC;
 	private final ItemStack result;
 	private final Identifier id;
- 
+	public static final String ID = "juicer_recipe";
+
 	public JuicerRecipe(Identifier id, ItemStack result, Ingredient inputA, Ingredient inputB, Ingredient inputC) {
 		this.id = id;
 		this.inputA = inputA;
@@ -62,22 +66,14 @@ public class JuicerRecipe implements Recipe<JuicerInventory> {
 
     @Override 
 	public boolean matches(JuicerInventory inv, World world) {
-		if(inv.size() < 2) return false;
-		return inputA.test(inv.getStack(0)) && inputB.test(inv.getStack(1))&& inputC.test(inv.getStack(1));
+		// System.out.println("match test");
+		if(inv.size() < 4) return false;
+		return inputA.test(inv.getStack(0)) && inputB.test(inv.getStack(1))&& inputC.test(inv.getStack(2)) && inv.getStack(3).isOf(Items.GLASS_BOTTLE);
 	}
-	
-    public static class Type implements RecipeType<JuicerRecipe> {
-        // Define JuicerRecipe.Type as a singleton by making its constructor private and exposing an instance.
-        private Type() {}
-        public static final Type INSTANCE = new Type();
-
-        // This will be needed in step 4
-        public static final String ID = "two_slot_recipe";
-    }
 
     @Override
     public RecipeType<?> getType() {
-        return Type.INSTANCE;
+        return MelonSlabsScreens.JUICER_RECIPE_TYPE;
     }
     
 	//returns the serializer that we made to go from json to not json and send messages over server
@@ -93,4 +89,5 @@ public class JuicerRecipe implements Recipe<JuicerInventory> {
         String outputItem;
         int outputAmount;
     }
+
 }

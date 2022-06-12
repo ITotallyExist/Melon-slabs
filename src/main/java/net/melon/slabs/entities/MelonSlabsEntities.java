@@ -10,11 +10,11 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.util.registry.Registry;
 
 public class MelonSlabsEntities {
-    //public static BlockEntityType<JuicerBlockEntity> JUICER_BLOCK_ENTITY;
+    public static BlockEntityType<JuicerBlockEntity> JUICER_BLOCK_ENTITY;
 
  
 
     public static void registerEntities(){
-        //JUICER_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "melonslabs:juicer_block_entity", FabricBlockEntityTypeBuilder.create(JuicerBlockEntity::new, MelonSlabsBlocks.JUICER).build(null));
+        JUICER_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, "melonslabs:juicer_block_entity", FabricBlockEntityTypeBuilder.create(JuicerBlockEntity::new, MelonSlabsBlocks.JUICER).build(null));
     }
 }

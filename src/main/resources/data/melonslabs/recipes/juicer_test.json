@@ -1,4 +1,5 @@
 {
+  "type": "melonslabs:juicer_recipe",
     "inputA" : {
       "item": "minecraft:redstone"
     },
@@ -6,8 +7,8 @@
       "tag": "minecraft:logs"
     },
     "inputC": {
-        "tag": "melonslabs:melon-slab"
+        "item": "melonslabs:melon_slab"
     },
     "outputItem": "minecraft:cobblestone",
     "outputAmount": "20"
-  }
+}
