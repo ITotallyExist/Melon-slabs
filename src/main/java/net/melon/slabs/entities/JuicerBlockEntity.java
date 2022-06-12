@@ -56,6 +56,9 @@ public class JuicerBlockEntity extends BlockEntity implements NamedScreenHandler
         this.handler.onContentChanged(this);
     }
 
+    public void clearCraftingResult(){
+        this.inventory.set(4, ItemStack.EMPTY);
+    }
 
     @Override
     public Text getDisplayName() {

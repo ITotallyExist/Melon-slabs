@@ -93,24 +93,56 @@ public class JuicerScreenHandler extends ScreenHandler  {
     public ItemStack transferSlot(PlayerEntity player, int invSlot) {
         ItemStack newStack = ItemStack.EMPTY;
         Slot slot = this.slots.get(invSlot);
+        
         if (slot != null && slot.hasStack()) {
             ItemStack originalStack = slot.getStack();
             newStack = originalStack.copy();
-            if (invSlot < this.inventory.size()) {
-                if (!this.insertItem(originalStack, this.inventory.size(), this.slots.size(), true)) {
+
+            if (invSlot == 4){//taking from result slot
+                //get the ingredient slot witht the minimum number of items in it
+                int maxTotalCrafts = Math.min(this.slots.get(0).getStack().getCount(), this.slots.get(1).getStack().getCount());
+                maxTotalCrafts = Math.min(maxTotalCrafts, this.slots.get(2).getStack().getCount());
+                maxTotalCrafts = Math.min(maxTotalCrafts, this.slots.get(3).getStack().getCount());
+
+                // newStack.setCount(originalStack.getCount()*totalCrafts);
+                
+
+                int i;
+                for (i=0; i<maxTotalCrafts; i++){
+                    System.out.println("here"+i);
+                    //if(player.giveItemStack(newS))
+                    if (!this.insertItem(newStack.copy(), this.inventory.size(), this.slots.size(), true)) {
+                        final int finalCrafts = i;
+                        this.inventory.getItems().forEach((item) -> {item.setCount(item.getCount()-finalCrafts);});
+                        this.doCrafting();
+                        return ItemStack.EMPTY;
+                    }
+                }
+                final int finalTotalCrafts = i;
+
+                this.inventory.getItems().forEach((item) -> {item.setCount(item.getCount()-finalTotalCrafts);});
+                this.doCrafting();
+
+
+            } else {
+
+                if (invSlot < this.inventory.size()) {
+                    if (!this.insertItem(originalStack, this.inventory.size(), this.slots.size(), true)) {
+                        return ItemStack.EMPTY;
+                    }
+                } else if (!this.insertItem(originalStack, 0, this.inventory.size(), false)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.insertItem(originalStack, 0, this.inventory.size(), false)) {
-                return ItemStack.EMPTY;
-            }
- 
-            if (originalStack.isEmpty()) {
-                slot.setStack(ItemStack.EMPTY);
-            } else {
-                slot.markDirty();
+    
+                if (originalStack.isEmpty()) {
+                    slot.setStack(ItemStack.EMPTY);
+                } else {
+                    slot.markDirty();
+                }
             }
         }
         return newStack;
+
     }
 
 

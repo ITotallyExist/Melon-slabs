@@ -95,6 +95,7 @@ public class Juicer extends BlockWithEntity  {
         if (state.getBlock() != newState.getBlock()) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof JuicerBlockEntity) {
+                ((JuicerBlockEntity) blockEntity).clearCraftingResult();
                 ItemScatterer.spawn(world, pos, (JuicerBlockEntity)blockEntity);
                 // update comparators
                 world.updateComparators(pos,this);
