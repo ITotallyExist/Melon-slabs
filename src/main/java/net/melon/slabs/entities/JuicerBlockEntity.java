@@ -73,9 +73,12 @@ public class JuicerBlockEntity extends BlockEntity implements NamedScreenHandler
     }
  
     @Override
-    public void writeNbt(NbtCompound nbt) {
-        super.writeNbt(nbt);
+    public NbtCompound writeNbt(NbtCompound nbt) {
+        NbtCompound result = super.writeNbt(nbt);
+
         Inventories.writeNbt(nbt, this.inventory);
+
+        return result;
     }
 
     @Override

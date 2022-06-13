@@ -81,7 +81,7 @@ public class JackOSlab extends SlabBlock{
 
     public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
         if (!scheduled){
-            world.createAndScheduleBlockTick(pos, this, 1);
+            world.getBlockTickScheduler().schedule(pos, this, 1);
             scheduled = false;
         }
     }
@@ -92,7 +92,7 @@ public class JackOSlab extends SlabBlock{
         super.neighborUpdate(state, world, pos, block, fromPos, notify);
         if (!scheduled){
             scheduled = true;
-            world.createAndScheduleBlockTick(pos, this, 1);        
+            world.getBlockTickScheduler().schedule(pos, this, 1);
         }
     }
 
@@ -121,7 +121,7 @@ public class JackOSlab extends SlabBlock{
 
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if (state.get(TYPE) != SlabType.DOUBLE){
-            world.createAndScheduleBlockTick(pos, this, 1);
+            world.getBlockTickScheduler().schedule(pos, this, 1);
         } else{
             scheduled = false;
         }
