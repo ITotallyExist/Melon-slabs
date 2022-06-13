@@ -57,8 +57,7 @@ public class Juicer extends BlockWithEntity  {
 		if(world.isClient) {
 			return ActionResult.SUCCESS;
 		} else {
-            //TODO, fix message
-            player.sendMessage(Text.literal("WIP, check back later"), false);
+            //player.sendMessage(Text.literal("WIP, check back later"), false);
             
             NamedScreenHandlerFactory screenHandlerFactory = state.createScreenHandlerFactory(world, pos);
 
