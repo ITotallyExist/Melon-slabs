@@ -13,6 +13,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -62,7 +63,7 @@ public class JuicerBlockEntity extends BlockEntity implements NamedScreenHandler
 
     @Override
     public Text getDisplayName() {
-        return Text.translatable(getCachedState().getBlock().getTranslationKey());
+        return new TranslatableText(getCachedState().getBlock().getTranslationKey());
     }
  
     @Override

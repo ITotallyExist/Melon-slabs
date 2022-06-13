@@ -18,11 +18,8 @@ import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.SimpleNamedScreenHandlerFactory;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
-import net.minecraft.text.LiteralTextContent;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
-import net.minecraft.text.TextContent;
-import net.minecraft.text.TranslatableTextContent;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
@@ -58,7 +55,7 @@ public class Juicer extends BlockWithEntity  {
 			return ActionResult.SUCCESS;
 		} else {
             //TODO, fix message
-            player.sendMessage(Text.literal("WIP, check back later"), false);
+            //player.sendMessage(new Li("WIP, check back later"), false);
             
             NamedScreenHandlerFactory screenHandlerFactory = state.createScreenHandlerFactory(world, pos);
 

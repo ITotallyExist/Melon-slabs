@@ -1,5 +1,7 @@
 package net.melon.slabs.mixin;
 
+import java.util.Random;
+
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -7,10 +9,10 @@ import org.spongepowered.asm.mixin.Shadow;
 import net.melon.slabs.blocks.MelonSlabsBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.CactusBlock;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
 
@@ -40,7 +42,7 @@ public abstract class CactusMixin extends Block{
                world.setBlockState(blockPos, MelonSlabsBlocks.CACTUS_SLAB.getDefaultState());
                BlockState blockState = (BlockState)state.with(AGE, 0);
                world.setBlockState(pos, blockState, 4);
-               world.updateNeighbor(blockState, blockPos, this, pos, false);
+               world.updateNeighbor(pos, Blocks.CACTUS, blockPos);
                if (!placeAble){
                   world.breakBlock(blockPos, true);
                }

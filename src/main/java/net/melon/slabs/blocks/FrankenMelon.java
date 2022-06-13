@@ -28,7 +28,8 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.random.Random;
+import java.util.Random;
+
 import net.minecraft.world.World;
 
 public class FrankenMelon extends Block{
@@ -44,7 +45,7 @@ public class FrankenMelon extends Block{
     }
 
     private Direction getRandomDirection(){
-        return(getRandomDirection(Random.create()));
+        return(getRandomDirection(new Random()));
     }
 
     private Direction getRandomDirection(Random random){
@@ -55,7 +56,7 @@ public class FrankenMelon extends Block{
         directions[2] = Direction.SOUTH;
         directions[3] = Direction.WEST;
 
-        return(directions[Random.create().nextInt(4)]);
+        return(directions[new Random().nextInt(4)]);
     }
 
     @Override
@@ -144,7 +145,7 @@ public class FrankenMelon extends Block{
     //makes the sound of the frankenmelon getting hurt
     private void getHurt (BlockState state, World world, BlockPos pos){
         if (!world.isClient && state.get(LIT)) {
-            Random rd = Random.create();
+            Random rd = new Random();
             world.playSound(null, pos, MelonSlabsSounds.FRANKENMELON_HURT_EVENT, SoundCategory.BLOCKS, 0.2f + rd.nextFloat()/10f, 0.8f + + rd.nextFloat()/2.5f);
         }
     }

@@ -1,6 +1,7 @@
 package net.melon.slabs.blocks;
 
-import net.minecraft.util.math.random.Random;
+import java.util.Random;
+
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

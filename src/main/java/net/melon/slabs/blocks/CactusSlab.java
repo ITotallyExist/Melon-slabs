@@ -10,7 +10,8 @@ import net.minecraft.block.CactusBlock;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
+import java.util.Random;
+
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldView;
@@ -56,7 +57,7 @@ public class CactusSlab extends CactusBlock{
             int j = (Integer)state.get(AGE);
             if (j >= 7) {
                 world.setBlockState(pos, Blocks.CACTUS.getDefaultState().with(AGE,0), Block.NOTIFY_LISTENERS);
-                world.updateNeighbor(Blocks.CACTUS.getDefaultState().with(AGE,0), pos, this, pos, false);
+                world.updateNeighbor(pos, this, pos);
 
                 //here we destroy the cactus block if it grew in an unallowed area (so vanilla cactus farms will still work)
                 if (!world.getBlockState(pos).canPlaceAt(world, pos)){
