@@ -15,6 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import java.util.Random;
 
+import net.minecraft.world.TickPriority;
 import net.minecraft.world.World;
 
 import net.fabricmc.api.Environment;
@@ -81,7 +82,7 @@ public class JillOSlab extends SlabBlock{
 
     public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
         if (!scheduled){
-            world.getBlockTickScheduler().schedule(pos, this, 1);
+            world.getBlockTickScheduler().schedule(pos, this, 1, TickPriority.VERY_HIGH);
             scheduled = false;
         }
     }
@@ -91,7 +92,7 @@ public class JillOSlab extends SlabBlock{
         super.neighborUpdate(state, world, pos, block, fromPos, notify);
         if (!scheduled){
             scheduled = true;
-            world.getBlockTickScheduler().schedule(pos, this, 1);
+            world.getBlockTickScheduler().schedule(pos, this, 1, TickPriority.VERY_HIGH);
         }
     }
 
@@ -120,7 +121,7 @@ public class JillOSlab extends SlabBlock{
 
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if (state.get(TYPE) != SlabType.DOUBLE){
-            world.getBlockTickScheduler().schedule(pos, this, 1);
+            world.getBlockTickScheduler().schedule(pos, this, 1, TickPriority.VERY_HIGH);
         } else{
             scheduled = false;
         }

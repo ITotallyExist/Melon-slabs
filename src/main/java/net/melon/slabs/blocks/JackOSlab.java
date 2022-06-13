@@ -24,6 +24,7 @@ import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.world.TickPriority;
 import net.minecraft.world.World;
 
 
@@ -81,7 +82,7 @@ public class JackOSlab extends SlabBlock{
 
     public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
         if (!scheduled){
-            world.getBlockTickScheduler().schedule(pos, this, 1);
+            world.getBlockTickScheduler().schedule(pos, this, 1, TickPriority.VERY_HIGH);
             scheduled = false;
         }
     }
@@ -92,7 +93,7 @@ public class JackOSlab extends SlabBlock{
         super.neighborUpdate(state, world, pos, block, fromPos, notify);
         if (!scheduled){
             scheduled = true;
-            world.getBlockTickScheduler().schedule(pos, this, 1);
+            world.getBlockTickScheduler().schedule(pos, this, 1, TickPriority.VERY_HIGH);
         }
     }
 
@@ -121,7 +122,7 @@ public class JackOSlab extends SlabBlock{
 
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if (state.get(TYPE) != SlabType.DOUBLE){
-            world.getBlockTickScheduler().schedule(pos, this, 1);
+            world.getBlockTickScheduler().schedule(pos, this, 1, TickPriority.VERY_HIGH);
         } else{
             scheduled = false;
         }
