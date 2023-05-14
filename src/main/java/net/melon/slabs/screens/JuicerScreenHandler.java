@@ -2,30 +2,13 @@ package net.melon.slabs.screens;
 
 import java.util.Optional;
 
-import net.melon.slabs.blocks.MelonSlabsBlocks;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.CraftingInventory;
-import net.minecraft.inventory.CraftingResultInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.network.packet.s2c.play.ScreenHandlerSlotUpdateS2CPacket;
-import net.minecraft.recipe.CraftingRecipe;
-import net.minecraft.recipe.Recipe;
-import net.minecraft.recipe.RecipeMatcher;
-import net.minecraft.recipe.RecipeType;
-import net.minecraft.recipe.book.RecipeBookCategory;
-import net.minecraft.screen.AbstractRecipeScreenHandler;
 import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.ScreenHandlerContext;
-import net.minecraft.screen.ScreenHandlerType;
-import net.minecraft.screen.slot.CraftingResultSlot;
 import net.minecraft.screen.slot.Slot;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
 public class JuicerScreenHandler extends ScreenHandler  {
@@ -59,9 +42,10 @@ public class JuicerScreenHandler extends ScreenHandler  {
         int m;
         int l;
         //Our inventory
-        this.addSlot(new IngredientSlot(inventory, 0, 52, 22));
+        this.addSlot(new IngredientSlot(inventory, 0, 90, 22));
         this.addSlot(new IngredientSlot(inventory, 1, 71, 17));
-        this.addSlot(new IngredientSlot(inventory, 2, 90, 22));
+        this.addSlot(new IngredientSlot(inventory, 2, 52, 22));
+
         this.addSlot(new BottleSlot(inventory, 3, 71, 53));
         this.addSlot(new ResultSlot(inventory, 4, 125, 35));
 
@@ -132,13 +116,17 @@ public class JuicerScreenHandler extends ScreenHandler  {
             } else {
 
                 if (invSlot < this.inventory.size()) {
-                    //this.inventory.size - 1 is because we dont want to insert into results slot
+                    //this.inventory.size - 1 is because we dont want to insert from results slot
                     if (!this.insertItem(originalStack, this.inventory.size(), this.slots.size(), true)) {
                         return ItemStack.EMPTY;
                     }
 
                 //this.inventory.size - 1 is because we dont want to insert into results slot
-                } else if (!this.insertItem(originalStack, 0, this.inventory.size()-1, false)) {
+                // } else if (!this.insertItem(newStack, invSlot, invSlot, false)){//if we are trying to insert a glass bottle
+
+                //     return ItemStack.EMPTY;
+                    
+                } else if (!this.insertItem(originalStack, 0, this.inventory.size()-1, true)) {//if we are trying to insert anything else
                     return ItemStack.EMPTY;
                 }
     
@@ -198,7 +186,6 @@ public class JuicerScreenHandler extends ScreenHandler  {
 
     static class ResultSlot
     extends Slot {
-        //TODO: make it so that if the item gets removed, every other item in the inventory gets minused one
         public ResultSlot(Inventory inventory, int i, int j, int k) {
             super(inventory, i, j, k);
         }

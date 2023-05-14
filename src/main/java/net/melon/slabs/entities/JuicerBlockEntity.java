@@ -70,7 +70,7 @@ public class JuicerBlockEntity extends BlockEntity implements NamedScreenHandler
     }
 
     public boolean hasGlassBottle(){
-        return (this.inventory.get(3).isOf(Items.GLASS_BOTTLE));
+        return (this.inventory.get(0).isOf(Items.GLASS_BOTTLE));
     }
 
     public void clearCraftingResult(){
@@ -99,7 +99,7 @@ public class JuicerBlockEntity extends BlockEntity implements NamedScreenHandler
         if (slot == 4) {
             return false;
         }
-        if (slot == 3) {
+        if (slot == 0) {
             return stack.isOf(Items.GLASS_BOTTLE);
         }
         return true;
