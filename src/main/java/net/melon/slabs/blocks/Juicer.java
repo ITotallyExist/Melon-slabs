@@ -57,7 +57,7 @@ public class Juicer extends BlockWithEntity  {
 
     public Juicer() {
         super(FabricBlockSettings.copy(Blocks.OAK_WOOD));
-        this.setDefaultState((BlockState)((BlockState)this.stateManager.getDefaultState()).with(FACING, Direction.NORTH).with(HAS_BOTTLE, true));
+        this.setDefaultState((BlockState)((BlockState)this.stateManager.getDefaultState()).with(FACING, Direction.NORTH).with(HAS_BOTTLE, false));
     }
 
     @Override

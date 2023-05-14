@@ -5,11 +5,9 @@ import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.screen.ScreenHandler;
 import net.minecraft.util.collection.DefaultedList;
 
-//TODO, MAKE IT HERE SO THAT YOU CAN SEPCIFY THAT A CERTAIN SLOT CAN ONLY HOLD A CERTIAN TYPE OF ITEM
-//TODO , speciealise this to a jiucer inventory
+//TODO, MAKE IT HERE SO THAT YOU CAN SEPCIFY THAT A CERTAIN SLOT CAN ONLY HOLD A CERTIAN TYPE OF ITEM, based on recipes which are available
 
 /**
  * A simple {@code Inventory} implementation with only default methods + an item list getter.

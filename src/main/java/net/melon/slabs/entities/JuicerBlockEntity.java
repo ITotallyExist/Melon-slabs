@@ -1,5 +1,6 @@
 package net.melon.slabs.entities;
 
+import net.melon.slabs.blocks.Juicer;
 import net.melon.slabs.screens.JuicerInventory;
 import net.melon.slabs.screens.JuicerScreenHandler;
 import net.minecraft.block.BlockState;
@@ -28,7 +29,16 @@ public class JuicerBlockEntity extends BlockEntity implements NamedScreenHandler
         super(MelonSlabsEntities.JUICER_BLOCK_ENTITY, pos, state);
     }
  
- 
+    
+    public boolean isInventoryEmpty() {
+        for (int i = 0; i < this.inventory.size(); i++) {
+            if (!this.inventory.get(i).isEmpty()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     //From the ImplementedInventory Interface
  
     @Override
@@ -52,8 +62,15 @@ public class JuicerBlockEntity extends BlockEntity implements NamedScreenHandler
  
     @Override
     public void markDirty() {
+        if (!this.world.isClient){
+            this.world.setBlockState(pos, this.world.getBlockState(pos).with(Juicer.HAS_BOTTLE, this.hasGlassBottle()));         
+        }
         super.markDirty();
         this.handler.onContentChanged(this);
+    }
+
+    public boolean hasGlassBottle(){
+        return (this.inventory.get(3).isOf(Items.GLASS_BOTTLE));
     }
 
     public void clearCraftingResult(){
