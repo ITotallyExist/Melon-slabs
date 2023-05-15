@@ -8,6 +8,7 @@ import net.melon.slabs.criteria.MelonSlabsCriteria;
 import net.melon.slabs.sounds.MelonSlabsSounds;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.HorizontalFacingBlock;
 import net.minecraft.block.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -120,6 +121,26 @@ public class FrankenMelon extends Block{
     @Override
     public boolean hasRandomTicks(BlockState state) {
         return true;
+    }
+
+    //make it so that frankenmelon lights when a lightning rod above it gets struck
+    @Override
+    public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
+        if (world.isClient) {
+            return;
+        } else {
+            if (state.get(LIT)){
+                return;
+            }
+
+            //check if there is a powered lightning rod above
+            BlockState upBlockState = world.getBlockState(pos.up());
+            if (upBlockState.isOf(Blocks.LIGHTNING_ROD)){
+                if(upBlockState.get(Properties.POWERED)){
+                    this.lightFrankenmelon(pos, world, state);
+                }
+            }
+        }
     }
 
     //randomly teleports one block at a time
