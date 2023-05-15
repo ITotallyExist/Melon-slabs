@@ -7,7 +7,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.collection.DefaultedList;
 
-//TODO, MAKE IT HERE SO THAT YOU CAN SEPCIFY THAT A CERTAIN SLOT CAN ONLY HOLD A CERTIAN TYPE OF ITEM, based on recipes which are available (or based on a)
 
 /**
  * A simple {@code Inventory} implementation with only default methods + an item list getter.

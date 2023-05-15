@@ -45,6 +45,8 @@ public class MelonSlabsItems {
         //1.5x the absorption, regen lasts twice as long, resistance 2 instead of 1, fire resistance last 1.5x as long, 33% chance of giving you wither that lasts as long as the regen
         public static final Item ENCHANTED_GOLDEN_APPLE_JUICE = new GlintedJuiceItem(new Item.Settings().maxCount(4).recipeRemainder(Items.GLASS_BOTTLE).group(GROUP).rarity(Rarity.EPIC).food(new FoodComponent.Builder().hunger(8).saturationModifier(1.2f).statusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 800, 1), 1.0f).statusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 6000, 1), 1.0f).statusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 9000, 0), 1.0f).statusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 2400, 7), 1.0f).statusEffect(new StatusEffectInstance(StatusEffects.WITHER, 1600, 0), 0.33f).alwaysEdible().build()));
 
+        //tortured soul
+        public static final Item TORTURED_SOUL = new TorturedSoulItem(new Item.Settings().maxCount(1).group(GROUP).rarity(Rarity.RARE).recipeRemainder(Items.GLASS_BOTTLE));                                                                                                             
 
         //register items
         public static void registerItems(){
@@ -67,5 +69,6 @@ public class MelonSlabsItems {
             Registry.register(Registry.ITEM, "melonslabs:apple_juice", APPLE_JUICE);
             Registry.register(Registry.ITEM, "melonslabs:golden_apple_juice", GOLDEN_APPLE_JUICE);
             Registry.register(Registry.ITEM, "melonslabs:enchanted_golden_apple_juice", ENCHANTED_GOLDEN_APPLE_JUICE);
+            Registry.register(Registry.ITEM, "melonslabs:tortured_soul", TORTURED_SOUL);
         }
 }

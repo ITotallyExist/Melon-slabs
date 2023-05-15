@@ -1,0 +1,25 @@
+{
+    "parent": "minecraft:recipes/root",
+    "rewards": {
+      "recipes": [
+        "melonslabs:soul_sand"
+      ]
+    },
+    "criteria": {
+      "has_soul": {
+        "trigger": "minecraft:inventory_changed",
+        "conditions": {
+          "items": [
+            {
+              "item": "melonslabs:tortured_soul"
+            }
+          ]
+        }
+      }
+    },
+    "requirements": [
+      [
+        "has_soul"
+      ]
+    ]
+  }

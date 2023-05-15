@@ -1,0 +1,8 @@
+{
+  "type":"melonslabs:juicer_recipe",
+    "inputA" : {
+      "item": "melonslabs:frankenmelon"
+    },
+    "outputItem": "melonslabs:tortured_soul",
+    "outputAmount": "1"
+}
