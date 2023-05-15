@@ -6,7 +6,6 @@
   "mixins": ["ComposterMixin",
     "CactusMixin",
     "MelonMixin",
-    "TridentMixin",
     "CriteriaMixin"
   ],
   "client": [],

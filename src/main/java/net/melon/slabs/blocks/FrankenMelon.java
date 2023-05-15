@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.melon.slabs.criteria.MelonSlabsCriteria;
-import net.melon.slabs.mixin.TridentMixin;
 import net.melon.slabs.sounds.MelonSlabsSounds;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -16,15 +15,19 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LightningEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.ProjectileEntity;
+import net.minecraft.entity.projectile.TridentEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
@@ -58,29 +61,55 @@ public class FrankenMelon extends Block{
         return(directions[Random.create().nextInt(4)]);
     }
 
-    @Override
+    //@Override
     //makes it light when lightning
-    public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity){
-        if (!world.isClient()){
-            if (!state.get(LIT)){
-                if (entity instanceof net.minecraft.entity.projectile.TridentEntity){
-                    if (world.isThundering() && EnchantmentHelper.hasChanneling(((TridentMixin) entity).getTridentStack()) && world.isSkyVisible(pos.up())){
-                        world.setBlockState(pos, state.with(LIT, true).with(FACING, this.getRandomDirection()), Block.NOTIFY_LISTENERS);
+    // public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity){
+    //     if (!world.isClient()){
+    //         if (!state.get(LIT)){
+    //             if (entity instanceof net.minecraft.entity.projectile.TridentEntity){
+    //                 if (world.isThundering() && EnchantmentHelper.hasChanneling(((TridentMixin) entity).getTridentStack()) && world.isSkyVisible(pos.up())){
+    //                     world.setBlockState(pos, state.with(LIT, true).with(FACING, this.getRandomDirection()), Block.NOTIFY_LISTENERS);
 
-                        Entity ownerEntity = ((net.minecraft.entity.projectile.TridentEntity) entity).getOwner();
-                        MelonSlabsCriteria.CREATED_FRANKENMELON.trigger((ownerEntity instanceof ServerPlayerEntity ? (ServerPlayerEntity)ownerEntity : null));
+    //                     Entity ownerEntity = ((net.minecraft.entity.projectile.TridentEntity) entity).getOwner();
+    //                     MelonSlabsCriteria.CREATED_FRANKENMELON.trigger((ownerEntity instanceof ServerPlayerEntity ? (ServerPlayerEntity)ownerEntity : null));
 
-                        LightningEntity lightningEntity = (LightningEntity)EntityType.LIGHTNING_BOLT.create(world);
-                        lightningEntity.refreshPositionAfterTeleport(Vec3d.ofBottomCenter(pos));
-                        lightningEntity.setChanneler(null);
-                        world.spawnEntity(lightningEntity);
-                    }
-                }
-            } else if (entity instanceof net.minecraft.entity.projectile.ProjectileEntity){
-                this.getHurt(state, world, pos);
+    //                     LightningEntity lightningEntity = (LightningEntity)EntityType.LIGHTNING_BOLT.create(world);
+    //                     lightningEntity.refreshPositionAfterTeleport(Vec3d.ofBottomCenter(pos));
+    //                     lightningEntity.setChanneler(null);
+    //                     world.spawnEntity(lightningEntity);
+    //                 }
+    //             }
+    //         } else if (entity instanceof net.minecraft.entity.projectile.ProjectileEntity){
+    //             this.getHurt(state, world, pos);
+    //         }
+    //     }
+    //     super.onEntityCollision(state, world, pos, entity);
+    // }
+
+    @Override
+    public void onProjectileHit(World world, BlockState state, BlockHitResult hit, ProjectileEntity projectile) {
+        BlockPos blockPos = hit.getBlockPos();
+        
+        if (state.get(LIT)){
+            this.getHurt(state, world, hit.getBlockPos());
+        } else {
+            if (world.isThundering() && projectile instanceof TridentEntity && ((TridentEntity)projectile).hasChanneling() && world.isSkyVisible(blockPos.up())) {
+                LightningEntity lightningEntity = EntityType.LIGHTNING_BOLT.create(world);
+                lightningEntity.refreshPositionAfterTeleport(Vec3d.ofBottomCenter(blockPos.up()));
+                Entity ownerEntity = projectile.getOwner();
+                lightningEntity.setChanneler(ownerEntity instanceof ServerPlayerEntity ? (ServerPlayerEntity)ownerEntity : null);
+                MelonSlabsCriteria.CREATED_FRANKENMELON.trigger((ownerEntity instanceof ServerPlayerEntity ? (ServerPlayerEntity)ownerEntity : null));
+                world.spawnEntity(lightningEntity);
+                world.playSound(null, blockPos, SoundEvents.ITEM_TRIDENT_THUNDER, SoundCategory.WEATHER, 5.0f, 1.0f);
+
+                this.lightFrankenmelon(blockPos, world, state);
             }
         }
-        super.onEntityCollision(state, world, pos, entity);
+    }
+
+    //Pos, world, and blockstate, are the places where this block is
+    public void lightFrankenmelon (BlockPos pos, World world, BlockState state){
+        world.setBlockState(pos, state.with(LIT, true).with(FACING, this.getRandomDirection()), Block.NOTIFY_LISTENERS);
     }
 
     public BlockState getPlacementState(ItemPlacementContext ctx) {
