@@ -39,23 +39,26 @@ public class JuicerCategory implements DisplayCategory<JuicerDisplay> {
         return (EntryStacks.of(MelonSlabsItems.JUICER));
     }
 
-    @Override
-    public int getDisplayHeight(){
-        return 75;
-    }
+    // @Override
+    // public int getDisplayHeight(){
+    //     return 75;
+    // }
 
     @Override
     public List<Widget> setupDisplay(JuicerDisplay display, Rectangle bounds) {
-        Point startPoint = new Point(bounds.getCenterX() - 41, bounds.getMinY()+10);
+        Point startPoint = new Point(bounds.getCenterX() - 41, bounds.getMinY()+7);
         List<Widget> widgets = new ArrayList<Widget>();
 
         // The base background of the display
         // Please try to not remove this to preserve an uniform style to REI
         widgets.add(Widgets.createRecipeBase(bounds));
 
-        //widgets.add(Widgets.createTexturedWidget(new Identifier("melonslabs", "textures/gui/juicerarrowone.png"), startPoint.x + 23, startPoint.y + 15, 20, 18));
-        //widgets.add(Widgets.createTexturedWidget(new Identifier("melonslabs", "textures/gui/juicerarrowtwo.png"), startPoint.x + 42, startPoint.y+35, 31, 21));
-        //widgets.add(Widgets.createTexturedWidget(new Identifier("melonslabs", "textures/gui/juicer.png"), startPoint.x + 23, startPoint.y+15, 31, 21));
+        //then we add the arrows to the background
+        Rectangle imageBounds = new Rectangle( startPoint.x + 21, startPoint.y + 17, 20, 18);
+        Rectangle imageBounds2 = new Rectangle(startPoint.x + 40, startPoint.y+19, 31, 21);
+        widgets.add(Widgets.createTexturedWidget(new Identifier("melonslabs", "textures/gui/juicer_arrow_1.png"), imageBounds,0,0,20,18));
+        widgets.add(Widgets.createTexturedWidget(new Identifier("melonslabs", "textures/gui/juicer_arrow_2.png"), imageBounds2, 0,0,31,21));
+
 
         
         // We create a result slot background AND
@@ -108,9 +111,11 @@ public class JuicerCategory implements DisplayCategory<JuicerDisplay> {
 
         //we add the slot for the glass bottle
         widgets.add(Widgets.createSlot(new Point(startPoint.x + 23, startPoint.y + 36))
-                .entries(EntryIngredients.of(Items.GLASS_BOTTLE)) 
+                .entries(EntryIngredients.of(new ItemStack(Items.GLASS_BOTTLE))) 
                 .markInput());
 
+        
+        
         // We return the list of widgets for REI to display
         return widgets;
     } 

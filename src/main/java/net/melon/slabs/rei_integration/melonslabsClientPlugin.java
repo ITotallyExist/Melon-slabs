@@ -21,7 +21,7 @@ public class melonslabsClientPlugin implements REIClientPlugin {
 
     @Override
     public void registerScreens(ScreenRegistry registry) {
-        //registry.add();
+       //registry.add();
     }
 
     @Override
