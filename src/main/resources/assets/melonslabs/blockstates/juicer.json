@@ -1,32 +1,32 @@
 {
     "variants": {
-      "facing=east,has_bottle=false": {
+      "facing=west,has_bottle=false": {
         "model": "melonslabs:block/juicer",
         "y": 270
       },
-      "facing=north,has_bottle=false": {
+      "facing=south,has_bottle=false": {
         "model": "melonslabs:block/juicer",
         "y": 180
       },
-      "facing=south,has_bottle=false": {
+      "facing=north,has_bottle=false": {
         "model": "melonslabs:block/juicer"
       },
-      "facing=west,has_bottle=false": {
+      "facing=east,has_bottle=false": {
         "model": "melonslabs:block/juicer",
         "y": 90
       },
-      "facing=east,has_bottle=true": {
+      "facing=west,has_bottle=true": {
         "model": "melonslabs:block/juicer_full",
         "y": 270
       },
-      "facing=north,has_bottle=true": {
+      "facing=south,has_bottle=true": {
         "model": "melonslabs:block/juicer_full",
         "y": 180
       },
-      "facing=south,has_bottle=true": {
+      "facing=north,has_bottle=true": {
         "model": "melonslabs:block/juicer_full"
       },
-      "facing=west,has_bottle=true": {
+      "facing=east,has_bottle=true": {
         "model": "melonslabs:block/juicer_full",
         "y": 90
       }
