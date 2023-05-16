@@ -10,7 +10,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 public class JuicerScreen extends HandledScreen<JuicerScreenHandler> {
-    //A path to the gui texture. In this example we use the texture from the dispenser
+    //A path to the gui texture
     private static final Identifier TEXTURE = new Identifier("melonslabs", "textures/gui/juicer.png");
  
     public JuicerScreen(JuicerScreenHandler handler, PlayerInventory inventory, Text title) {
@@ -18,7 +18,11 @@ public class JuicerScreen extends HandledScreen<JuicerScreenHandler> {
         //System.out.println("hi2");
 
     }
- 
+    
+    public static Identifier getTexture(){
+        return TEXTURE;
+    }
+
     @Override
     protected void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);

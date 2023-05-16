@@ -4,6 +4,8 @@ import me.shedaniel.rei.api.client.plugins.REIClientPlugin;
 import me.shedaniel.rei.api.client.registry.category.CategoryRegistry;
 import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
 import me.shedaniel.rei.api.client.registry.screen.ScreenRegistry;
+import me.shedaniel.rei.api.common.util.EntryStacks;
+import net.melon.slabs.items.MelonSlabsItems;
 import net.melon.slabs.screens.JuicerRecipe;
 import net.melon.slabs.screens.JuicerScreen;
 
@@ -12,6 +14,7 @@ public class melonslabsClientPlugin implements REIClientPlugin {
     @Override
     public void registerCategories(CategoryRegistry registry) {
         registry.add(new JuicerCategory());
+        registry.addWorkstations(JuicerCategory.JUICER_DISPLAY, EntryStacks.of(MelonSlabsItems.JUICER));
 
 
     }
