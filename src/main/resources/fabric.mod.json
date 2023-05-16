@@ -23,6 +23,9 @@
     ],
     "client": [
       "net.melon.slabs.MelonSlabsClient"
+    ],
+    "rei_client": [
+      "net.melon.slabs.rei_integration.melonslabsClientPlugin"
     ]
   },
   "mixins": [

@@ -1,5 +1,8 @@
 package net.melon.slabs.screens;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.gson.JsonObject;
 
 import net.minecraft.item.ItemStack;
@@ -29,6 +32,18 @@ public class JuicerRecipe implements Recipe<JuicerInventory> {
 		this.result = result;
 	}
  
+	//so that the rei display can have a list of ingredients to work with
+	public List<Ingredient> getInputs(){
+		List<Ingredient> ingredients = new ArrayList<Ingredient>();
+
+		ingredients.add(this.inputA);
+		ingredients.add(this.inputB);
+		ingredients.add(this.inputC);
+
+
+		return (ingredients);
+	}
+
 	public Ingredient getInputA() {
 		return this.inputA;
 	}
