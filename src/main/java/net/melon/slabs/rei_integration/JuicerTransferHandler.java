@@ -68,8 +68,8 @@ public class JuicerTransferHandler implements TransferHandler{
                 inputStacks.add(incompleteInputStacks.get(0));
                 inputStacks.add(ItemStack.EMPTY);
             } else if (numRecipeInputs == 2){
-                inputStacks.add(incompleteInputStacks.get(0));
                 inputStacks.add(incompleteInputStacks.get(1));
+                inputStacks.add(incompleteInputStacks.get(0));
                 inputStacks.add(ItemStack.EMPTY);
             } else {
                 inputStacks= incompleteInputStacks;
@@ -182,8 +182,10 @@ public class JuicerTransferHandler implements TransferHandler{
                 int maxCrafts = Math.min(screenHandler.getCountOf(Items.GLASS_BOTTLE, false), Items.GLASS_BOTTLE.getMaxCount());
 
                 for (int i = 0; i<necessaryMaterials.size(); i++){
-                    maxCrafts = Math.min(maxCrafts, screenHandler.getCountOf(necessaryMaterials.get(i).getItem(), true)/necessaryMaterials.get(i).getCount());
-                    maxCrafts = Math.min(maxCrafts, necessaryMaterials.get(i).getItem().getMaxCount());
+                    if (!necessaryMaterials.get(i).isEmpty()){
+                        maxCrafts = Math.min(maxCrafts, screenHandler.getCountOf(necessaryMaterials.get(i).getItem(), true)/necessaryMaterials.get(i).getCount());
+                        maxCrafts = Math.min(maxCrafts, necessaryMaterials.get(i).getItem().getMaxCount());
+                    }
                 }
 
                 for (int i=0; i<3; i++){
@@ -191,7 +193,7 @@ public class JuicerTransferHandler implements TransferHandler{
                     if (!inputStacks.get(i).isEmpty()){
                         Item item = inputStacks.get(i).getItem();
 
-                        
+
                         //remove from player inventory
                         screenHandler.removeFromPlayer(item, maxCrafts);
                         //add to juicer inventory

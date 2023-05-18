@@ -85,19 +85,19 @@ public class JuicerCategory implements DisplayCategory<JuicerDisplay> {
             displayInputs.add(recipeInputs.get(0));
             displayInputs.add(emptyIngredient);
         } else if (numRecipeInputs == 2){
-            displayInputs.add(recipeInputs.get(0));
             displayInputs.add(recipeInputs.get(1));
+            displayInputs.add(recipeInputs.get(0));
             displayInputs.add(emptyIngredient);
         } else {
-            displayInputs.add(recipeInputs.get(0));
-            displayInputs.add(recipeInputs.get(1));
             displayInputs.add(recipeInputs.get(2));
+            displayInputs.add(recipeInputs.get(1));
+            displayInputs.add(recipeInputs.get(0));
         }
         
 
         // then We add the input slots
         widgets.add(Widgets.createSlot(new Point(startPoint.x + 4, startPoint.y + 5))
-                .entries(displayInputs.get(0)) // Get the first input ingredient
+                .entries(displayInputs.get(2)) // Get the first input ingredient
                 .markInput()); // Mark this as the input for REI to identify
         
         widgets.add(Widgets.createSlot(new Point(startPoint.x + 23, startPoint.y ))
@@ -105,7 +105,7 @@ public class JuicerCategory implements DisplayCategory<JuicerDisplay> {
                 .markInput());
         
         widgets.add(Widgets.createSlot(new Point(startPoint.x + 42, startPoint.y + 5))
-                .entries(displayInputs.get(2)) 
+                .entries(displayInputs.get(0)) 
                 .markInput());
         
 

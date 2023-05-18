@@ -1,4 +1,4 @@
-package net.melon.slabs.rei_integration;
+package net.melon.slabs.rei_integration.client;
 
 import me.shedaniel.rei.api.client.plugins.REIClientPlugin;
 import me.shedaniel.rei.api.client.registry.category.CategoryRegistry;
@@ -7,6 +7,9 @@ import me.shedaniel.rei.api.client.registry.screen.ScreenRegistry;
 import me.shedaniel.rei.api.client.registry.transfer.TransferHandlerRegistry;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.melon.slabs.items.MelonSlabsItems;
+import net.melon.slabs.rei_integration.JuicerCategory;
+import net.melon.slabs.rei_integration.JuicerDisplay;
+import net.melon.slabs.rei_integration.JuicerTransferHandler;
 import net.melon.slabs.screens.JuicerRecipe;
 import net.melon.slabs.screens.JuicerScreen;
 
