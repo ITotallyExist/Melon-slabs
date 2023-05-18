@@ -6,6 +6,7 @@ import net.melon.slabs.blocks.MelonSlabsBlocks;
 import net.melon.slabs.entities.MelonSlabsEntities;
 import net.melon.slabs.criteria.MelonSlabsCriteria;
 import net.melon.slabs.items.MelonSlabsItems;
+import net.melon.slabs.packets.MelonSlabsPackets;
 import net.melon.slabs.screens.MelonSlabsScreens;
 import net.melon.slabs.sounds.MelonSlabsSounds;
 
@@ -34,5 +35,8 @@ public class MelonSlabs implements ModInitializer {
 
         //ui stuff and crafting and recipes
         MelonSlabsScreens.registerScreensAndRecipes();
+
+        //server client communications stuff
+        MelonSlabsPackets.registerServerPackets();
     }
 }

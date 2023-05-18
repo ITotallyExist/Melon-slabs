@@ -3,6 +3,7 @@ package net.melon.slabs;
 import net.fabricmc.api.ClientModInitializer;
 
 import net.melon.slabs.blocks.MelonSlabsBlocks;
+import net.melon.slabs.packets.MelonSlabsPackets;
 import net.melon.slabs.screens.MelonSlabsScreens;
 
 public class MelonSlabsClient implements ClientModInitializer {
@@ -15,5 +16,8 @@ public class MelonSlabsClient implements ClientModInitializer {
         MelonSlabsBlocks.putRenderLayers();
 
         MelonSlabsScreens.registerScreensAndRecipesClient();
+
+        MelonSlabsPackets.registerClientPackets();
+
     }
 }
