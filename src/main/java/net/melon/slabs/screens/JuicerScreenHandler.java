@@ -3,6 +3,7 @@ package net.melon.slabs.screens;
 import java.util.List;
 import java.util.Optional;
 
+import me.shedaniel.rei.impl.client.gui.changelog.JParseDown.Block;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
@@ -11,10 +12,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class JuicerScreenHandler extends ScreenHandler  {
     private final JuicerInventory inventory;
+    private final BlockPos blockPos;
  
     //just to access crafting recipes
     private final World world;
@@ -23,17 +26,18 @@ public class JuicerScreenHandler extends ScreenHandler  {
     //This constructor gets called on the client when the server wants it to open the screenHandler,
     //The client will call the other constructor with an empty Inventory and the screenHandler will automatically
     //sync this empty inventory with the inventory on the server.
-    public JuicerScreenHandler(int syncId, PlayerInventory playerInventory) {
-        this(syncId, playerInventory, JuicerInventory.empty());
+    public JuicerScreenHandler(int syncId, PlayerInventory playerInventory, BlockPos pos) {
+        this(syncId, playerInventory, JuicerInventory.empty(), pos);
     }
  
     //This constructor gets called from the BlockEntity on the server without calling the other constructor first, the server knows the inventory of the container
     //and can therefore directly provide it as an argument. This inventory will then be synced to the client.
-    public JuicerScreenHandler(int syncId, PlayerInventory playerInventory, JuicerInventory inventory) {
-
+    public JuicerScreenHandler(int syncId, PlayerInventory playerInventory, JuicerInventory inventory, BlockPos pos) {
         
         super(MelonSlabsScreens.JUICER_SCREEN_HANDLER, syncId);
         this.world = playerInventory.player.world;
+
+        this.blockPos = pos;
 
         checkSize(inventory, 5);
         this.inventory = inventory;
@@ -76,6 +80,10 @@ public class JuicerScreenHandler extends ScreenHandler  {
  
     public Inventory getJuicerInventory(){
         return this.inventory;
+    }
+
+    public BlockPos getBlockPos (){
+        return this.blockPos;
     }
 
     // Shift + Player Inv Slot

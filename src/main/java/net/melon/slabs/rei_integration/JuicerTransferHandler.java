@@ -6,6 +6,8 @@ import java.util.List;
 import me.shedaniel.rei.api.client.registry.transfer.TransferHandler;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.entry.type.VanillaEntryTypes;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.melon.slabs.packets.JuicerPacketsHandler;
 import net.melon.slabs.screens.JuicerScreen;
 import net.melon.slabs.screens.JuicerScreenHandler;
 import net.minecraft.item.Item;
@@ -143,85 +145,10 @@ public class JuicerTransferHandler implements TransferHandler{
             }
 
             //we know it was successful, now we have to actually do it (if we are crafting)
-            if (context.isActuallyCrafting() && !context.isStackedCrafting()){
-                //empty out juicer (except for glass bottles)
-                screenHandler.emptyCraftingSlots();
-
-                //put one of each material into slot
-
-                //for each input
-                for (int i=0; i<3; i++){
-                    //if not empty
-                    if (!inputStacks.get(i).isEmpty()){
-                        Item item = inputStacks.get(i).getItem();
-
-                        //remove from player inventory
-                        screenHandler.removeFromPlayer(item, 1);
-                        //add to juicer inventory
-
-                        screenHandler.slots.get(i).setStack(new ItemStack(item, 1));
-                        screenHandler.slots.get(i).markDirty();
-                    }
-                }
-                    
-
-                //if glass bottle slot doesnt have glass bottles in it
-                if (!screenHandler.slots.get(3).getStack().isOf(Items.GLASS_BOTTLE)){
-                    //remove from player inventory
-                    screenHandler.removeFromPlayer(Items.GLASS_BOTTLE, 1);
-
-                    //add to juicer inventory
-                    screenHandler.slots.get(3).setStack(new ItemStack(Items.GLASS_BOTTLE, 1));
-                    screenHandler.slots.get(3).markDirty();
-                }
-            } else if (context.isActuallyCrafting() && context.isStackedCrafting()){//move materials into their correct slots using the screenhandler, crafting as many as possible given status of inventory
-                //empty out juicer (except for glass bottles)
-                screenHandler.emptyCraftingSlots();
-                
-                //get the maximum number of crafts to set up
-                int maxCrafts = Math.min(screenHandler.getCountOf(Items.GLASS_BOTTLE, false), Items.GLASS_BOTTLE.getMaxCount());
-
-                for (int i = 0; i<necessaryMaterials.size(); i++){
-                    if (!necessaryMaterials.get(i).isEmpty()){
-                        maxCrafts = Math.min(maxCrafts, screenHandler.getCountOf(necessaryMaterials.get(i).getItem(), true)/necessaryMaterials.get(i).getCount());
-                        maxCrafts = Math.min(maxCrafts, necessaryMaterials.get(i).getItem().getMaxCount());
-                    }
-                }
-
-                for (int i=0; i<3; i++){
-                    //if not empty
-                    if (!inputStacks.get(i).isEmpty()){
-                        Item item = inputStacks.get(i).getItem();
-
-
-                        //remove from player inventory
-                        screenHandler.removeFromPlayer(item, maxCrafts);
-                        //add to juicer inventory
-
-                        screenHandler.slots.get(i).setStack(new ItemStack(item, maxCrafts));
-                        screenHandler.slots.get(i).markDirty();
-                    }
-                }
-                    
-
-                //if glass bottle slot doesnt have glass bottles in it
-                if (!screenHandler.slots.get(3).getStack().isOf(Items.GLASS_BOTTLE)){
-                    //remove from player inventory
-                    screenHandler.removeFromPlayer(Items.GLASS_BOTTLE, maxCrafts);
-
-                    //add to juicer inventory
-                    screenHandler.slots.get(3).setStack(new ItemStack(Items.GLASS_BOTTLE, maxCrafts));
-                    screenHandler.slots.get(3).markDirty();
-                } else if (screenHandler.slots.get(3).getStack().getCount() < maxCrafts){
-                    screenHandler.removeFromPlayer(Items.GLASS_BOTTLE, maxCrafts - screenHandler.slots.get(3).getStack().getCount());
-
-                    //add to juicer inventory
-                    screenHandler.slots.get(3).setStack(new ItemStack(Items.GLASS_BOTTLE, maxCrafts));
-                    screenHandler.slots.get(3).markDirty();
-                }
+            if (context.isActuallyCrafting()){
+                JuicerPacketsHandler.sendCraftPacket(screenHandler.getBlockPos(), (JuicerDisplay) context.getDisplay(), context.isStackedCrafting());
+                return new ResultImpl(true, true);
             }
-
-            return new ResultImpl(true, true);
 
         }
         return (new ResultImpl (applicable));
