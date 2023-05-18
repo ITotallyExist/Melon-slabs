@@ -85,9 +85,9 @@ public class JuicerCategory implements DisplayCategory<JuicerDisplay> {
             displayInputs.add(recipeInputs.get(0));
             displayInputs.add(emptyIngredient);
         } else if (numRecipeInputs == 2){
+            displayInputs.add(emptyIngredient);
             displayInputs.add(recipeInputs.get(1));
             displayInputs.add(recipeInputs.get(0));
-            displayInputs.add(emptyIngredient);
         } else {
             displayInputs.add(recipeInputs.get(2));
             displayInputs.add(recipeInputs.get(1));

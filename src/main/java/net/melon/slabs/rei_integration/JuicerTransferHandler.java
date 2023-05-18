@@ -68,9 +68,9 @@ public class JuicerTransferHandler implements TransferHandler{
                 inputStacks.add(incompleteInputStacks.get(0));
                 inputStacks.add(ItemStack.EMPTY);
             } else if (numRecipeInputs == 2){
+                inputStacks.add(ItemStack.EMPTY);
                 inputStacks.add(incompleteInputStacks.get(1));
                 inputStacks.add(incompleteInputStacks.get(0));
-                inputStacks.add(ItemStack.EMPTY);
             } else {
                 inputStacks= incompleteInputStacks;
             }
