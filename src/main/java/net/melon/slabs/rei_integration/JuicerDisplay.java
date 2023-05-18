@@ -28,10 +28,6 @@ public class JuicerDisplay extends BasicDisplay {
         return (this.outputs.get(0));
     }
 
-    public List<EntryIngredient> getInputs(){
-        return (this.inputs);
-    }
-
     @Override
     public CategoryIdentifier<?> getCategoryIdentifier() {
         return(JuicerCategory.JUICER_DISPLAY);

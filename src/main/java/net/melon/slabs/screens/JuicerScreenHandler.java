@@ -1,10 +1,12 @@
 package net.melon.slabs.screens;
 
+import java.util.List;
 import java.util.Optional;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.screen.ScreenHandler;
@@ -145,6 +147,34 @@ public class JuicerScreenHandler extends ScreenHandler  {
     @Override
     public void onContentChanged(Inventory inventory) {
         doCrafting();
+    }
+
+    //returns how many of a certain item exist in the combined inventories
+    public int getCountOf (Item item){
+        int count = 0;
+
+        List<ItemStack> stacks = this.getStacks();
+
+        for (int i = 0; i<stacks.size(); i++){
+            if (stacks.get(i).isOf(item)){
+                count += stacks.get(i).getCount();
+            }
+        }
+
+        return count;
+    }
+
+    //returns how many empty slots are in the player's inventory
+    public int getPlayerEmptyCount(){
+        int count = 0;
+
+        for (int i = 5; i<this.slots.size(); i++){
+            if (!this.slots.get(i).hasStack()){
+                count += 1;
+            }
+        }
+
+        return count;
     }
 
     private void doCrafting(){

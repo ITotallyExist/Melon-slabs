@@ -70,7 +70,7 @@ public class JuicerCategory implements DisplayCategory<JuicerDisplay> {
                 .markOutput()); // Mark this as the output for REI to identify
         
         //first we get a nice list of the inputs for this recipe
-        List<EntryIngredient> recipeInputs = display.getInputs();
+        List<EntryIngredient> recipeInputs = display.getInputEntries();
         Integer numRecipeInputs = recipeInputs.size();
         List<EntryIngredient> displayInputs = new ArrayList<EntryIngredient>();
 
