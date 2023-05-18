@@ -74,6 +74,10 @@ public class JuicerScreenHandler extends ScreenHandler  {
         return this.inventory.canPlayerUse(player);
     }
  
+    public Inventory getJuicerInventory(){
+        return this.inventory;
+    }
+
     // Shift + Player Inv Slot
     @Override
     public ItemStack transferSlot(PlayerEntity player, int invSlot) {

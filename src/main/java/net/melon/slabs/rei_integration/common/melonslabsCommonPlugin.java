@@ -10,9 +10,11 @@ import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.plugins.REIServerPlugin;
 import me.shedaniel.rei.api.common.transfer.info.MenuInfoRegistry;
 import me.shedaniel.rei.api.common.transfer.info.simple.SimpleMenuInfoProvider;
+import net.melon.slabs.menu.JuicerMenu;
 import net.melon.slabs.rei_integration.JuicerCategory;
 import net.melon.slabs.rei_integration.JuicerDisplay;
 import net.melon.slabs.screens.JuicerRecipe;
+import net.melon.slabs.screens.JuicerScreenHandler;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
@@ -23,7 +25,7 @@ public class melonslabsCommonPlugin implements REIServerPlugin {
     
     @Override
     public void registerMenuInfo(MenuInfoRegistry registry){
-        
+        registry.register(JuicerCategory.JUICER_DISPLAY, JuicerScreenHandler.class, SimpleMenuInfoProvider.of(JuicerMenuInfo::new));
     }
 
     @Override
@@ -49,7 +51,7 @@ public class melonslabsCommonPlugin implements REIServerPlugin {
                 List<EntryIngredient> outputs = new ArrayList<EntryIngredient>();
 
                 for (int i=0; tag.contains("input"+Integer.toString(i)); i++){
-                    inputs.add(EntryIngredient.read((NbtList) tag.get(Integer.toString(i))));
+                    inputs.add(EntryIngredient.read((NbtList) tag.get("input"+Integer.toString(i))));
                 }
 
                 for (int i=0; tag.contains("output"+Integer.toString(i)); i++){
