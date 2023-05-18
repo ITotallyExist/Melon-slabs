@@ -15,18 +15,18 @@
         "model": "melonslabs:block/juicer",
         "y": 90
       },
-      "facing=west,has_bottle=true": {
+      "facing=east,has_bottle=true": {
         "model": "melonslabs:block/juicer_full",
         "y": 270
       },
-      "facing=south,has_bottle=true": {
+      "facing=north,has_bottle=true": {
         "model": "melonslabs:block/juicer_full",
         "y": 180
       },
-      "facing=north,has_bottle=true": {
+      "facing=south,has_bottle=true": {
         "model": "melonslabs:block/juicer_full"
       },
-      "facing=east,has_bottle=true": {
+      "facing=west,has_bottle=true": {
         "model": "melonslabs:block/juicer_full",
         "y": 90
       }
