@@ -22,6 +22,9 @@ public class JuicerScreenHandler extends ScreenHandler  {
     //just to access crafting recipes
     private final World world;
 
+    public JuicerScreenHandler(int syncId, PlayerInventory playerInventory) {
+        this(syncId, playerInventory, JuicerInventory.empty(), BlockPos.ORIGIN);
+    }
 
     //This constructor gets called on the client when the server wants it to open the screenHandler,
     //The client will call the other constructor with an empty Inventory and the screenHandler will automatically

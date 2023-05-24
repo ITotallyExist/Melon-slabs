@@ -1,5 +1,8 @@
 package net.melon.slabs.packets;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import me.shedaniel.rei.api.common.display.DisplaySerializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
@@ -10,8 +13,13 @@ import net.melon.slabs.rei_integration.JuicerDisplay;
 import net.melon.slabs.rei_integration.common.JuicerDisplaySerializer;
 import net.melon.slabs.screens.JuicerInventory;
 import net.melon.slabs.utils.MelonSlabsInventoryUtils;
+import net.melon.slabs.utils.MelonSlabsRecipeUtils;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.NamedScreenHandlerFactory;
@@ -43,12 +51,14 @@ public class JuicerPacketsHandler {
     public static void recieveCraftPacket(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler networkHandler, PacketByteBuf buf, PacketSender sender){
         //read the packet byte buff data here
 
+        System.out.println("hi!");
+
         BlockPos juicerPos = buf.readBlockPos();
 
         JuicerDisplay recipeDisplay = DISPLAY_SERIALIZER.read(buf.readNbt());
 
         boolean isStackedCrafting = buf.readBoolean();
-        server.execute(() ->{
+        server.execute(() -> {
 
             ServerWorld world = player.getWorld();
             //TODO: REFACTOR: do server-side verification that this is possible before all the moving
@@ -57,93 +67,92 @@ public class JuicerPacketsHandler {
             
             //check that this block is, in fact, a juicer block
             if (!world.getBlockState(juicerPos).isOf(MelonSlabsBlocks.JUICER)){
+                System.out.println("l moment!");
+
                 return;
             }
             
-            Inventory playerInventory = player.getInventory();
+            PlayerInventory playerInventory = player.getInventory();
             
-            DefaultedList<ItemStack> juicerInventory = ((JuicerBlockEntity) world.getBlockEntity(juicerPos)).getItems() ;
+            JuicerBlockEntity juicerBlockEntity = ((JuicerBlockEntity) world.getBlockEntity(juicerPos));
+            DefaultedList<ItemStack> juicerInventoryDefaulted = juicerBlockEntity.getItems();
+            List<ItemStack> juicerInventory = new ArrayList<ItemStack>(juicerInventoryDefaulted);
+
+
+            List<ItemStack> recipeInputs = recipeDisplay.getFullInputs();
+
+            //if you can dump the inventory, then do.  If you cant, then immediately return
+            int[] slotsToDump = {0,1,2};
+
+            if (!MelonSlabsInventoryUtils.dumpInventory(juicerInventory, playerInventory, slotsToDump)){
+                System.out.println("woops!");
+
+                return;
+            }
+            
+            //check if player can craft
+            int possibleCrafts = MelonSlabsRecipeUtils.possibleCrafts(recipeInputs, playerInventory);
+            if (possibleCrafts <= 0){
+                System.out.println("f in the chat");
+
+                return;
+            }
+            
 
             if (isStackedCrafting){
-                
-                     else if (context.isActuallyCrafting() && context.isStackedCrafting()){//move materials into their correct slots using the screenhandler, crafting as many as possible given status of inventory
-                    //empty out juicer (except for glass bottles)
-                    screenHandler.emptyCraftingSlots();
-                    
-                    //get the maximum number of crafts to set up
-                    int maxCrafts = Math.min(screenHandler.getCountOf(Items.GLASS_BOTTLE, false), Items.GLASS_BOTTLE.getMaxCount());
-    
-                    for (int i = 0; i<necessaryMaterials.size(); i++){
-                        if (!necessaryMaterials.get(i).isEmpty()){
-                            maxCrafts = Math.min(maxCrafts, screenHandler.getCountOf(necessaryMaterials.get(i).getItem(), true)/necessaryMaterials.get(i).getCount());
-                            maxCrafts = Math.min(maxCrafts, necessaryMaterials.get(i).getItem().getMaxCount());
-                        }
-                    }
-    
-                    for (int i=0; i<3; i++){
-                        //if not empty
-                        if (!inputStacks.get(i).isEmpty()){
-                            Item item = inputStacks.get(i).getItem();
-    
-    
-                            //remove from player inventory
-                            screenHandler.removeFromPlayer(item, maxCrafts);
-                            //add to juicer inventory
-    
-                            screenHandler.slots.get(i).setStack(new ItemStack(item, maxCrafts));
-                            screenHandler.slots.get(i).markDirty();
-                        }
-                    }
-                        
-    
-                    //if glass bottle slot doesnt have glass bottles in it
-                    if (!screenHandler.slots.get(3).getStack().isOf(Items.GLASS_BOTTLE)){
-                        //remove from player inventory
-                        screenHandler.removeFromPlayer(Items.GLASS_BOTTLE, maxCrafts);
-    
-                        //add to juicer inventory
-                        screenHandler.slots.get(3).setStack(new ItemStack(Items.GLASS_BOTTLE, maxCrafts));
-                        screenHandler.slots.get(3).markDirty();
-                    } else if (screenHandler.slots.get(3).getStack().getCount() < maxCrafts){
-                        screenHandler.removeFromPlayer(Items.GLASS_BOTTLE, maxCrafts - screenHandler.slots.get(3).getStack().getCount());
-    
-                        //add to juicer inventory
-                        screenHandler.slots.get(3).setStack(new ItemStack(Items.GLASS_BOTTLE, maxCrafts));
-                        screenHandler.slots.get(3).markDirty();
-                    }
-                }
-    
-            } else {
-                //empty out juicer (except for glass bottles)
-                MelonSlabsInventoryUtils.dumpInventory(juicerInventory, playerInventory, [0,1,2]);
-                    
-                //put one of each material into slot
-
-                //for each input
+                //for each ingredient slot                    
                 for (int i=0; i<3; i++){
                     //if not empty
-                    if (!inputStacks.get(i).isEmpty()){
-                        Item item = inputStacks.get(i).getItem();
+                    if (!recipeInputs.get(i).isEmpty()){
+                        final Item item = recipeInputs.get(i).getItem();
 
-                        //remove from player inventory
-                        screenHandler.removeFromPlayer(item, 1);
-                        //add to juicer inventory
+                            //remove from player inventory
+                        ItemStack newStack = new ItemStack(item, Inventories.remove(playerInventory, itemStack -> {return itemStack.isOf(item);}, possibleCrafts, false));
 
-                        screenHandler.slots.get(i).setStack(new ItemStack(item, 1));
-                        screenHandler.slots.get(i).markDirty();
+                        juicerBlockEntity.setStack(i, newStack);
                     }
                 }
                     
 
                 //if glass bottle slot doesnt have glass bottles in it
-                if (!screenHandler.slots.get(3).getStack().isOf(Items.GLASS_BOTTLE)){
+                if (!juicerInventory.get(3).isOf(Items.GLASS_BOTTLE)){
                     //remove from player inventory
-                    screenHandler.removeFromPlayer(Items.GLASS_BOTTLE, 1);
+                    ItemStack newStack = new ItemStack(Items.GLASS_BOTTLE, Inventories.remove(playerInventory, itemStack -> {return itemStack.isOf(Items.GLASS_BOTTLE);}, possibleCrafts, false));
 
+                    juicerBlockEntity.setStack(3, newStack);
+
+                } else if (juicerInventory.get(3).getCount() < possibleCrafts){
+                    int bottleCount = juicerInventory.get(3).getCount();
+
+                    ItemStack newStack = new ItemStack(Items.GLASS_BOTTLE, bottleCount + Inventories.remove(playerInventory, itemStack -> {return itemStack.isOf(Items.GLASS_BOTTLE);}, possibleCrafts - bottleCount, false));
+                    
                     //add to juicer inventory
-                    screenHandler.slots.get(3).setStack(new ItemStack(Items.GLASS_BOTTLE, 1));
-                    screenHandler.slots.get(3).markDirty();
+                    juicerBlockEntity.setStack(3, newStack);
                 }
+            } else {
+                        
+                //put one of each material into slot
+                //for each input
+                for (int i=0; i<3; i++){
+                    //if not empty
+                    if (!recipeInputs.get(i).isEmpty()){
+                        Item item = recipeInputs.get(i).getItem();
+
+                        //remove from player inventory
+                        ItemStack newStack = new ItemStack(Items.GLASS_BOTTLE, Inventories.remove(playerInventory, itemStack -> {return itemStack.isOf(item);}, 1, false));
+                        //add to juicer inventory
+                        juicerBlockEntity.setStack(3, newStack);               
+                    }
+                }
+                    
+
+                //if glass bottle slot doesnt have glass bottles in it
+                if (!juicerInventory.get(3).isOf(Items.GLASS_BOTTLE)){
+                    //remove from player inventory
+                    //remove from player inventory
+                    ItemStack newStack = new ItemStack(Items.GLASS_BOTTLE, Inventories.remove(playerInventory, itemStack -> {return itemStack.isOf(Items.GLASS_BOTTLE);}, 1, false));
+
+                    juicerBlockEntity.setStack(3, newStack);
                 }
             }
 

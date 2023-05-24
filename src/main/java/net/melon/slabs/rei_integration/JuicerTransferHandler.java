@@ -146,6 +146,8 @@ public class JuicerTransferHandler implements TransferHandler{
 
             //we know it was successful, now we have to actually do it (if we are crafting)
             if (context.isActuallyCrafting()){
+                System.out.println("hello?");
+                System.out.println(screenHandler.getBlockPos());
                 JuicerPacketsHandler.sendCraftPacket(screenHandler.getBlockPos(), (JuicerDisplay) context.getDisplay(), context.isStackedCrafting());
                 return new ResultImpl(true, true);
             }
