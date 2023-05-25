@@ -6,11 +6,12 @@ import java.util.List;
 import me.shedaniel.rei.api.client.registry.transfer.TransferHandler;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.entry.type.VanillaEntryTypes;
-import me.shedaniel.rei.impl.common.transfer.InputSlotCrafter;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.melon.slabs.packets.JuicerPacketsHandler;
 import net.melon.slabs.screens.JuicerScreen;
 import net.melon.slabs.screens.JuicerScreenHandler;
+import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -151,6 +152,9 @@ public class JuicerTransferHandler implements TransferHandler{
                 System.out.println("hello?");
                 System.out.println(((JuicerScreen) context.getContainerScreen()).getBlockPos());
                 //new InputSlotCrafter(null, screenHandler);
+
+                //ClientPlayerEntity player = context.getMinecraft().player;
+
                 JuicerPacketsHandler.sendCraftPacket(screenHandler.getBlockPos(), (JuicerDisplay) context.getDisplay(), context.isStackedCrafting());
                 return new ResultImpl(true, true);
             }

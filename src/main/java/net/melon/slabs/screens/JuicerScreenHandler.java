@@ -3,7 +3,6 @@ package net.melon.slabs.screens;
 import java.util.List;
 import java.util.Optional;
 
-import me.shedaniel.rei.impl.client.gui.changelog.JParseDown.Block;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
