@@ -9,6 +9,7 @@ import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.melon.slabs.rei_integration.JuicerDisplay;
 import net.melon.slabs.rei_integration.common.JuicerDisplaySerializer;
 import net.melon.slabs.screens.JuicerScreenHandler;
+import net.melon.slabs.screens.JuicerScreenHandlerFactory;
 import net.melon.slabs.utils.MelonSlabsInventoryUtils;
 import net.melon.slabs.utils.MelonSlabsRecipeUtils;
 import net.minecraft.entity.player.PlayerInventory;
@@ -19,10 +20,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableTextContent;
 
 //here we add all the callbacks for when various packets are called for the juicer block
 public class JuicerPacketsHandler {
@@ -69,7 +73,7 @@ public class JuicerPacketsHandler {
             System.out.println(recipeInputs);
 
             //if you can dump the inventory, then do.  If you cant, then immediately return
-            int[] slotsToDump = {0,1,2};
+            int[] slotsToDump = {0,1,2,3};
 
             if (!MelonSlabsInventoryUtils.dumpInventory(juicerInventory, playerInventory, slotsToDump)){
                 System.out.println("Not enough space in inventory");
@@ -102,16 +106,16 @@ public class JuicerPacketsHandler {
                     
 
                 //if glass bottle slot doesnt have glass bottles in it
-                if (!juicerInventory.getStack(3).isOf(Items.GLASS_BOTTLE)){
+                if (!juicerInventory.getStack(3).isOf(recipeInputs.get(recipeInputs.size()-1).getItem())){
                     //remove from player inventory
-                    ItemStack newStack = new ItemStack(Items.GLASS_BOTTLE, Inventories.remove(playerInventory, itemStack -> {return itemStack.isOf(Items.GLASS_BOTTLE);}, possibleCrafts, false));
+                    ItemStack newStack = new ItemStack(recipeInputs.get(recipeInputs.size()-1).getItem(), Inventories.remove(playerInventory, itemStack -> {return itemStack.isOf(Items.GLASS_BOTTLE);}, possibleCrafts, false));
 
                     juicerInventory.setStack(3, newStack);
 
                 } else if (juicerInventory.getStack(3).getCount() < possibleCrafts){
                     int bottleCount = juicerInventory.getStack(3).getCount();
 
-                    ItemStack newStack = new ItemStack(Items.GLASS_BOTTLE, bottleCount + Inventories.remove(playerInventory, itemStack -> {return itemStack.isOf(Items.GLASS_BOTTLE);}, possibleCrafts - bottleCount, false));
+                    ItemStack newStack = new ItemStack(recipeInputs.get(recipeInputs.size()-1).getItem(), bottleCount + Inventories.remove(playerInventory, itemStack -> {return itemStack.isOf(Items.GLASS_BOTTLE);}, possibleCrafts - bottleCount, false));
                     
                     //add to juicer inventory
                     juicerInventory.setStack(3, newStack);
@@ -134,10 +138,10 @@ public class JuicerPacketsHandler {
                     
 
                 //if glass bottle slot doesnt have glass bottles in it
-                if (!juicerInventory.getStack(3).isOf(Items.GLASS_BOTTLE)){
+                if (!juicerInventory.getStack(3).isOf(recipeInputs.get(recipeInputs.size()-1).getItem())){
                     //remove from player inventory
                     //remove from player inventory
-                    ItemStack newStack = new ItemStack(Items.GLASS_BOTTLE, Inventories.remove(playerInventory, itemStack -> {return itemStack.isOf(Items.GLASS_BOTTLE);}, 1, false));
+                    ItemStack newStack = new ItemStack(recipeInputs.get(recipeInputs.size()-1).getItem(), Inventories.remove(playerInventory, itemStack -> {return itemStack.isOf(Items.GLASS_BOTTLE);}, 1, false));
 
                     juicerInventory.setStack(3, newStack);
                 }
@@ -145,6 +149,13 @@ public class JuicerPacketsHandler {
 
             //after moving the items around, server opens the crafter for the player
             screenHandler.updateToClient();
+
+            player.currentScreenHandler = screenHandler;
+
+
+            player.openHandledScreen((NamedScreenHandlerFactory)new JuicerScreenHandlerFactory((JuicerScreenHandler)screenHandler, Text.translatable("block.melonslabs.juicer")));
+
+            //player.openHandledScreen(screenHandler);
             // NamedScreenHandlerFactory screenHandlerFactory = screenHandler.createScreenHandlerFactory();
 
             // if (screenHandlerFactory != null) {

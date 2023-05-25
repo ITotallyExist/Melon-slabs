@@ -75,7 +75,10 @@ public class JuicerDisplay extends BasicDisplay {
             inputStacks.add(incompleteInputStacks.get(0));
             inputStacks.add(incompleteInputStacks.get(2));
         } else {
-            inputStacks= incompleteInputStacks;
+            inputStacks.add(incompleteInputStacks.get(2));
+            inputStacks.add(incompleteInputStacks.get(1));
+            inputStacks.add(incompleteInputStacks.get(0));
+            inputStacks.add(incompleteInputStacks.get(3));
         }
 
         return incompleteInputStacks;
