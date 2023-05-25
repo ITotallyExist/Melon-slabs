@@ -29,10 +29,11 @@ public class MelonSlabsInventoryUtils {
 
     //empties one specified slot from inventory A into inventory B, returns false if not possible, true if possible and successful
     public static boolean dumpStack (Inventory inventory, PlayerInventory playerInventory, int slot){
-        boolean possible = playerInventory.insertStack(inventory.getStack(slot));
+        ItemStack stack = inventory.removeStack(slot);
+        boolean possible = playerInventory.insertStack(stack);
 
-        if (possible){
-            inventory.setStack(slot, ItemStack.EMPTY);
+        if (!possible) {
+            inventory.setStack(slot, stack);
         }
 
         return possible;

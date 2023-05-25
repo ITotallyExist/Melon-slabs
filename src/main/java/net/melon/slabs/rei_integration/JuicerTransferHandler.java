@@ -30,48 +30,11 @@ public class JuicerTransferHandler implements TransferHandler{
 
             //necessary materials for this recipe
             List<ItemStack> necessaryMaterials = new ArrayList<ItemStack>();
-            //start with necessary glass bottle
-            necessaryMaterials.add(new ItemStack(Items.GLASS_BOTTLE, 1));
+            
             //check display to get necessary materials
 
-            List<EntryIngredient> inputs = context.getDisplay().getInputEntries();
+            List<ItemStack> inputStacks = ((JuicerDisplay)context.getDisplay()).getFullInputs();
 
-            List<ItemStack> incompleteInputStacks = new ArrayList<ItemStack>();
-
-            inputs.forEach(entryIngredient -> {
-                entryIngredient.forEach(entryStack ->{
-                    //make sure it is an item entry (not really necessary because we are dealing with juicer recipes only at this point, but whatevs)
-                    if (entryStack.getValueType() == ItemStack.class){
-                        incompleteInputStacks.add((ItemStack) entryStack.getValue());
-                    }
-
-                    if (entryStack.isEmpty()){
-                        incompleteInputStacks.add(ItemStack.EMPTY);
-                    }
-                
-                });
-
-            });
-
-            //add empty ingredients
-            Integer numRecipeInputs = incompleteInputStacks.size();
-            List<ItemStack> inputStacks = new ArrayList<ItemStack>();
-
-            if (numRecipeInputs == 0){
-                inputStacks.add(ItemStack.EMPTY);
-                inputStacks.add(ItemStack.EMPTY);
-                inputStacks.add(ItemStack.EMPTY);
-            } else if (numRecipeInputs == 1){
-                inputStacks.add(ItemStack.EMPTY);
-                inputStacks.add(incompleteInputStacks.get(0));
-                inputStacks.add(ItemStack.EMPTY);
-            } else if (numRecipeInputs == 2){
-                inputStacks.add(ItemStack.EMPTY);
-                inputStacks.add(incompleteInputStacks.get(1));
-                inputStacks.add(incompleteInputStacks.get(0));
-            } else {
-                inputStacks= incompleteInputStacks;
-            }
 
             //for each item in inputs
             inputStacks.forEach(itemStack -> {
@@ -113,8 +76,6 @@ public class JuicerTransferHandler implements TransferHandler{
                     break; 
                 }
             }
-            
-                
             
 
             if (! hasMaterials){

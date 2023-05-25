@@ -144,7 +144,8 @@ public class JuicerPacketsHandler {
             }
 
             //after moving the items around, server opens the crafter for the player
-            // NamedScreenHandlerFactory screenHandlerFactory = world.getBlockState(juicerPos).createScreenHandlerFactory(world, juicerPos);
+            screenHandler.updateToClient();
+            // NamedScreenHandlerFactory screenHandlerFactory = screenHandler.createScreenHandlerFactory();
 
             // if (screenHandlerFactory != null) {
             //     //With this call the server will request the client to open the appropriate Screenhandler
