@@ -5,14 +5,9 @@ import java.util.List;
 
 import me.shedaniel.rei.api.client.registry.transfer.TransferHandler;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
-import me.shedaniel.rei.api.common.entry.type.VanillaEntryTypes;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.melon.slabs.packets.JuicerPacketsHandler;
 import net.melon.slabs.screens.JuicerScreen;
 import net.melon.slabs.screens.JuicerScreenHandler;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.screen.slot.Slot;
@@ -23,7 +18,6 @@ public class JuicerTransferHandler implements TransferHandler{
     @Override
     public Result handle(Context context) {
         boolean applicable;
-        boolean successful = false;
 
         applicable =  context.getContainerScreen() instanceof JuicerScreen;
 
@@ -148,14 +142,7 @@ public class JuicerTransferHandler implements TransferHandler{
 
             //we know it was successful, now we have to actually do it (if we are crafting)
             if (context.isActuallyCrafting()){
-                screenHandler.insertItem(new ItemStack(Items.GRASS_BLOCK),0,3);
-                System.out.println("hello?");
-                System.out.println(((JuicerScreen) context.getContainerScreen()).getBlockPos());
-                //new InputSlotCrafter(null, screenHandler);
-
-                //ClientPlayerEntity player = context.getMinecraft().player;
-
-                JuicerPacketsHandler.sendCraftPacket(screenHandler.getBlockPos(), (JuicerDisplay) context.getDisplay(), context.isStackedCrafting());
+                JuicerPacketsHandler.sendCraftPacket((JuicerDisplay) context.getDisplay(), context.isStackedCrafting());
                 return new ResultImpl(true, true);
             }
 

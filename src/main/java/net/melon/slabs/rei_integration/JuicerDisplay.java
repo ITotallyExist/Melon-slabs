@@ -11,7 +11,6 @@ import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import net.melon.slabs.screens.JuicerRecipe;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 
 public class JuicerDisplay extends BasicDisplay {
@@ -31,7 +30,7 @@ public class JuicerDisplay extends BasicDisplay {
         return (this.outputs.get(0));
     }
 
-    //gives a list of itemstacks that is the full inputs required for this recipe, including glass bottles and empty slots
+    //gives a list of itemstacks that is the full inputs required for this recipe, including glass bottles
     public List<ItemStack> getFullInputs(){
         List<EntryIngredient> inputs = this.getInputEntries();
 

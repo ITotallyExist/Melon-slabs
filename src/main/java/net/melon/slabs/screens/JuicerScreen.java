@@ -8,27 +8,14 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
 
 public class JuicerScreen extends HandledScreen<JuicerScreenHandler> {
-    private BlockPos pos;
     
     //A path to the gui texture
     private static final Identifier TEXTURE = new Identifier("melonslabs", "textures/gui/juicer.png");
     
     public JuicerScreen(JuicerScreenHandler handler, PlayerInventory inventory, Text title) {
-        this(handler, inventory, title, BlockPos.ORIGIN);
-
-    }
-    public JuicerScreen(JuicerScreenHandler handler, PlayerInventory inventory, Text title, BlockPos pos) {
         super(handler, inventory, title);
-        this.pos = pos;
-        //System.out.println("hi2");
-
-    }
-
-    public BlockPos getBlockPos(){
-        return this.pos;
     }
     
     public static Identifier getTexture(){

@@ -1,21 +1,16 @@
 package net.melon.slabs.packets;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import me.shedaniel.rei.api.common.display.DisplaySerializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
-import net.melon.slabs.blocks.MelonSlabsBlocks;
-import net.melon.slabs.entities.JuicerBlockEntity;
 import net.melon.slabs.rei_integration.JuicerDisplay;
 import net.melon.slabs.rei_integration.common.JuicerDisplaySerializer;
-import net.melon.slabs.screens.JuicerInventory;
 import net.melon.slabs.screens.JuicerScreenHandler;
 import net.melon.slabs.utils.MelonSlabsInventoryUtils;
 import net.melon.slabs.utils.MelonSlabsRecipeUtils;
-import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
@@ -24,27 +19,22 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.math.BlockPos;
 
 //here we add all the callbacks for when various packets are called for the juicer block
 public class JuicerPacketsHandler {
 
     private static final DisplaySerializer<JuicerDisplay> DISPLAY_SERIALIZER = new JuicerDisplaySerializer();
 
-    public static void sendCraftPacket (BlockPos pos, JuicerDisplay recipeDisplay, boolean isStackedCrafting){
+    public static void sendCraftPacket (JuicerDisplay recipeDisplay, boolean isStackedCrafting){
 
         NbtCompound recipeNbtCompound = DISPLAY_SERIALIZER.save(new NbtCompound(), recipeDisplay);
 
         PacketByteBuf buf = PacketByteBufs.create();
 
-        //buf.writeBlockPos(pos);
         buf.writeNbt(recipeNbtCompound);
         buf.writeBoolean(isStackedCrafting);
 
@@ -54,11 +44,6 @@ public class JuicerPacketsHandler {
     public static void recieveCraftPacket(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler networkHandler, PacketByteBuf buf, PacketSender sender){
         //read the packet byte buff data here
 
-        System.out.println("hi!");
-
-        //BlockPos juicerPosOld = buf.readBlockPos();
-        //BlockPos juicerPos = new BlockPos(459, 64, 150);
-
         ScreenHandler screenHandler = player.currentScreenHandler;
 
         JuicerDisplay recipeDisplay = DISPLAY_SERIALIZER.read(buf.readNbt());
@@ -66,14 +51,10 @@ public class JuicerPacketsHandler {
         boolean isStackedCrafting = buf.readBoolean();
         server.execute(() -> {
 
-            ServerWorld world = player.getWorld();
-            //TODO: REFACTOR: do server-side verification that this is possible before all the moving
-                //in doing that, maybe make an iscraftpossible function that takes in two inventories (the juicer and the player) 
-                    //and refactor transferhandler to use that instead of its internal code (i.e. move internal code there)
             
             //check that this block is, in fact, a juicer block
             if (!(screenHandler instanceof JuicerScreenHandler)){
-                System.out.println("l moment!");
+                System.out.println("Not the proper workstation");
 
                 return;
             }
@@ -81,7 +62,6 @@ public class JuicerPacketsHandler {
             PlayerInventory playerInventory = player.getInventory();
             
             Inventory juicerInventory = ((JuicerScreenHandler)screenHandler).getJuicerInventory();
-            List<ItemStack> juicerInventoryList = new ArrayList<ItemStack>(((JuicerInventory) juicerInventory).getItems());
 
 
             List<ItemStack> recipeInputs = recipeDisplay.getFullInputs();
@@ -91,8 +71,8 @@ public class JuicerPacketsHandler {
             //if you can dump the inventory, then do.  If you cant, then immediately return
             int[] slotsToDump = {0,1,2};
 
-            if (!MelonSlabsInventoryUtils.dumpInventory(juicerInventoryList, playerInventory, slotsToDump)){
-                System.out.println("woops!");
+            if (!MelonSlabsInventoryUtils.dumpInventory(juicerInventory, playerInventory, slotsToDump)){
+                System.out.println("Not enough space in inventory");
 
                 return;
             }
@@ -100,7 +80,7 @@ public class JuicerPacketsHandler {
             //check if player can craft
             int possibleCrafts = MelonSlabsRecipeUtils.possibleCrafts(recipeInputs, playerInventory);
             if (possibleCrafts <= 0){
-                System.out.println("f in the chat");
+                System.out.println("Not enough resources to craft");
 
                 return;
             }

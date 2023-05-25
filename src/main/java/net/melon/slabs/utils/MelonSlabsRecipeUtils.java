@@ -8,6 +8,7 @@ import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
 
 public class MelonSlabsRecipeUtils {
+
     //returns x < 0 if not possible
     //retutns x if possible where x is max number of crafts
     static public int possibleCrafts(List<ItemStack> recipeInputs, PlayerInventory inventory){
