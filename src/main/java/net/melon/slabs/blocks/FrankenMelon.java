@@ -113,7 +113,7 @@ public class FrankenMelon extends Block{
     }
 
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        Direction direction = ctx.getPlayerFacing().getOpposite();
+        Direction direction = ctx.getHorizontalPlayerFacing().getOpposite();
         return (BlockState) this.getDefaultState().with(FACING, direction);
     }
 

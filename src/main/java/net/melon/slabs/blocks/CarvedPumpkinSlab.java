@@ -46,9 +46,9 @@ public class CarvedPumpkinSlab extends SlabBlock{
             return (BlockState)((BlockState)MelonSlabsBlocks.JACK_O_SLAB.getDefaultState().with(FACING, blockState.get(FACING)).with(TYPE, SlabType.DOUBLE)).with(WATERLOGGED, false);
         } else {
             FluidState fluidState = ctx.getWorld().getFluidState(blockPos);
-            BlockState blockState2 = (BlockState)((BlockState)this.getDefaultState().with(TYPE, SlabType.BOTTOM)).with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER).with(FACING, ctx.getPlayerFacing().getOpposite());
+            BlockState blockState2 = (BlockState)((BlockState)this.getDefaultState().with(TYPE, SlabType.BOTTOM)).with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER).with(FACING, ctx.getHorizontalPlayerFacing().getOpposite());
             Direction direction = ctx.getSide();
-            return direction != Direction.DOWN && (direction == Direction.UP || ctx.getHitPos().y - (double)blockPos.getY() <= 0.5D) ? blockState2 : (BlockState)blockState2.with(TYPE, SlabType.TOP).with(FACING, ctx.getPlayerFacing().getOpposite());
+            return direction != Direction.DOWN && (direction == Direction.UP || ctx.getHitPos().y - (double)blockPos.getY() <= 0.5D) ? blockState2 : (BlockState)blockState2.with(TYPE, SlabType.TOP).with(FACING, ctx.getHorizontalPlayerFacing().getOpposite());
         }
     }
 

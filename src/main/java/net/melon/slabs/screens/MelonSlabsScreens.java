@@ -3,9 +3,9 @@ package net.melon.slabs.screens;
 import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.recipe.RecipeType;
+import net.minecraft.registry.Registry;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 public class MelonSlabsScreens {
     public static final ScreenHandlerType<JuicerScreenHandler> JUICER_SCREEN_HANDLER = ScreenHandlerRegistry.registerSimple(new Identifier("melonslabs","juicer"), JuicerScreenHandler::new);

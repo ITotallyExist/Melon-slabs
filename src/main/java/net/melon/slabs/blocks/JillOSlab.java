@@ -51,9 +51,9 @@ public class JillOSlab extends SlabBlock{
         } else if (blockState.isOf(MelonSlabsBlocks.CARVED_MELON_SLAB)){
             return (BlockState)((BlockState)MelonSlabsBlocks.JILL_O_SLAB.getDefaultState().with(FACING, blockState.get(FACING)).with(TYPE, SlabType.DOUBLE)).with(WATERLOGGED, false);
         } else {
-            BlockState blockState2 = (BlockState)((BlockState)this.getDefaultState().with(TYPE, SlabType.BOTTOM)).with(WATERLOGGED, false).with(FACING, ctx.getPlayerFacing().getOpposite());
+            BlockState blockState2 = (BlockState)((BlockState)this.getDefaultState().with(TYPE, SlabType.BOTTOM)).with(WATERLOGGED, false).with(FACING, ctx.getHorizontalPlayerFacing().getOpposite());
             Direction direction = ctx.getSide();
-            return direction != Direction.DOWN && (direction == Direction.UP || ctx.getHitPos().y - (double)blockPos.getY() <= 0.5D) ? blockState2 : (BlockState)blockState2.with(TYPE, SlabType.TOP).with(FACING, ctx.getPlayerFacing().getOpposite());
+            return direction != Direction.DOWN && (direction == Direction.UP || ctx.getHitPos().y - (double)blockPos.getY() <= 0.5D) ? blockState2 : (BlockState)blockState2.with(TYPE, SlabType.TOP).with(FACING, ctx.getHorizontalPlayerFacing().getOpposite());
         }
     }
 
@@ -80,7 +80,7 @@ public class JillOSlab extends SlabBlock{
 
     public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
         if (!scheduled){
-            world.createAndScheduleBlockTick(pos, this, 1);
+            world.scheduleBlockTick(pos, this, 1);
             scheduled = false;
         }
     }
@@ -90,7 +90,7 @@ public class JillOSlab extends SlabBlock{
         super.neighborUpdate(state, world, pos, block, fromPos, notify);
         if (!scheduled){
             scheduled = true;
-            world.createAndScheduleBlockTick(pos, this, 1);
+            world.scheduleBlockTick(pos, this, 1);
         }
     }
 
@@ -119,7 +119,7 @@ public class JillOSlab extends SlabBlock{
 
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if (state.get(TYPE) != SlabType.DOUBLE){
-            world.createAndScheduleBlockTick(pos, this, 1);
+            world.scheduleBlockTick(pos, this, 1);
         } else{
             scheduled = false;
         }

@@ -94,7 +94,7 @@ public class JuicerScreenHandler extends ScreenHandler  {
     
     // Shift + Player Inv Slot
     @Override
-    public ItemStack transferSlot(PlayerEntity player, int invSlot) {
+    public ItemStack quickMove(PlayerEntity player, int invSlot) {
         ItemStack newStack = ItemStack.EMPTY;
         Slot slot = this.slots.get(invSlot);
         
@@ -151,7 +151,7 @@ public class JuicerScreenHandler extends ScreenHandler  {
                 }
     
                 if (originalStack.isEmpty()) {
-                    slot.setStack(ItemStack.EMPTY);
+                    slot.setStackNoCallbacks(ItemStack.EMPTY);
                 } else {
                     slot.markDirty();
                 }
@@ -250,8 +250,8 @@ public class JuicerScreenHandler extends ScreenHandler  {
             if (this.slots.get(i).hasStack()){
                 for (int j = 5; j<slots.size(); j++){
                     if (!this.slots.get(j).hasStack()){
-                        this.slots.get(j).setStack(this.slots.get(i).getStack());
-                        this.slots.get(i).setStack(ItemStack.EMPTY);
+                        this.slots.get(j).setStackNoCallbacks(this.slots.get(i).getStack());
+                        this.slots.get(i).setStackNoCallbacks(ItemStack.EMPTY);
                     }
                 }
             }
@@ -265,12 +265,12 @@ public class JuicerScreenHandler extends ScreenHandler  {
         //Optional<JuicerRecipe> match = (Optional<JuicerRecipe>) this.world.getRecipeManager().get(new Identifier("melonslabs",JuicerRecipe.ID)).stream().findFirst();
         Optional<JuicerRecipe> match = this.world.getRecipeManager().getFirstMatch(MelonSlabsScreens.JUICER_RECIPE_TYPE, inventory, world);
         if (match.isPresent()){
-            this.slots.get(4).setStack(match.get().getOutput().copy());
+            this.slots.get(4).setStackNoCallbacks(match.get().getOutput().copy());
             //System.out.println("match");
 
         } else {
             //System.out.println("nomatch");
-            this.slots.get(4).setStack(ItemStack.EMPTY);
+            this.slots.get(4).setStackNoCallbacks(ItemStack.EMPTY);
         }
     }
 
@@ -306,7 +306,7 @@ public class JuicerScreenHandler extends ScreenHandler  {
 
         //overriding this slot so that it doesnt mark as dirty weh
         @Override
-        public void setStack(ItemStack stack) {
+        public void setStackNoCallbacks(ItemStack stack) {
             this.inventory.setStack(4, stack);
             //this.markDirty();
         }

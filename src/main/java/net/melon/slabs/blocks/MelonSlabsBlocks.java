@@ -3,7 +3,7 @@ package net.melon.slabs.blocks;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.minecraft.block.Block;
 import net.minecraft.client.render.RenderLayer;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registry;
 
 public class MelonSlabsBlocks {
     public static final Block MELON_SLAB = new MelonSlab();

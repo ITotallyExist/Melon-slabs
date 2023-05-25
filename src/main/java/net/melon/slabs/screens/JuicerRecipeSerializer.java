@@ -14,8 +14,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 public class JuicerRecipeSerializer implements RecipeSerializer<JuicerRecipe>{
     // Define ExampleRecipeSerializer as a singleton by making its constructor private and exposing an instance.

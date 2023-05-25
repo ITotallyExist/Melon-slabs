@@ -3,7 +3,7 @@ package net.melon.slabs.entities;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.melon.slabs.blocks.MelonSlabsBlocks;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registry;
 
 public class MelonSlabsEntities {
     public static BlockEntityType<JuicerBlockEntity> JUICER_BLOCK_ENTITY;

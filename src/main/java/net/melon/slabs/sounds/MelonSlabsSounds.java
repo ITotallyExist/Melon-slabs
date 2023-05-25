@@ -1,9 +1,9 @@
 package net.melon.slabs.sounds;
 
 
+import net.minecraft.registry.Registry;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 public class MelonSlabsSounds {
     public static SoundEvent FRANKENMELON_HURT_EVENT = new SoundEvent(new Identifier("melonslabs:frankenmelon_hurt"));
