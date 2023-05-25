@@ -51,7 +51,6 @@ public class JuicerDisplay extends BasicDisplay {
             });
 
         });
-        incompleteInputStacks.add(new ItemStack(Items.GLASS_BOTTLE));
 
         return incompleteInputStacks;
     }

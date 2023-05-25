@@ -52,12 +52,17 @@ public class JuicerRecipeSerializer implements RecipeSerializer<JuicerRecipe>{
             inputC = Ingredient.fromJson(recipeJson.inputC);
         }
 
+        Ingredient bottleInput = Ingredient.empty();
+        if (recipeJson.bottleInput != null){
+            bottleInput = Ingredient.fromJson(recipeJson.bottleInput);
+        }
+
         Item outputItem = Registry.ITEM.getOrEmpty(new Identifier(recipeJson.outputItem))
             // Validate the inputted item actually exists
             .orElseThrow(() -> new JsonSyntaxException("No such item " + recipeJson.outputItem));
         ItemStack output = new ItemStack(outputItem, recipeJson.outputAmount);
 
-        return new JuicerRecipe(id, output, inputA, inputB, inputC);
+        return new JuicerRecipe(id, output, inputA, inputB, inputC, bottleInput);
     }
     @Override
     // Turns Recipe into PacketByteBuf
@@ -65,6 +70,7 @@ public class JuicerRecipeSerializer implements RecipeSerializer<JuicerRecipe>{
         recipe.getInputA().write(packetData);
         recipe.getInputB().write(packetData);
         recipe.getInputC().write(packetData);
+        recipe.getBottleInput().write(packetData);
         packetData.writeItemStack(recipe.getOutput());
     }
 
@@ -75,7 +81,8 @@ public class JuicerRecipeSerializer implements RecipeSerializer<JuicerRecipe>{
         Ingredient inputA = Ingredient.fromPacket(packetData);
         Ingredient inputB = Ingredient.fromPacket(packetData);
         Ingredient inputC = Ingredient.fromPacket(packetData);
+        Ingredient bottleInput = Ingredient.fromPacket(packetData);
         ItemStack output = packetData.readItemStack();
-        return new JuicerRecipe(recipeId, output, inputA, inputB, inputC);
+        return new JuicerRecipe(recipeId, output, inputA, inputB, inputC, bottleInput);
     }
 }

@@ -89,6 +89,10 @@ public class JuicerScreenHandler extends ScreenHandler  {
         return this.blockPos;
     }
 
+    public void insertItem(ItemStack stack, int start, int last){
+        this.insertItem(stack, start, last, false);
+    }
+    
     // Shift + Player Inv Slot
     @Override
     public ItemStack transferSlot(PlayerEntity player, int invSlot) {
@@ -290,6 +294,7 @@ public class JuicerScreenHandler extends ScreenHandler  {
         }
 
         public static boolean matches(ItemStack stack) {
+            //TODO: make this a tag for juicer can be bottles
             return stack.isOf(Items.GLASS_BOTTLE);
         }
     }

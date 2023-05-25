@@ -6,6 +6,9 @@
     "inputB": {
       "item": "minecraft:apple"
     },
+    "bottleInput": {
+      "item": "minecraft:glass_bottle"
+    },
     "outputItem": "melonslabs:apple_juice",
     "outputAmount": "1"
 }

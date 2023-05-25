@@ -6,6 +6,7 @@ import java.util.List;
 import me.shedaniel.rei.api.client.registry.transfer.TransferHandler;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.entry.type.VanillaEntryTypes;
+import me.shedaniel.rei.impl.common.transfer.InputSlotCrafter;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.melon.slabs.packets.JuicerPacketsHandler;
 import net.melon.slabs.screens.JuicerScreen;
@@ -130,7 +131,7 @@ public class JuicerTransferHandler implements TransferHandler{
                 //dont condense stacks
             int emptySlotsNeeded = 0;
 
-            List<Slot> slots = context.getContainerScreen().getScreenHandler().slots;
+            List<Slot> slots = screenHandler.slots;
             //for every slot in the juicer (excluding glass bottle slot)
             for (int i=0; i<3; i++){
                 if (slots.get(i).hasStack()){
@@ -138,7 +139,7 @@ public class JuicerTransferHandler implements TransferHandler{
                 }
             }
             
-            hasRoom = ((JuicerScreen) context.getContainerScreen()).getScreenHandler().getPlayerEmptyCount() >= emptySlotsNeeded;
+            hasRoom = screenHandler.getPlayerEmptyCount() >= emptySlotsNeeded;
 
             if (!hasRoom){
                 return (new ResultImpl(Text.translatable("error.melonslabs.juicer.noroom"), 0));
@@ -146,13 +147,17 @@ public class JuicerTransferHandler implements TransferHandler{
 
             //we know it was successful, now we have to actually do it (if we are crafting)
             if (context.isActuallyCrafting()){
+                screenHandler.insertItem(new ItemStack(Items.GRASS_BLOCK),0,3);
                 System.out.println("hello?");
-                System.out.println(screenHandler.getBlockPos());
+                System.out.println(((JuicerScreen) context.getContainerScreen()).getBlockPos());
+                //new InputSlotCrafter(null, screenHandler);
                 JuicerPacketsHandler.sendCraftPacket(screenHandler.getBlockPos(), (JuicerDisplay) context.getDisplay(), context.isStackedCrafting());
                 return new ResultImpl(true, true);
             }
 
         }
+        
+
         return (new ResultImpl (applicable));
     }
     

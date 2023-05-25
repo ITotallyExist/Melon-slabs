@@ -6,6 +6,9 @@
     "inputB": {
       "item": "minecraft:enchanted_golden_apple"
     },
+    "bottleInput": {
+      "item": "minecraft:glass_bottle"
+    },
     "outputItem": "melonslabs:enchanted_golden_apple_juice",
     "outputAmount": "1"
 }

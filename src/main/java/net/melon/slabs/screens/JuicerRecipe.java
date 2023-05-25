@@ -20,15 +20,17 @@ public class JuicerRecipe implements Recipe<JuicerInventory> {
 	private final Ingredient inputA;
 	private final Ingredient inputB;
 	private final Ingredient inputC;
+	private final Ingredient bottleInput;
 	private final ItemStack result;
 	private final Identifier id;
 	public static final String ID = "juicer_recipe";
 
-	public JuicerRecipe(Identifier id, ItemStack result, Ingredient inputA, Ingredient inputB, Ingredient inputC) {
+	public JuicerRecipe(Identifier id, ItemStack result, Ingredient inputA, Ingredient inputB, Ingredient inputC, Ingredient bottleInput) {
 		this.id = id;
 		this.inputA = inputA;
 		this.inputB = inputB;
 		this.inputC = inputC;
+		this.bottleInput = bottleInput;
 		this.result = result;
 	}
  
@@ -39,6 +41,7 @@ public class JuicerRecipe implements Recipe<JuicerInventory> {
 		ingredients.add(this.inputA);
 		ingredients.add(this.inputB);
 		ingredients.add(this.inputC);
+		ingredients.add(this.bottleInput);
 
 
 		return (ingredients);
@@ -54,6 +57,10 @@ public class JuicerRecipe implements Recipe<JuicerInventory> {
 
 	public Ingredient getInputC() {
 		return this.inputC;
+	}
+
+	public Ingredient getBottleInput() {
+		return this.bottleInput;
 	}
  
 	@Override
@@ -82,11 +89,11 @@ public class JuicerRecipe implements Recipe<JuicerInventory> {
 		if(inv.size() < 4) return false;
 
 		//no bottle in bottle slot
-		if (!inv.getStack(3).isOf(Items.GLASS_BOTTLE)) return false;
+		if (!bottleInput.test(inv.getStack(3))) return false;
 
 		boolean result = false;
 		//we check all possible setups where each slot corresponds to each of the inputs for a mach because this is shapeless
-		int i,j,k;
+		int i,j;
 		for (i=0; i<3; i++){
 			for (j=1; j<3; j++){
 				int jIndex = (j+i)%3;//so its not the same as i, but covers all other possiblities given all possibilities of j one to one
@@ -115,6 +122,7 @@ public class JuicerRecipe implements Recipe<JuicerInventory> {
         JsonObject inputA;
         JsonObject inputB;
         JsonObject inputC;
+		JsonObject bottleInput;
         String outputItem;
         int outputAmount;
     }

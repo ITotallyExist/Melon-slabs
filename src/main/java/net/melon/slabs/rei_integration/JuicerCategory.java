@@ -80,18 +80,27 @@ public class JuicerCategory implements DisplayCategory<JuicerDisplay> {
             displayInputs.add(emptyIngredient);
             displayInputs.add(emptyIngredient);
             displayInputs.add(emptyIngredient);
+            displayInputs.add(emptyIngredient);
         } else if (numRecipeInputs == 1){
+            displayInputs.add(emptyIngredient);
+            displayInputs.add(emptyIngredient);
+            displayInputs.add(emptyIngredient);
+            displayInputs.add(recipeInputs.get(0));
+        } else if (numRecipeInputs == 2){
             displayInputs.add(emptyIngredient);
             displayInputs.add(recipeInputs.get(0));
             displayInputs.add(emptyIngredient);
-        } else if (numRecipeInputs == 2){
+            displayInputs.add(recipeInputs.get(1));
+        } else if (numRecipeInputs == 3){
             displayInputs.add(emptyIngredient);
             displayInputs.add(recipeInputs.get(1));
             displayInputs.add(recipeInputs.get(0));
+            displayInputs.add(recipeInputs.get(2));
         } else {
             displayInputs.add(recipeInputs.get(2));
             displayInputs.add(recipeInputs.get(1));
             displayInputs.add(recipeInputs.get(0));
+            displayInputs.add(recipeInputs.get(3));
         }
         
 
@@ -111,7 +120,7 @@ public class JuicerCategory implements DisplayCategory<JuicerDisplay> {
 
         //we add the slot for the glass bottle
         widgets.add(Widgets.createSlot(new Point(startPoint.x + 23, startPoint.y + 36))
-                .entries(EntryIngredients.of(new ItemStack(Items.GLASS_BOTTLE))) 
+                .entries(displayInputs.get(3)) 
                 .markInput());
 
         

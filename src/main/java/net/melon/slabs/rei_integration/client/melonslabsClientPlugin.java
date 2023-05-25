@@ -6,6 +6,7 @@ import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
 import me.shedaniel.rei.api.client.registry.screen.ScreenRegistry;
 import me.shedaniel.rei.api.client.registry.transfer.TransferHandlerRegistry;
 import me.shedaniel.rei.api.common.util.EntryStacks;
+import me.shedaniel.rei.plugin.autocrafting.DefaultCategoryHandler;
 import net.melon.slabs.items.MelonSlabsItems;
 import net.melon.slabs.rei_integration.JuicerCategory;
 import net.melon.slabs.rei_integration.JuicerDisplay;
@@ -28,7 +29,7 @@ public class melonslabsClientPlugin implements REIClientPlugin {
 
     @Override
     public void registerTransferHandlers(TransferHandlerRegistry registry) {
-        registry.register(new JuicerTransferHandler());
+        registry.register(new DefaultCategoryHandler());
     }
 
     @Override

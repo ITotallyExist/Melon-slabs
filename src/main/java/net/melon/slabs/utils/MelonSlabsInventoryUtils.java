@@ -10,16 +10,33 @@ public class MelonSlabsInventoryUtils {
 
     //empties all the slots from inventory A into inventory B, returns false if not possible, true if possible and successful
     public static boolean dumpInventory (List<ItemStack> inventory, PlayerInventory playerInventory){
-        return dumpInventory(inventory, playerInventory, null);
+        throw new UnsupportedOperationException();
+
+        //int[] slots = {};
+        //return dumpInventory(inventory, playerInventory, slots);
     }
 
     //empties all the specified slots inventory A into inventory B, returns false if not possible, true if possible and successful
     public static boolean dumpInventory (List<ItemStack> inventory, PlayerInventory playerInventory, int[] slots){
-        throw new UnsupportedOperationException();
+        for (int i=0; i<slots.length; i++){
+            if (!inventory.get(slots[i]).isEmpty()){
+                if (!dumpStack(inventory, playerInventory, slots[i])){
+                    return false;
+                }
+            }
+        }
+        
+        return true;
     }
 
     //empties one specified slot from inventory A into inventory B, returns false if not possible, true if possible and successful
-    public static boolean dumpStack (List<ItemStack> inventory, PlayerInventory playerInventory, int slots){
-        throw new UnsupportedOperationException();
+    public static boolean dumpStack (List<ItemStack> inventory, PlayerInventory playerInventory, int slot){
+        boolean possible = playerInventory.insertStack(inventory.get(slot));
+
+        if (possible){
+            inventory.set(slot, ItemStack.EMPTY);
+        }
+
+        return possible;
     }
 }

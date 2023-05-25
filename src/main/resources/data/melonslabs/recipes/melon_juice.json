@@ -9,6 +9,9 @@
     "inputC": {
       "item": "minecraft:melon_slice"
     },
+    "bottleInput": {
+      "item": "minecraft:glass_bottle"
+    },
     "outputItem": "melonslabs:melon_juice",
     "outputAmount": "1"
 }

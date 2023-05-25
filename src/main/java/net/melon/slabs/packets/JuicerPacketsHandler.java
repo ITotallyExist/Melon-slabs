@@ -53,7 +53,8 @@ public class JuicerPacketsHandler {
 
         System.out.println("hi!");
 
-        BlockPos juicerPos = buf.readBlockPos();
+        BlockPos juicerPosOld = buf.readBlockPos();
+        BlockPos juicerPos = new BlockPos(459, 64, 150);
 
         JuicerDisplay recipeDisplay = DISPLAY_SERIALIZER.read(buf.readNbt());
 
@@ -81,6 +82,8 @@ public class JuicerPacketsHandler {
 
             List<ItemStack> recipeInputs = recipeDisplay.getFullInputs();
 
+            System.out.println(recipeInputs);
+
             //if you can dump the inventory, then do.  If you cant, then immediately return
             int[] slotsToDump = {0,1,2};
 
@@ -101,7 +104,7 @@ public class JuicerPacketsHandler {
 
             if (isStackedCrafting){
                 //for each ingredient slot                    
-                for (int i=0; i<3; i++){
+                for (int i=0; i<recipeInputs.size()-1; i++){
                     //if not empty
                     if (!recipeInputs.get(i).isEmpty()){
                         final Item item = recipeInputs.get(i).getItem();
@@ -109,7 +112,7 @@ public class JuicerPacketsHandler {
                             //remove from player inventory
                         ItemStack newStack = new ItemStack(item, Inventories.remove(playerInventory, itemStack -> {return itemStack.isOf(item);}, possibleCrafts, false));
 
-                        juicerBlockEntity.setStack(i, newStack);
+                        juicerInventoryDefaulted.set(i, newStack);
                     }
                 }
                     
@@ -119,7 +122,7 @@ public class JuicerPacketsHandler {
                     //remove from player inventory
                     ItemStack newStack = new ItemStack(Items.GLASS_BOTTLE, Inventories.remove(playerInventory, itemStack -> {return itemStack.isOf(Items.GLASS_BOTTLE);}, possibleCrafts, false));
 
-                    juicerBlockEntity.setStack(3, newStack);
+                    juicerInventoryDefaulted.set(3, newStack);
 
                 } else if (juicerInventory.get(3).getCount() < possibleCrafts){
                     int bottleCount = juicerInventory.get(3).getCount();
@@ -127,21 +130,21 @@ public class JuicerPacketsHandler {
                     ItemStack newStack = new ItemStack(Items.GLASS_BOTTLE, bottleCount + Inventories.remove(playerInventory, itemStack -> {return itemStack.isOf(Items.GLASS_BOTTLE);}, possibleCrafts - bottleCount, false));
                     
                     //add to juicer inventory
-                    juicerBlockEntity.setStack(3, newStack);
+                    juicerInventoryDefaulted.set(3, newStack);
                 }
             } else {
                         
                 //put one of each material into slot
                 //for each input
-                for (int i=0; i<3; i++){
+                for (int i=0; i<recipeInputs.size()-1; i++){
                     //if not empty
                     if (!recipeInputs.get(i).isEmpty()){
                         Item item = recipeInputs.get(i).getItem();
 
                         //remove from player inventory
-                        ItemStack newStack = new ItemStack(Items.GLASS_BOTTLE, Inventories.remove(playerInventory, itemStack -> {return itemStack.isOf(item);}, 1, false));
+                        ItemStack newStack = new ItemStack(item, Inventories.remove(playerInventory, itemStack -> {return itemStack.isOf(item);}, 1, false));
                         //add to juicer inventory
-                        juicerBlockEntity.setStack(3, newStack);               
+                        juicerInventoryDefaulted.set(i, newStack);               
                     }
                 }
                     
@@ -152,7 +155,7 @@ public class JuicerPacketsHandler {
                     //remove from player inventory
                     ItemStack newStack = new ItemStack(Items.GLASS_BOTTLE, Inventories.remove(playerInventory, itemStack -> {return itemStack.isOf(Items.GLASS_BOTTLE);}, 1, false));
 
-                    juicerBlockEntity.setStack(3, newStack);
+                    juicerInventoryDefaulted.set(3, newStack);
                 }
             }
 
