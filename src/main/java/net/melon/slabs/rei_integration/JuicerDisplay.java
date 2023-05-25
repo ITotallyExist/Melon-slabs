@@ -11,7 +11,6 @@ import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import net.melon.slabs.screens.JuicerRecipe;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 
 public class JuicerDisplay extends BasicDisplay {

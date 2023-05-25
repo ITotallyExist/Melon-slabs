@@ -35,7 +35,7 @@ public abstract class CactusMixin extends Block{
          if (i < 4) {
             int j = (Integer)state.get(AGE);
             if (j >= 7) {
-               boolean placeAble = canPlaceAt(state, world, blockPos);
+               boolean placeAble = state.canPlaceAt(world, blockPos);
 
                world.setBlockState(blockPos, MelonSlabsBlocks.CACTUS_SLAB.getDefaultState());
                BlockState blockState = (BlockState)state.with(AGE, 0);

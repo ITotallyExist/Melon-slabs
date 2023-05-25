@@ -55,7 +55,7 @@ public class JuicerBlockEntity extends BlockEntity implements NamedScreenHandler
     public ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity player) {
         //We provide *this* to the screenHandler as our class Implements Inventory
         //Only the Server has the Inventory at the start, this will be synced to the client in the ScreenHandler
-        this.handler = new JuicerScreenHandler(syncId, playerInventory, this, this.getPos());
+        this.handler = new JuicerScreenHandler(syncId, playerInventory, this);
         markDirty();//this makes it so that the crafting recipe result appears to you one you open the menu, because it is not always marked as dirty (to prevent infinite loops), we just refresh it here just in case
         return this.handler;
     }

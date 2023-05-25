@@ -10,9 +10,7 @@ import me.shedaniel.rei.plugin.autocrafting.DefaultCategoryHandler;
 import net.melon.slabs.items.MelonSlabsItems;
 import net.melon.slabs.rei_integration.JuicerCategory;
 import net.melon.slabs.rei_integration.JuicerDisplay;
-import net.melon.slabs.rei_integration.JuicerTransferHandler;
 import net.melon.slabs.screens.JuicerRecipe;
-import net.melon.slabs.screens.JuicerScreen;
 
 public class melonslabsClientPlugin implements REIClientPlugin {
     

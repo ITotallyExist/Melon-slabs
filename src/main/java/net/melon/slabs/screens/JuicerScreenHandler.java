@@ -1,46 +1,36 @@
 package net.melon.slabs.screens;
 
-import java.util.List;
 import java.util.Optional;
 
-import me.shedaniel.rei.impl.client.gui.changelog.JParseDown.Block;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class JuicerScreenHandler extends ScreenHandler  {
     private final JuicerInventory inventory;
-    private final BlockPos blockPos;
  
     //just to access crafting recipes
     private final World world;
 
-    public JuicerScreenHandler(int syncId, PlayerInventory playerInventory) {
-        this(syncId, playerInventory, JuicerInventory.empty(), BlockPos.ORIGIN);
-    }
-
     //This constructor gets called on the client when the server wants it to open the screenHandler,
     //The client will call the other constructor with an empty Inventory and the screenHandler will automatically
     //sync this empty inventory with the inventory on the server.
-    public JuicerScreenHandler(int syncId, PlayerInventory playerInventory, BlockPos pos) {
-        this(syncId, playerInventory, JuicerInventory.empty(), pos);
+    public JuicerScreenHandler(int syncId, PlayerInventory playerInventory) {
+        this(syncId, playerInventory, JuicerInventory.empty());
     }
  
     //This constructor gets called from the BlockEntity on the server without calling the other constructor first, the server knows the inventory of the container
     //and can therefore directly provide it as an argument. This inventory will then be synced to the client.
-    public JuicerScreenHandler(int syncId, PlayerInventory playerInventory, JuicerInventory inventory, BlockPos pos) {
+    public JuicerScreenHandler(int syncId, PlayerInventory playerInventory, JuicerInventory inventory) {
         
         super(MelonSlabsScreens.JUICER_SCREEN_HANDLER, syncId);
         this.world = playerInventory.player.world;
 
-        this.blockPos = pos;
 
         checkSize(inventory, 5);
         this.inventory = inventory;
@@ -83,14 +73,6 @@ public class JuicerScreenHandler extends ScreenHandler  {
  
     public Inventory getJuicerInventory(){
         return this.inventory;
-    }
-
-    public BlockPos getBlockPos (){
-        return this.blockPos;
-    }
-
-    public void insertItem(ItemStack stack, int start, int last){
-        this.insertItem(stack, start, last, false);
     }
     
     // Shift + Player Inv Slot
@@ -166,99 +148,6 @@ public class JuicerScreenHandler extends ScreenHandler  {
     @Override
     public void onContentChanged(Inventory inventory) {
         doCrafting();
-    }
-
-    //returns how many of a certain item exist in the combined inventories
-    public int getCountOf (Item item){
-        return this.getCountOf(item, false);
-    }
-
-    //if playerOnly, will return only the count of that item type in the player's inventory
-    public int getCountOf (Item item, boolean playerOnly){
-        int count = 0;
-
-        List<ItemStack> stacks = this.getStacks();
-
-        for (int i = 0; i<stacks.size(); i++){
-            if (stacks.get(i).isOf(item)){
-                count += stacks.get(i).getCount();
-            }
-        }
-
-        return count;
-    }
-
-    //returns how many empty slots are in the player's inventory
-    public int getPlayerEmptyCount(){
-        int count = 0;
-
-        for (int i = 5; i<this.slots.size(); i++){
-            if (!this.slots.get(i).hasStack()){
-                count += 1;
-            }
-        }
-
-        return count;
-    }
-
-    //returns false if there are not enough of that item to remove from the player inventory
-    //if there are, it removes them
-    public boolean removeFromPlayer (Item item, int count){
-        if (this.getCountOf(item, true) < count){
-            return false;
-        }
-
-        //each of the slots in the player's inventory
-        for (int i = 5; i<this.slots.size(); i++){
-            ItemStack itemStack = this.slots.get(i).getStack();
-            if (itemStack.isOf(item)){
-
-                //this stack alon isnt enough to meet quota
-                if (count > itemStack.getCount()){
-                    count -= itemStack.getCount();
-                    itemStack.decrement(itemStack.getCount());
-                    this.slots.get(i).markDirty();
-                } else {
-                    itemStack.decrement(count);
-                    count = 0;
-                    this.slots.get(i).markDirty();
-                    break;
-                }
-                
-            }
-        }
-
-        return true;
-    }
-
-    //emtpies the three ingredient slots (not the bottle slot) into the player inventory
-    //returns false if this is not possible
-        //else true
-    public boolean emptyCraftingSlots(){
-        int emptySlotsNeeded = 0;
-
-        for (int i=0; i< 3; i++){
-            if (this.slots.get(i).hasStack()){
-                emptySlotsNeeded ++;
-            }
-        }
-
-        if (this.getPlayerEmptyCount() < emptySlotsNeeded){
-            return false;
-        }
-
-        for (int i=0; i< 3; i++){
-            if (this.slots.get(i).hasStack()){
-                for (int j = 5; j<slots.size(); j++){
-                    if (!this.slots.get(j).hasStack()){
-                        this.slots.get(j).setStack(this.slots.get(i).getStack());
-                        this.slots.get(i).setStack(ItemStack.EMPTY);
-                    }
-                }
-            }
-        }
-
-        return true;
     }
 
     private void doCrafting(){
