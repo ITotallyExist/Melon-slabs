@@ -3,6 +3,9 @@
     "inputA" : {
       "item": "melonslabs:frankenmelon"
     },
+    "bottleInput": {
+      "item": "minecraft:glass_bottle"
+    },
     "outputItem": "melonslabs:tortured_soul",
     "outputAmount": "1"
 }
