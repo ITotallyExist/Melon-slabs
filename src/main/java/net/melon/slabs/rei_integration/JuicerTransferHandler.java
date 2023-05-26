@@ -5,6 +5,7 @@ import java.util.List;
 
 import me.shedaniel.rei.api.client.registry.transfer.TransferHandler;
 import me.shedaniel.rei.api.common.entry.EntryIngredient;
+import me.shedaniel.rei.api.client.ClientHelper;
 import net.melon.slabs.packets.JuicerPacketsHandler;
 import net.melon.slabs.screens.JuicerScreen;
 import net.melon.slabs.screens.JuicerScreenHandler;
@@ -17,6 +18,11 @@ public class JuicerTransferHandler implements TransferHandler{
 
     @Override
     public Result handle(Context context) {
+
+        if (!ClientHelper.getInstance().canUseMovePackets()) {
+            return Result.createFailed(Text.translatable("error.rei.not.on.server"));
+        }
+
         boolean applicable;
 
         applicable =  context.getContainerScreen() instanceof JuicerScreen;
