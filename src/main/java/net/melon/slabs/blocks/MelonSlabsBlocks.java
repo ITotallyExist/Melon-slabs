@@ -3,6 +3,7 @@ package net.melon.slabs.blocks;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.minecraft.block.Block;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 
 public class MelonSlabsBlocks {
@@ -21,19 +22,19 @@ public class MelonSlabsBlocks {
     public static final Block JUICER = new Juicer();
 
     public static void registerBlocks(){
-        Registry.register(Registry.BLOCK, "melonslabs:cactus_slab", CACTUS_SLAB);
-        Registry.register(Registry.BLOCK, "melonslabs:jill_o_lantern", JILL_O_LANTERN);
-        Registry.register(Registry.BLOCK, "melonslabs:carved_melon", CARVED_MELON);
-        Registry.register(Registry.BLOCK, "melonslabs:melon_stairs", MELON_STAIRS);
-        Registry.register(Registry.BLOCK, "melonslabs:melon_slab", MELON_SLAB);
-        Registry.register(Registry.BLOCK, "melonslabs:carved_melon_slab", CARVED_MELON_SLAB);
-        Registry.register(Registry.BLOCK, "melonslabs:jill_o_slab", JILL_O_SLAB);
-        Registry.register(Registry.BLOCK, "melonslabs:pumpkin_stairs", PUMPKIN_STAIRS);
-        Registry.register(Registry.BLOCK, "melonslabs:pumpkin_slab", PUMPKIN_SLAB);
-        Registry.register(Registry.BLOCK, "melonslabs:carved_pumpkin_slab", CARVED_PUMPKIN_SLAB);
-        Registry.register(Registry.BLOCK, "melonslabs:jack_o_slab", JACK_O_SLAB);
-        Registry.register(Registry.BLOCK, "melonslabs:frankenmelon", FRANKENMELON);
-        Registry.register(Registry.BLOCK, "melonslabs:juicer", JUICER);
+        Registry.register(Registries.BLOCK, "melonslabs:cactus_slab", CACTUS_SLAB);
+        Registry.register(Registries.BLOCK, "melonslabs:jill_o_lantern", JILL_O_LANTERN);
+        Registry.register(Registries.BLOCK, "melonslabs:carved_melon", CARVED_MELON);
+        Registry.register(Registries.BLOCK, "melonslabs:melon_stairs", MELON_STAIRS);
+        Registry.register(Registries.BLOCK, "melonslabs:melon_slab", MELON_SLAB);
+        Registry.register(Registries.BLOCK, "melonslabs:carved_melon_slab", CARVED_MELON_SLAB);
+        Registry.register(Registries.BLOCK, "melonslabs:jill_o_slab", JILL_O_SLAB);
+        Registry.register(Registries.BLOCK, "melonslabs:pumpkin_stairs", PUMPKIN_STAIRS);
+        Registry.register(Registries.BLOCK, "melonslabs:pumpkin_slab", PUMPKIN_SLAB);
+        Registry.register(Registries.BLOCK, "melonslabs:carved_pumpkin_slab", CARVED_PUMPKIN_SLAB);
+        Registry.register(Registries.BLOCK, "melonslabs:jack_o_slab", JACK_O_SLAB);
+        Registry.register(Registries.BLOCK, "melonslabs:frankenmelon", FRANKENMELON);
+        Registry.register(Registries.BLOCK, "melonslabs:juicer", JUICER);
     }
 
     public static void putRenderLayers(){

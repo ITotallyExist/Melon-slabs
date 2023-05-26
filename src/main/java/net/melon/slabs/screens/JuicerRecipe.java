@@ -10,6 +10,7 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
+import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
@@ -62,8 +63,12 @@ public class JuicerRecipe implements Recipe<JuicerInventory> {
 		return this.bottleInput;
 	}
  
-	@Override
 	public ItemStack getOutput() {
+		return getOutput(null);
+	}
+
+	@Override
+	public ItemStack getOutput(DynamicRegistryManager manager) {
 		return this.result;
 	}
  
@@ -72,8 +77,12 @@ public class JuicerRecipe implements Recipe<JuicerInventory> {
 		return this.id;
 	}
 
-	@Override
     public ItemStack craft(JuicerInventory inventory) {
+		return craft(inventory, null);
+    }
+
+	@Override
+    public ItemStack craft(JuicerInventory inventory, DynamicRegistryManager manager) {
         return ItemStack.EMPTY;
     }
  
