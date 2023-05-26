@@ -9,6 +9,7 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.FoodComponent;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemGroups;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
@@ -60,8 +61,25 @@ public class MelonSlabsItems {
         .icon(() -> new ItemStack(MelonSlabsItems.MELON_SLAB))
         .build();
 
-        private static void addItemToGroup( Item item) {
-            ItemGroupEvents.modifyEntriesEvent(GROUP).register(entries -> entries.add(item));
+
+        private static void addItemToModGroup( Item item) {
+            addItemToGroup (item, GROUP);
+        }
+
+        private static void addItemToFoodGroup(Item item) {
+            addItemToGroup (item, ItemGroups.FOOD_AND_DRINK);
+        }
+
+        private static void addItemToNaturalBlocksGroup(Item item) {
+            addItemToGroup (item, ItemGroups.NATURAL);
+        }
+
+        private static void addItemToBuildingBlocksGroup(Item item) {
+            addItemToGroup (item, ItemGroups.BUILDING_BLOCKS);
+        }
+
+        private static void addItemToGroup (Item item, ItemGroup group){
+            ItemGroupEvents.modifyEntriesEvent(group).register(entries -> entries.add(item));
         }
 
         //register items
@@ -89,32 +107,56 @@ public class MelonSlabsItems {
             // Registry.register(Registries.ITEM, "melonslabs:tortured_soul", TORTURED_SOUL);
 
             //Blocks
-            addItemToGroup(CACTUS_SLAB);
-            addItemToGroup(JILL_O_LANTERN);
-            addItemToGroup(CARVED_MELON);
-            addItemToGroup(MELON_STAIRS);
-            addItemToGroup(MELON_SLAB);
-            addItemToGroup(CARVED_MELON_SLAB);
-            addItemToGroup(JILL_O_SLAB);
-            addItemToGroup(PUMPKIN_STAIRS);
-            addItemToGroup(PUMPKIN_SLAB);
-            addItemToGroup(CARVED_PUMPKIN_SLAB);
-            addItemToGroup(JACK_O_SLAB);
+            addItemToModGroup(CACTUS_SLAB);
+            addItemToModGroup(JILL_O_LANTERN);
+            addItemToModGroup(CARVED_MELON);
+            addItemToModGroup(MELON_STAIRS);
+            addItemToModGroup(MELON_SLAB);
+            addItemToModGroup(CARVED_MELON_SLAB);
+            addItemToModGroup(JILL_O_SLAB);
+            addItemToModGroup(PUMPKIN_STAIRS);
+            addItemToModGroup(PUMPKIN_SLAB);
+            addItemToModGroup(CARVED_PUMPKIN_SLAB);
+            addItemToModGroup(JACK_O_SLAB);
 
             //Food Items
-            addItemToGroup(PUMPKIN_SLICE);
-            addItemToGroup(COOKED_PUMPKIN_SLICE);
+            addItemToModGroup(PUMPKIN_SLICE);
+            addItemToModGroup(COOKED_PUMPKIN_SLICE);
 
             //Juices
-            addItemToGroup(JUICER);
-            addItemToGroup(MELON_JUICE);
-            addItemToGroup(APPLE_JUICE);
-            addItemToGroup(GOLDEN_APPLE_JUICE);
-            addItemToGroup(ENCHANTED_GOLDEN_APPLE_JUICE);
+            addItemToModGroup(JUICER);
+            addItemToModGroup(MELON_JUICE);
+            addItemToModGroup(APPLE_JUICE);
+            addItemToModGroup(GOLDEN_APPLE_JUICE);
+            addItemToModGroup(ENCHANTED_GOLDEN_APPLE_JUICE);
 
             //Magic Items
-            addItemToGroup(FRANKENMELON);
-            addItemToGroup(TORTURED_SOUL);
+            addItemToModGroup(FRANKENMELON);
+            addItemToModGroup(TORTURED_SOUL);
 
+            //Adding to food group
+            addItemToFoodGroup(PUMPKIN_SLICE);
+            addItemToFoodGroup(COOKED_PUMPKIN_SLICE);
+            addItemToFoodGroup(MELON_JUICE);
+            addItemToFoodGroup(APPLE_JUICE);
+            addItemToFoodGroup(GOLDEN_APPLE_JUICE);
+            addItemToFoodGroup(ENCHANTED_GOLDEN_APPLE_JUICE);
+
+            //Adding to naturalblocks group
+            addItemToNaturalBlocksGroup(CARVED_MELON);
+            addItemToNaturalBlocksGroup(JILL_O_LANTERN);
+
+            //Adding to building blocks group
+            addItemToBuildingBlocksGroup(MELON_STAIRS);
+            addItemToBuildingBlocksGroup(MELON_SLAB);
+            addItemToBuildingBlocksGroup(CARVED_MELON_SLAB);
+            addItemToBuildingBlocksGroup(JILL_O_SLAB);
+            addItemToBuildingBlocksGroup(PUMPKIN_STAIRS);
+            addItemToBuildingBlocksGroup(PUMPKIN_SLAB);
+            addItemToBuildingBlocksGroup(CARVED_PUMPKIN_SLAB);
+            addItemToBuildingBlocksGroup(JACK_O_SLAB);
+
+            //Adding to Functional Blocks group
+            addItemToGroup(JUICER, ItemGroups.FUNCTIONAL);
         }
 }
