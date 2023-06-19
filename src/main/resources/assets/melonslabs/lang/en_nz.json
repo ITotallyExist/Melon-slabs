@@ -24,5 +24,7 @@
     "item.melonslabs.enchanted_golden_apple_juice": "Enchanted Golden Apple Juice",
     "item.melonslabs.tortured_soul": "Tortured Soul",
     "item.melonslabs.pumpkin_slice": "Pumpkin Slice",
-    "item.melonslabs.cooked_pumpkin_slice": "Cooked Pumpkin Slice"
+    "item.melonslabs.cooked_pumpkin_slice": "Cooked Pumpkin Slice",
+    "effect.melonslabs.intoxicated": "Intoxicated",
+    "melonslabs.alcohol_poisoning": "died of alcohol poisoning"
 }
