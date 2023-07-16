@@ -6,7 +6,7 @@ import net.minecraft.advancement.criterion.AbstractCriterion;
 import net.minecraft.advancement.criterion.AbstractCriterionConditions;
 import net.minecraft.predicate.entity.AdvancementEntityPredicateDeserializer;
 import net.minecraft.predicate.entity.AdvancementEntityPredicateSerializer;
-import net.minecraft.predicate.entity.EntityPredicate;
+import net.minecraft.predicate.entity.LootContextPredicate;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 
@@ -25,21 +25,21 @@ public class CreatedFrankenmelonCriterion extends AbstractCriterion<CreatedFrank
         this.trigger(player, (conditions) -> conditions.matches(true));
     }
 
-    protected Conditions conditionsFromJson(JsonObject json, EntityPredicate.Extended entityPredicate, AdvancementEntityPredicateDeserializer deserializer) {
-		return new CreatedFrankenmelonCriterion.Conditions(id, entityPredicate);
+    protected Conditions conditionsFromJson(JsonObject json, LootContextPredicate lootCtxPredicate, AdvancementEntityPredicateDeserializer deserializer) {
+		return new CreatedFrankenmelonCriterion.Conditions(id, lootCtxPredicate);
 	}
 
     public static class Conditions extends AbstractCriterionConditions {
-        public Conditions(Identifier id, EntityPredicate.Extended entityPredicate) {
-            super(id, entityPredicate);
+        public Conditions(Identifier id, LootContextPredicate lootCtxPredicate) {
+            super(id, lootCtxPredicate);
         }
 
-        public static CreatedFrankenmelonCriterion.Conditions create(Identifier id, EntityPredicate.Extended entityPredicate) {
-            return new CreatedFrankenmelonCriterion.Conditions(id, entityPredicate);
+        public static CreatedFrankenmelonCriterion.Conditions create(Identifier id, LootContextPredicate lootContextPredicate) {
+            return new CreatedFrankenmelonCriterion.Conditions(id, lootContextPredicate);
         }
 
         public static CreatedFrankenmelonCriterion.Conditions create(Identifier id) {
-            return new CreatedFrankenmelonCriterion.Conditions(id, EntityPredicate.Extended.EMPTY);
+            return new CreatedFrankenmelonCriterion.Conditions(id, LootContextPredicate.EMPTY);
          }
 
         public boolean matches(Boolean input) {

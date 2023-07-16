@@ -14,6 +14,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
@@ -56,14 +58,17 @@ public class MelonSlabsItems {
         }
 
         //Item group
-        public static final ItemGroup GROUP = FabricItemGroup.builder(new Identifier("melonslabs", "group"))
-        .displayName(Text.translatable("itemGroup.melonslabs.group"))
-        .icon(() -> new ItemStack(MelonSlabsItems.MELON_SLAB))
-        .build();
+        public static final RegistryKey<ItemGroup> ITEM_GROUP = RegistryKey.of(RegistryKeys.ITEM_GROUP, new Identifier("melonslabs", "group"));
 
+        public static void registerItemGroups(){
+            Registry.register(Registries.ITEM_GROUP, ITEM_GROUP, FabricItemGroup.builder()
+            .icon(() -> new ItemStack(MelonSlabsItems.MELON_SLAB))
+            .displayName(Text.translatable("itemGroup.melonslabs.group"))
+            .build()); // build() no longer registers by itself
+        }
 
         private static void addItemToModGroup( Item item) {
-            addItemToGroup (item, GROUP);
+            addItemToGroup (item, ITEM_GROUP);
         }
 
         private static void addItemToFoodGroup(Item item) {
@@ -78,7 +83,7 @@ public class MelonSlabsItems {
             addItemToGroup (item, ItemGroups.BUILDING_BLOCKS);
         }
 
-        private static void addItemToGroup (Item item, ItemGroup group){
+        private static void addItemToGroup (Item item, RegistryKey<ItemGroup> group){
             ItemGroupEvents.modifyEntriesEvent(group).register(entries -> entries.add(item));
         }
 
