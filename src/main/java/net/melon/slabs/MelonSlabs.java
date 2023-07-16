@@ -29,6 +29,7 @@ public class MelonSlabs implements ModInitializer {
             //MelonSlabsBlocks.putRenderLayers();
 
         //items
+        MelonSlabsItems.registerItemGroups();
         MelonSlabsItems.registerItems();
 
         //entites (including blockentites)
