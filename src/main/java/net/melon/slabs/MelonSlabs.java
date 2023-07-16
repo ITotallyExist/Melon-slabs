@@ -5,7 +5,6 @@ import net.fabricmc.api.ModInitializer;
 import net.melon.slabs.blocks.MelonSlabsBlocks;
 import net.melon.slabs.entities.MelonSlabsEntities;
 import net.melon.slabs.criteria.MelonSlabsCriteria;
-import net.melon.slabs.damage_sources.MelonSlabsDamageSources;
 import net.melon.slabs.items.MelonSlabsItems;
 import net.melon.slabs.packets.MelonSlabsPackets;
 import net.melon.slabs.screens.MelonSlabsScreens;
@@ -45,7 +44,6 @@ public class MelonSlabs implements ModInitializer {
         MelonSlabsStatusEffects.registerStatusEffects();
 
         //damage sources/types/death messages
-        MelonSlabsDamageSources.registerDamageTypes();
 
     }
 }

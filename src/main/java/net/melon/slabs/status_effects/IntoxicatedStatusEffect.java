@@ -1,6 +1,5 @@
 package net.melon.slabs.status_effects;
 
-import net.melon.slabs.damage_sources.MelonSlabsDamageSources;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
@@ -48,7 +47,7 @@ public class IntoxicatedStatusEffect extends StatusEffect {
             //blackout
         } else {
             //alcohol poisoning
-            entity.damage(MelonSlabsDamageSources.ALCOHOL_POISONING_SOURCE, Float.MAX_VALUE);
+            //entity.damage(MelonSlabsDamageSources.ALCOHOL_POISONING_SOURCE, Float.MAX_VALUE);
             
            
         }   
