@@ -38,7 +38,7 @@ public class FrankenMelon extends Block{
     public static final DirectionProperty FACING;
     public static final BooleanProperty LIT;
     public FrankenMelon() {
-        super(FabricBlockSettings.of(Material.GOURD).ticksRandomly().sounds(BlockSoundGroup.WOOD).hardness(1.0f).resistance(1.0f));
+        super(FabricBlockSettings.create(Material.GOURD).ticksRandomly().sounds(BlockSoundGroup.WOOD).hardness(1.0f).resistance(1.0f));
         this.setDefaultState((BlockState)((BlockState)this.stateManager.getDefaultState()).with(LIT, true).with(FACING, Direction.NORTH));
     }
 
