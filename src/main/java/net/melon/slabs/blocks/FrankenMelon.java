@@ -10,7 +10,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.HorizontalFacingBlock;
-import net.minecraft.block.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LightningEntity;
@@ -38,7 +37,7 @@ public class FrankenMelon extends Block{
     public static final DirectionProperty FACING;
     public static final BooleanProperty LIT;
     public FrankenMelon() {
-        super(FabricBlockSettings.create(Material.GOURD).ticksRandomly().sounds(BlockSoundGroup.WOOD).hardness(1.0f).resistance(1.0f));
+        super(FabricBlockSettings.copyOf(Blocks.MELON).ticksRandomly().sounds(BlockSoundGroup.WOOD).hardness(1.0f).resistance(1.0f));
         this.setDefaultState((BlockState)((BlockState)this.stateManager.getDefaultState()).with(LIT, true).with(FACING, Direction.NORTH));
     }
 
@@ -181,7 +180,7 @@ public class FrankenMelon extends Block{
     //returns wether or not a block can be teleported into by a frankenmelon
     private boolean canTeleportInto (BlockPos pos, ServerWorld world){
         BlockState blockState = world.getBlockState(pos.down());
-        return (blockState.getMaterial().isSolid() && blockState.isFullCube(world, pos) && (world.isAir(pos) || world.getBlockState(pos).getMaterial().isReplaceable()));
+        return (blockState.isSolidBlock(world, pos.down()) && blockState.isFullCube(world, pos) && (world.isAir(pos) || world.getBlockState(pos).isReplaceable()));
     }
 
     @Override

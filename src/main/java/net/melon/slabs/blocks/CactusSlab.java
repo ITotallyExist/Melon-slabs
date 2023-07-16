@@ -73,7 +73,7 @@ public class CactusSlab extends CactusBlock{
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) { 
         BlockPos blockPos = pos.down();
         BlockState blockState = world.getBlockState(blockPos);
-        return (blockState.getMaterial().isSolid() && blockState.isFullCube(world, blockPos)) || blockState.isOf(Blocks.CACTUS);
+        return (blockState.isSolidBlock(world, blockPos) && blockState.isFullCube(world, blockPos)) || blockState.isOf(Blocks.CACTUS);
         //return false;   
     }
 
