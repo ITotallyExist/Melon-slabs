@@ -30,7 +30,7 @@ public class JuicerScreen extends HandledScreen<JuicerScreenHandler> {
         RenderSystem.setShaderTexture(0, TEXTURE);
         int x = (width - backgroundWidth) / 2;
         int y = (height - backgroundHeight) / 2;
-        context.drawTexture(new Identifier("melonslabs", "gui.juicer"), x, y, 0, 0, backgroundWidth, backgroundHeight);
+        context.drawTexture(new Identifier("melonslabs", "textures/gui/juicer.png"), x, y, 0, 0, backgroundWidth, backgroundHeight);
     }
  
     @Override
