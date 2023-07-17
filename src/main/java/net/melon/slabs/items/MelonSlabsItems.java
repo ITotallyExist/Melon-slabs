@@ -51,7 +51,7 @@ public class MelonSlabsItems {
         public static final Item ENCHANTED_GOLDEN_APPLE_JUICE = registerItem("enchanted_golden_apple_juice",new GlintedJuiceItem(new Item.Settings().maxCount(4).recipeRemainder(Items.GLASS_BOTTLE).rarity(Rarity.EPIC).food(new FoodComponent.Builder().hunger(8).saturationModifier(1.2f).statusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 800, 1), 1.0f).statusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 6000, 1), 1.0f).statusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 9000, 0), 1.0f).statusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 2400, 7), 1.0f).statusEffect(new StatusEffectInstance(StatusEffects.WITHER, 1600, 0), 0.33f).alwaysEdible().build())));
 
         //Magic Items
-        public static final Item TORTURED_SOUL = registerItem("tortured_soul",new TorturedSoulItem(new Item.Settings().maxCount(1).rarity(Rarity.RARE).recipeRemainder(Items.GLASS_BOTTLE)));
+        public static final Item TORTURED_SOUL = registerItem("tortured_soul",new TorturedSoulItem(new Item.Settings().maxCount(4).rarity(Rarity.RARE).recipeRemainder(Items.GLASS_BOTTLE)));
 
         private static Item registerItem(String name, Item item){
             return Registry.register(Registries.ITEM, new Identifier("melonslabs",name), item);
