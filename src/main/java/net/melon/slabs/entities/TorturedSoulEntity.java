@@ -1,5 +1,6 @@
 package net.melon.slabs.entities;
 
+import net.melon.slabs.items.MelonSlabsItems;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityStatuses;
 import net.minecraft.entity.EntityType;
@@ -22,21 +23,21 @@ public class TorturedSoulEntity extends ThrownItemEntity {
     }
 
     public TorturedSoulEntity(World world, LivingEntity owner) {
-        super((EntityType<? extends ThrownItemEntity>)EntityType.SNOWBALL, owner, world);
+        super((EntityType<? extends ThrownItemEntity>)MelonSlabsEntities.TORTURED_SOUL, owner, world);
     }
 
     public TorturedSoulEntity(World world, double x, double y, double z) {
-        super((EntityType<? extends ThrownItemEntity>)EntityType.SNOWBALL, x, y, z, world);
+        super((EntityType<? extends ThrownItemEntity>)MelonSlabsEntities.TORTURED_SOUL, x, y, z, world);
     }
 
     @Override
     protected Item getDefaultItem() {
-        return Items.SNOWBALL;
+        return MelonSlabsItems.TORTURED_SOUL;
     }
 
     private ParticleEffect getParticleParameters() {
         ItemStack itemStack = this.getItem();
-        return itemStack.isEmpty() ? ParticleTypes.ITEM_SNOWBALL : new ItemStackParticleEffect(ParticleTypes.ITEM, itemStack);
+        return itemStack.isEmpty() ? new ItemStackParticleEffect(ParticleTypes.ITEM,new  ItemStack(MelonSlabsItems.TORTURED_SOUL, 1)) : new ItemStackParticleEffect(ParticleTypes.ITEM, itemStack);
     }
 
     @Override
@@ -54,12 +55,12 @@ public class TorturedSoulEntity extends ThrownItemEntity {
         //TODO: spawn phantoms targiting the entity that you hit
         super.onEntityHit(entityHitResult);
         Entity entity = entityHitResult.getEntity();
-        int i = entity instanceof BlazeEntity ? 3 : 0;
-        entity.damage(this.getDamageSources().thrown(this, this.getOwner()), i);
     }
 
     @Override
     protected void onCollision(HitResult hitResult) {
+        this.getWorld().createExplosion(this, this.getX(), this.getY(), this.getZ(), 2.0f, World.ExplosionSourceType.NONE);
+
         //TODO: spawn phantoms targeting nearest entity if this didnt already hit an entity
         super.onCollision(hitResult);
         if (!this.getWorld().isClient) {
