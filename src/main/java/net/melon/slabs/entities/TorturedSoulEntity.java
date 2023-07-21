@@ -1,11 +1,15 @@
 package net.melon.slabs.entities;
 
+import java.util.ArrayList;
+
 import net.melon.slabs.items.MelonSlabsItems;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityStatuses;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.mob.BlazeEntity;
+import net.minecraft.entity.mob.PhantomEntity;
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -15,6 +19,8 @@ import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.Box;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 
 public class TorturedSoulEntity extends ThrownItemEntity {
@@ -54,7 +60,22 @@ public class TorturedSoulEntity extends ThrownItemEntity {
     protected void onEntityHit(EntityHitResult entityHitResult) {
         //TODO: spawn phantoms targiting the entity that you hit
         super.onEntityHit(entityHitResult);
-        Entity entity = entityHitResult.getEntity(); 
+        if(!this.getWorld().isClient){
+            //create phantoms
+            ArrayList<PhantomEntity> phantoms = createPhantoms();
+
+            Entity entity = entityHitResult.getEntity();
+            if (entity.isAlive() && entity.isLiving()){//if entity is alive
+                //make phantoms target entity
+                angerPhantoms(phantoms, (LivingEntity) entity);
+            } else {
+                //make phantoms target nearest living entity
+                angerPhantoms(phantoms);
+            }
+
+            //spawn phantoms
+            spawnPhantoms(phantoms);
+        }
     }
 
     @Override
@@ -65,7 +86,71 @@ public class TorturedSoulEntity extends ThrownItemEntity {
         super.onCollision(hitResult);
         if (!this.getWorld().isClient) {
             this.getWorld().sendEntityStatus(this, EntityStatuses.PLAY_DEATH_SOUND_OR_ADD_PROJECTILE_HIT_PARTICLES);
+
+            //if did not hit entity
+            if (hitResult.getType() != HitResult.Type.ENTITY){
+                //create phantoms
+                ArrayList<PhantomEntity> phantoms = createPhantoms();
+                //anger towards nearest living entity 
+                angerPhantoms(phantoms);
+                //spawn phantoms
+                spawnPhantoms(phantoms);
+            }
+
             this.discard();
+        }
+    }
+
+    //creates phantoms at the correct location
+    //points them in random directions
+    private ArrayList<PhantomEntity> createPhantoms(){
+        Random random = this.getWorld().getRandom();
+
+        int numSpawned = random.nextBetween(1,3);
+
+        ArrayList<PhantomEntity> phantomArray = new ArrayList<PhantomEntity>(numSpawned);
+
+        for (int i = 0; i<numSpawned; i++){
+            PhantomEntity phantomEntity = EntityType.PHANTOM.create(this.getWorld());
+            phantomEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), random.nextFloat(), random.nextFloat());
+
+            phantomArray.set(i,phantomEntity);
+        }
+
+        return (phantomArray);
+    }
+
+    //sets the phantoms to target the nearest living entity
+        //phantoms will by default attack the nearest player, we need to make them attack the nearest thing because they are angry phantoms
+    private void angerPhantoms(ArrayList<PhantomEntity> phantoms){
+        //entity selection process
+            //create a target predicate that determines how the phantoms will decide their target
+        TargetPredicate targetPredicate = TargetPredicate.createAttackable();
+        targetPredicate.ignoreVisibility();
+
+        //define box, will only target anything if there is a living entity in the box
+        //TODO: test with really small box to see behavior if null is returned from getClosestEntity
+        Box box = new Box(this.getX()-100, this.getY()-100, this.getZ()-100,this.getX()+100, this.getY()+100, this.getZ()+100);
+
+        LivingEntity entity = this.getWorld().getClosestEntity(LivingEntity.class, targetPredicate, null, this.getX(), this.getY(), this.getZ(), box);
+
+        if (!(entity == null)){
+            angerPhantoms(phantoms, entity);
+        }
+    }
+
+    //sets the phantoms to target the given entity
+    private void angerPhantoms(ArrayList<PhantomEntity> phantoms, LivingEntity entity){
+        for (PhantomEntity phantom : phantoms){
+            phantom.setTarget(entity);
+        }
+    }
+
+    //spawns phantoms
+    //only call on server
+    private void spawnPhantoms(ArrayList<PhantomEntity> phantomArray){
+        for (PhantomEntity entity : phantomArray){
+            this.getWorld().spawnEntity(entity);
         }
     }
     
