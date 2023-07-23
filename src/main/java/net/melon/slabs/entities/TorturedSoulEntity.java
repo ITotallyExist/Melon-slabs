@@ -108,13 +108,13 @@ public class TorturedSoulEntity extends ThrownItemEntity {
 
         int numSpawned = random.nextBetween(1,3);
 
-        ArrayList<PhantomEntity> phantomArray = new ArrayList<PhantomEntity>(numSpawned);
+        ArrayList<PhantomEntity> phantomArray = new ArrayList<PhantomEntity>();
 
         for (int i = 0; i<numSpawned; i++){
             PhantomEntity phantomEntity = EntityType.PHANTOM.create(this.getWorld());
             phantomEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), random.nextFloat(), random.nextFloat());
 
-            phantomArray.set(i,phantomEntity);
+            phantomArray.add(phantomEntity); //out of bounds for length zero
         }
 
         return (phantomArray);
@@ -123,6 +123,10 @@ public class TorturedSoulEntity extends ThrownItemEntity {
     //sets the phantoms to target the nearest living entity
         //phantoms will by default attack the nearest player, we need to make them attack the nearest thing because they are angry phantoms
     private void angerPhantoms(ArrayList<PhantomEntity> phantoms){
+        if (phantoms.size() <= 0){
+            return;
+        }
+
         //entity selection process
             //create a target predicate that determines how the phantoms will decide their target
         TargetPredicate targetPredicate = TargetPredicate.createAttackable();
@@ -130,7 +134,8 @@ public class TorturedSoulEntity extends ThrownItemEntity {
 
         //define box, will only target anything if there is a living entity in the box
         //TODO: test with really small box to see behavior if null is returned from getClosestEntity
-        Box box = new Box(this.getX()-100, this.getY()-100, this.getZ()-100,this.getX()+100, this.getY()+100, this.getZ()+100);
+
+        Box box = phantoms.get(0).getBoundingBox();
 
         LivingEntity entity = this.getWorld().getClosestEntity(LivingEntity.class, targetPredicate, null, this.getX(), this.getY(), this.getZ(), box);
 
