@@ -111,7 +111,7 @@ public class TorturedSoulEntity extends ThrownItemEntity {
         for (int i = 0; i<numSpawned; i++){
             TorturedPhantomEntity torturedPhantomEntity = MelonSlabsEntities.TORTURED_PHANTOM.create(this.getWorld()); // EntityType.PHANTOM.create(this.getWorld());
             torturedPhantomEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), random.nextFloat(), random.nextFloat());
-
+            torturedPhantomEntity.setPhantomSize(random.nextBetween(1,2));
             phantomArray.add(torturedPhantomEntity); //out of bounds for length zero
         }
 

@@ -16,6 +16,7 @@ import net.minecraft.entity.ai.control.BodyControl;
 import net.minecraft.entity.ai.control.LookControl;
 import net.minecraft.entity.ai.control.MoveControl;
 import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
@@ -35,6 +36,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.Heightmap;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
@@ -57,6 +59,12 @@ implements Monster {
         this.moveControl = new PhantomMoveControl(this);
         this.lookControl = new PhantomLookControl(this);
     }
+
+    public static DefaultAttributeContainer.Builder createMobAttributes() {
+        return LivingEntity.createLivingAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 16.0).add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 6);
+    }
+
+    //below is all stuff copied from the minecraft phantom code
 
     @Override
     public boolean isFlappingWings() {
@@ -83,7 +91,7 @@ implements Monster {
     }
 
     public void setPhantomSize(int size) {
-        this.dataTracker.set(SIZE, MathHelper.clamp(size, 0, 64));
+        this.dataTracker.set(SIZE, MathHelper.clamp(size, 0, 1024));
     }
 
     private void onSizeChanged() {
@@ -323,7 +331,7 @@ implements Monster {
 
         @Override
         public void stop() {
-            //TorturedPhantomEntity.this.circlingCenter = TorturedPhantomEntity.this.getWorld().getTopPosition(Heightmap.Type.MOTION_BLOCKING, TorturedPhantomEntity.this.circlingCenter).up(10 + TorturedPhantomEntity.this.random.nextInt(20));
+            TorturedPhantomEntity.this.circlingCenter = TorturedPhantomEntity.this.getWorld().getTopPosition(Heightmap.Type.MOTION_BLOCKING, TorturedPhantomEntity.this.circlingCenter).up(10 + TorturedPhantomEntity.this.random.nextInt(20));
         }
 
         @Override
@@ -397,7 +405,7 @@ implements Monster {
         @Override
         public void stop() {
             //TorturedPhantomEntity.this.setTarget(null);
-            //TorturedPhantomEntity.this.movementType = PhantomMovementType.CIRCLE;
+            TorturedPhantomEntity.this.movementType = PhantomMovementType.CIRCLE;
         }
 
         @Override
