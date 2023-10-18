@@ -9,7 +9,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.mob.BlazeEntity;
-import net.minecraft.entity.mob.PhantomEntity;
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -60,9 +59,9 @@ public class TorturedSoulEntity extends ThrownItemEntity {
     protected void onEntityHit(EntityHitResult entityHitResult) {
         //TODO: spawn phantoms targiting the entity that you hit
         super.onEntityHit(entityHitResult);
-        if(!this.getWorld().isClient){
+        if(!this.getWorld().isClient()){
             //create phantoms
-            ArrayList<PhantomEntity> phantoms = createPhantoms();
+            ArrayList<TorturedPhantomEntity> phantoms = createPhantoms();
 
             Entity entity = entityHitResult.getEntity();
             if (entity.isAlive() && entity.isLiving()){//if entity is alive
@@ -84,13 +83,13 @@ public class TorturedSoulEntity extends ThrownItemEntity {
 
         //TODO: spawn phantoms targeting nearest entity if this didnt already hit an entity
         super.onCollision(hitResult);
-        if (!this.getWorld().isClient) {
+        if (!this.getWorld().isClient()) {
             this.getWorld().sendEntityStatus(this, EntityStatuses.PLAY_DEATH_SOUND_OR_ADD_PROJECTILE_HIT_PARTICLES);
 
             //if did not hit entity
             if (hitResult.getType() != HitResult.Type.ENTITY){
                 //create phantoms
-                ArrayList<PhantomEntity> phantoms = createPhantoms();
+                ArrayList<TorturedPhantomEntity> phantoms = createPhantoms();
                 //anger towards nearest living entity 
                 angerPhantoms(phantoms);
                 //spawn phantoms
@@ -103,18 +102,18 @@ public class TorturedSoulEntity extends ThrownItemEntity {
 
     //creates phantoms at the correct location
     //points them in random directions
-    private ArrayList<PhantomEntity> createPhantoms(){
+    private ArrayList<TorturedPhantomEntity> createPhantoms(){
         Random random = this.getWorld().getRandom();
 
         int numSpawned = random.nextBetween(1,3);
 
-        ArrayList<PhantomEntity> phantomArray = new ArrayList<PhantomEntity>();
+        ArrayList<TorturedPhantomEntity> phantomArray = new ArrayList<TorturedPhantomEntity>();
 
         for (int i = 0; i<numSpawned; i++){
-            PhantomEntity phantomEntity = EntityType.PHANTOM.create(this.getWorld());
-            phantomEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), random.nextFloat(), random.nextFloat());
+            TorturedPhantomEntity torturedPhantomEntity = MelonSlabsEntities.TORTURED_PHANTOM.create(this.getWorld()); // EntityType.PHANTOM.create(this.getWorld());
+            torturedPhantomEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), random.nextFloat(), random.nextFloat());
 
-            phantomArray.add(phantomEntity); //out of bounds for length zero
+            phantomArray.add(torturedPhantomEntity); //out of bounds for length zero
         }
 
         return (phantomArray);
@@ -122,7 +121,7 @@ public class TorturedSoulEntity extends ThrownItemEntity {
 
     //sets the phantoms to target the nearest living entity
         //phantoms will by default attack the nearest player, we need to make them attack the nearest thing because they are angry phantoms
-    private void angerPhantoms(ArrayList<PhantomEntity> phantoms){
+    private void angerPhantoms(ArrayList<TorturedPhantomEntity> phantoms){
         if (phantoms.size() <= 0){
             return;
         }
@@ -145,16 +144,16 @@ public class TorturedSoulEntity extends ThrownItemEntity {
     }
 
     //sets the phantoms to target the given entity
-    private void angerPhantoms(ArrayList<PhantomEntity> phantoms, LivingEntity entity){
-        for (PhantomEntity phantom : phantoms){
+    private void angerPhantoms(ArrayList<TorturedPhantomEntity> phantoms, LivingEntity entity){
+        for (TorturedPhantomEntity phantom : phantoms){
             phantom.setTarget(entity);
         }
     }
 
     //spawns phantoms
     //only call on server
-    private void spawnPhantoms(ArrayList<PhantomEntity> phantomArray){
-        for (PhantomEntity entity : phantomArray){
+    private void spawnPhantoms(ArrayList<TorturedPhantomEntity> phantomArray){
+        for (TorturedPhantomEntity entity : phantomArray){
             this.getWorld().spawnEntity(entity);
         }
     }
