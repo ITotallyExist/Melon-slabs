@@ -1,0 +1,9 @@
+make sure java --version points to 1.17
+
+make sure you ran ./gradlew vscode
+and ./gradlew gensources
+
+try running ./gradlew clean
+and ./gradlew --refresh-dependencies
+
+restart your computer if it ever says resources are busy
