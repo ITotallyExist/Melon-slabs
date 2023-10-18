@@ -387,15 +387,16 @@ implements Monster {
             if (!this.canStart()) {
                 return false;
             }
-            if (TorturedPhantomEntity.this.age > this.nextCatCheckAge) {
-                this.nextCatCheckAge = TorturedPhantomEntity.this.age + 20;
-                List<CatEntity> list = TorturedPhantomEntity.this.getWorld().getEntitiesByClass(CatEntity.class, TorturedPhantomEntity.this.getBoundingBox().expand(16.0), EntityPredicates.VALID_ENTITY);
-                for (CatEntity catEntity : list) {
-                    catEntity.hiss();
-                }
-                this.catsNearby = !list.isEmpty();
-            }
-            return !this.catsNearby;
+            // if (TorturedPhantomEntity.this.age > this.nextCatCheckAge) {
+            //     this.nextCatCheckAge = TorturedPhantomEntity.this.age + 20;
+            //     List<Entity> list = TorturedPhantomEntity.this.getWorld().getEntitiesByClass(CatEntity.class, TorturedPhantomEntity.this.getBoundingBox().expand(16.0), EntityPredicates.VALID_ENTITY);
+            //     for (CatEntity catEntity : list) {
+            //         catEntity.hiss();
+            //     }
+            //     this.catsNearby = !list.isEmpty();
+            // }
+            return true;
+            //return !this.catsNearby;
         }
 
         @Override
@@ -439,6 +440,7 @@ implements Monster {
 
         @Override
         public boolean canStart() {
+            //return false;
             return TorturedPhantomEntity.this.getTarget() == null || TorturedPhantomEntity.this.movementType == PhantomMovementType.CIRCLE;
         }
 
@@ -490,7 +492,9 @@ implements Monster {
 
     class FindTargetGoal
     extends Goal {
-        private final TargetPredicate PLAYERS_IN_RANGE_PREDICATE = TargetPredicate.createAttackable().setBaseMaxDistance(64.0);
+        //private final TargetPredicate PLAYERS_IN_RANGE_PREDICATE = TargetPredicate.createAttackable().setBaseMaxDistance(64.0);
+        private final TargetPredicate ATTACKABLE_PREDICATE = TargetPredicate.createAttackable().setBaseMaxDistance(64.0).ignoreVisibility();
+
         private int delay = FindTargetGoal.toGoalTicks(20);
 
         FindTargetGoal() {
@@ -503,15 +507,14 @@ implements Monster {
                 return false;
             }
             this.delay = FindTargetGoal.toGoalTicks(60);
-            List<PlayerEntity> list = TorturedPhantomEntity.this.getWorld().getPlayers(this.PLAYERS_IN_RANGE_PREDICATE, TorturedPhantomEntity.this, TorturedPhantomEntity.this.getBoundingBox().expand(16.0, 64.0, 16.0));
-            if (!list.isEmpty()) {
-                list.sort(Comparator.comparing(Entity::getY).reversed());
-                for (PlayerEntity playerEntity : list) {
-                    if (!TorturedPhantomEntity.this.isTarget(playerEntity, TargetPredicate.DEFAULT)) continue;
-                    TorturedPhantomEntity.this.setTarget(playerEntity);
-                    return true;
-                }
+            
+            LivingEntity entity = TorturedPhantomEntity.this.getWorld().getClosestEntity(LivingEntity.class, ATTACKABLE_PREDICATE, null, TorturedPhantomEntity.this.getX(), TorturedPhantomEntity.this.getY(), TorturedPhantomEntity.this.getZ(), TorturedPhantomEntity.this.getBoundingBox().expand(16.0, 64.0, 16.0));
+
+            if (!(entity == null)){
+                TorturedPhantomEntity.this.setTarget(entity);
+                return true;
             }
+
             return false;
         }
 

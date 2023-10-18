@@ -28,7 +28,7 @@ public class MelonSlabsEntities {
         
         TORTURED_SOUL =  Registry.register(Registries.ENTITY_TYPE, "melonslabs:tortured_soul", Builder.<TorturedSoulEntity>create(TorturedSoulEntity::new, SpawnGroup.MISC).setDimensions(0.25f, 0.25f).maxTrackingRange(4).trackingTickInterval(10).build("tortured_soul"));
         
-        TORTURED_PHANTOM = Registry.register(Registries.ENTITY_TYPE, "melonslabs:tortured_phantom", Builder.<TorturedPhantomEntity>create(TorturedPhantomEntity::new, SpawnGroup.MONSTER).setDimensions(0.9f, 0.5f).maxTrackingRange(8).trackingTickInterval(10).build("tortured_phantom"));
+        TORTURED_PHANTOM = Registry.register(Registries.ENTITY_TYPE, "melonslabs:tortured_phantom", Builder.<TorturedPhantomEntity>create(TorturedPhantomEntity::new, SpawnGroup.MONSTER).setDimensions(0.9f, 0.5f).maxTrackingRange(8).build("tortured_phantom"));
     }
 
     public static void registerEntityAttributes(){
