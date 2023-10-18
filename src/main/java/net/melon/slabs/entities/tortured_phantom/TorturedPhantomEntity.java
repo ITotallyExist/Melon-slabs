@@ -1,4 +1,4 @@
-package net.melon.slabs.entities;
+package net.melon.slabs.entities.tortured_phantom;
 
 import java.util.Comparator;
 import java.util.EnumSet;
@@ -35,7 +35,6 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.Heightmap;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;

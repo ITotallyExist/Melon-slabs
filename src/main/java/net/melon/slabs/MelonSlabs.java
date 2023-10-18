@@ -34,7 +34,8 @@ public class MelonSlabs implements ModInitializer {
 
         //entites (including blockentites)
         MelonSlabsEntities.registerEntities();
-
+        MelonSlabsEntities.registerEntityAttributes();
+        
         //ui stuff and crafting and recipes
         MelonSlabsScreens.registerScreensAndRecipes();
 

@@ -2,17 +2,16 @@ package net.melon.slabs.entities;
 
 import java.util.ArrayList;
 
+import net.melon.slabs.entities.tortured_phantom.TorturedPhantomEntity;
 import net.melon.slabs.items.MelonSlabsItems;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityStatuses;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.TargetPredicate;
-import net.minecraft.entity.mob.BlazeEntity;
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.particle.ItemStackParticleEffect;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
@@ -59,7 +58,7 @@ public class TorturedSoulEntity extends ThrownItemEntity {
     protected void onEntityHit(EntityHitResult entityHitResult) {
         //TODO: spawn phantoms targiting the entity that you hit
         super.onEntityHit(entityHitResult);
-        if(!this.getWorld().isClient()){
+        if(!this.getWorld().isClient){
             //create phantoms
             ArrayList<TorturedPhantomEntity> phantoms = createPhantoms();
 
@@ -83,7 +82,7 @@ public class TorturedSoulEntity extends ThrownItemEntity {
 
         //TODO: spawn phantoms targeting nearest entity if this didnt already hit an entity
         super.onCollision(hitResult);
-        if (!this.getWorld().isClient()) {
+        if (!this.getWorld().isClient) {
             this.getWorld().sendEntityStatus(this, EntityStatuses.PLAY_DEATH_SOUND_OR_ADD_PROJECTILE_HIT_PARTICLES);
 
             //if did not hit entity
