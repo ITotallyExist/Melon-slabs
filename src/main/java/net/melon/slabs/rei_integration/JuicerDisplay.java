@@ -11,15 +11,16 @@ import me.shedaniel.rei.api.common.entry.EntryIngredient;
 import me.shedaniel.rei.api.common.util.EntryIngredients;
 import net.melon.slabs.screens.JuicerRecipe;
 import net.minecraft.item.ItemStack;
+import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.util.Identifier;
 
 public class JuicerDisplay extends BasicDisplay {
     // public static JUICER_DISPLAY_SERIALIZER = BasicDisplay.Serializer.ofSimple(JuicerDisplay::new);
 
-
-    public JuicerDisplay(JuicerRecipe recipe){
-        this(EntryIngredients.ofIngredients(recipe.getInputs()), Collections.singletonList(EntryIngredients.of(recipe.getOutput())),
-		Optional.ofNullable(recipe.getId()));
+    //
+    public JuicerDisplay(RecipeEntry<JuicerRecipe> recipe){
+        this(EntryIngredients.ofIngredients(recipe.value().getInputs()), Collections.singletonList(EntryIngredients.of(recipe.value().getOutput())),
+		Optional.ofNullable(recipe.value().getId()));
     }
 
     public JuicerDisplay(List<EntryIngredient> inputs, List<EntryIngredient> outputs, Optional<Identifier> location) {

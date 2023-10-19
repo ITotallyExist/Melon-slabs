@@ -3,6 +3,7 @@ package net.melon.slabs.rei_integration.common;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.shedaniel.rei.api.client.registry.category.CategoryRegistry;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.display.DisplaySerializer;
 import me.shedaniel.rei.api.common.display.DisplaySerializerRegistry;
@@ -22,6 +23,7 @@ public class melonslabsCommonPlugin implements REIServerPlugin {
     public void registerMenuInfo(MenuInfoRegistry registry){
         registry.register(JuicerCategory.JUICER_DISPLAY, JuicerScreenHandler.class, SimpleMenuInfoProvider.of(JuicerMenuInfo::new));
     }
+    
 
     @Override
     public void registerDisplaySerializer(DisplaySerializerRegistry registry) {

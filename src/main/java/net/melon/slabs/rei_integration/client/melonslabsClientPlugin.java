@@ -11,6 +11,7 @@ import net.melon.slabs.rei_integration.JuicerCategory;
 import net.melon.slabs.rei_integration.JuicerDisplay;
 import net.melon.slabs.rei_integration.JuicerTransferHandler;
 import net.melon.slabs.screens.JuicerRecipe;
+import net.melon.slabs.screens.MelonSlabsScreens;
 
 public class melonslabsClientPlugin implements REIClientPlugin {
     
@@ -20,10 +21,10 @@ public class melonslabsClientPlugin implements REIClientPlugin {
         registry.addWorkstations(JuicerCategory.JUICER_DISPLAY, EntryStacks.of(MelonSlabsItems.JUICER));
     }
 
-    @Override
-    public void registerScreens(ScreenRegistry registry) {
-       //registry.add();
-    }
+    // @Override
+    // public void registerScreens(ScreenRegistry registry) {
+    //    //registry.add();
+    // }
 
     @Override
     public void registerTransferHandlers(TransferHandlerRegistry registry) {
@@ -32,8 +33,9 @@ public class melonslabsClientPlugin implements REIClientPlugin {
 
     @Override
     public void registerDisplays(DisplayRegistry registry) {
+        registry.registerRecipeFiller(JuicerRecipe.class, MelonSlabsScreens.JUICER_RECIPE_TYPE, JuicerDisplay::new);
         //basically calling register a bunch of times to fill the registry
-        registry.registerFiller(JuicerRecipe.class, JuicerDisplay::new);
+        //registry.registerFiller(JuicerRecipe.class, JuicerDisplay::new);
 
     }
 }
