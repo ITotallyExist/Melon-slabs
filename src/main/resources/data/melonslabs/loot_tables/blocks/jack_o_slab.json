@@ -9,28 +9,15 @@
           "name": "melonslabs:carved_pumpkin_slab",
           "conditions": [
             {
-              "condition": "minecraft:inverted",
-              "term": {
-                "condition": "minecraft:alternative",
-                "terms": [
-                  {
-                    "condition": "minecraft:inverted",
-                    "term": {
-                      "condition": "minecraft:block_state_property",
-                      "block": "melonslabs:jack_o_slab",
-                      "properties": { "type": "double" }
-                    }
-                  },
-                  {
-                    "condition": "minecraft:inverted",
-                    "term": {
-                      "condition": "minecraft:survives_explosion"
-                    }
-                  }
-                ]
-              }
+              "condition": "minecraft:block_state_property",
+              "block": "melonslabs:jack_o_slab",
+              "properties": { "type": "double" }
+            },
+            {
+              "condition": "minecraft:survives_explosion"
             }
           ]
+          
         }
       ]
     },

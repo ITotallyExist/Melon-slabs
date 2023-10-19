@@ -6,6 +6,8 @@
     "bottleInput": {
       "item": "minecraft:glass_bottle"
     },
-    "outputItem": "melonslabs:tortured_soul",
-    "outputAmount": "1"
+    "output": {
+      "id":"melonslabs:tortured_soul",
+      "Count": "1"
+    }
 }

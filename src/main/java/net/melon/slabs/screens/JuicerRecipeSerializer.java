@@ -36,7 +36,7 @@ public class JuicerRecipeSerializer implements RecipeSerializer<JuicerRecipe>{
     public static final JuicerRecipeSerializer INSTANCE = new JuicerRecipeSerializer();
 
     // This will be the "type" field in the json
-    public static final Identifier ID = new Identifier("melonslabs:juicer_recipe");
+    public static final Identifier ID = new Identifier("juicer_recipe");
 
     private static final MapCodec<Ingredient> CODEC_IN_A = Ingredient.DISALLOW_EMPTY_CODEC.fieldOf("inputA");
     private static final MapCodec<Ingredient> CODEC_IN_B = Ingredient.ALLOW_EMPTY_CODEC.fieldOf("inputB");

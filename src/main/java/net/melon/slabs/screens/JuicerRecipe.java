@@ -26,6 +26,12 @@ public class JuicerRecipe implements Recipe<JuicerInventory> {
 	public static final String ID = "juicer_recipe";
 
 	public JuicerRecipe(ItemStack result, Ingredient inputA, Ingredient inputB, Ingredient inputC, Ingredient bottleInput) {
+		System.out.println(result);
+		System.out.println(inputA);
+		System.out.println(inputB);
+		System.out.println(inputC);
+		System.out.println(bottleInput);
+
 		//this.id = id;
 		this.inputA = inputA;
 		this.inputB = inputB;
