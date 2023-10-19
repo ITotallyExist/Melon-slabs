@@ -3,6 +3,8 @@ package net.melon.slabs.entities.tortured_phantom;
 import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.List;
+
+import net.melon.slabs.entities.MelonSlabsEntities;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityDimensions;
@@ -53,6 +55,9 @@ implements Monster {
     BlockPos circlingCenter = BlockPos.ORIGIN;
     PhantomMovementType movementType = PhantomMovementType.CIRCLE;
 
+    private final TargetPredicate ATTACKABLE_PREDICATE = TargetPredicate.createAttackable().setBaseMaxDistance(64.0).ignoreVisibility();
+
+
     public TorturedPhantomEntity(EntityType<? extends TorturedPhantomEntity> entityType, World world) {
         super((EntityType<? extends FlyingEntity>)entityType, world);
         this.experiencePoints = 5;
@@ -63,8 +68,6 @@ implements Monster {
     public static DefaultAttributeContainer.Builder createMobAttributes() {
         return LivingEntity.createLivingAttributes().add(EntityAttributes.GENERIC_FOLLOW_RANGE, 16.0).add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK).add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 6);
     }
-
-    //below is all stuff copied from the minecraft phantom code
 
     @Override
     public boolean isFlappingWings() {
@@ -156,6 +159,38 @@ implements Monster {
         super.mobTick();
     }
 
+    private boolean hasValidTarget(){
+        LivingEntity target = this.getTarget();
+
+        if (target == null) {
+                return false;
+        }
+        if (!target.isAlive()) {
+                return false;
+        }
+        if (target instanceof PlayerEntity) {
+            PlayerEntity playerEntity = (PlayerEntity)target;
+            if (target.isSpectator() || playerEntity.isCreative()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private boolean getNewTarget(){
+        LivingEntity entity = TorturedPhantomEntity.this.getWorld().getClosestEntity(LivingEntity.class, ATTACKABLE_PREDICATE, TorturedPhantomEntity.this, TorturedPhantomEntity.this.getX(), TorturedPhantomEntity.this.getY(), TorturedPhantomEntity.this.getZ(), TorturedPhantomEntity.this.getBoundingBox().expand(16.0, 64.0, 16.0));
+
+
+        if (!(entity == null)){
+
+            TorturedPhantomEntity.this.setTarget(entity);
+            return true;
+        }
+
+        return false;
+    }
+
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
         this.circlingCenter = this.getBlockPos().up(5);
@@ -218,6 +253,9 @@ implements Monster {
 
     @Override
     public boolean canTarget(EntityType<?> type) {
+        if (type == MelonSlabsEntities.TORTURED_PHANTOM){
+            return false;
+        }
         return true;
     }
 
@@ -243,17 +281,18 @@ implements Monster {
     class PhantomMoveControl
     extends MoveControl {
         private float targetSpeed;
+        private static final float SPEED_BOOST = 5.0f;
 
         public PhantomMoveControl(MobEntity owner) {
             super(owner);
-            this.targetSpeed = 0.1f;
+            this.targetSpeed = 0.1f*SPEED_BOOST;
         }
 
         @Override
         public void tick() {
             if (TorturedPhantomEntity.this.horizontalCollision) {
                 TorturedPhantomEntity.this.setYaw(TorturedPhantomEntity.this.getYaw() + 180.0f);
-                this.targetSpeed = 0.1f;
+                this.targetSpeed = 0.1f*SPEED_BOOST;
             }
             double d = TorturedPhantomEntity.this.targetPosition.x - TorturedPhantomEntity.this.getX();
             double e = TorturedPhantomEntity.this.targetPosition.y - TorturedPhantomEntity.this.getY();
@@ -269,7 +308,7 @@ implements Monster {
                 float m = MathHelper.wrapDegrees(k * 57.295776f);
                 TorturedPhantomEntity.this.setYaw(MathHelper.stepUnwrappedAngleTowards(l, m, 4.0f) - 90.0f);
                 TorturedPhantomEntity.this.bodyYaw = TorturedPhantomEntity.this.getYaw();
-                this.targetSpeed = MathHelper.angleBetween(j, TorturedPhantomEntity.this.getYaw()) < 3.0f ? MathHelper.stepTowards(this.targetSpeed, 1.8f, 0.005f * (1.8f / this.targetSpeed)) : MathHelper.stepTowards(this.targetSpeed, 0.2f, 0.025f);
+                this.targetSpeed = MathHelper.angleBetween(j, TorturedPhantomEntity.this.getYaw()) < 3.0f ? MathHelper.stepTowards(this.targetSpeed, SPEED_BOOST*1.8f, 0.005f * (SPEED_BOOST*1.8f / this.targetSpeed)) : MathHelper.stepTowards(this.targetSpeed, SPEED_BOOST*0.2f, SPEED_BOOST*0.025f);
                 float n = (float)(-(MathHelper.atan2(-e, g) * 57.2957763671875));
                 TorturedPhantomEntity.this.setPitch(n);
                 float o = TorturedPhantomEntity.this.getYaw() + 90.0f;
@@ -277,6 +316,7 @@ implements Monster {
                 double q = (double)(this.targetSpeed * MathHelper.sin(o * ((float)Math.PI / 180))) * Math.abs(f / i);
                 double r = (double)(this.targetSpeed * MathHelper.sin(n * ((float)Math.PI / 180))) * Math.abs(e / i);
                 Vec3d vec3d = TorturedPhantomEntity.this.getVelocity();
+                //set target speed here
                 TorturedPhantomEntity.this.setVelocity(vec3d.add(new Vec3d(p, r, q).subtract(vec3d).multiply(0.2)));
             }
         }
@@ -324,7 +364,7 @@ implements Monster {
 
         @Override
         public void start() {
-            this.cooldown = this.getTickCount(10);
+            this.cooldown = this.getTickCount(3);
             TorturedPhantomEntity.this.movementType = PhantomMovementType.CIRCLE;
             this.startSwoop();
         }
@@ -341,7 +381,7 @@ implements Monster {
                 if (this.cooldown <= 0) {
                     TorturedPhantomEntity.this.movementType = PhantomMovementType.SWOOP;
                     this.startSwoop();
-                    this.cooldown = this.getTickCount((8 + TorturedPhantomEntity.this.random.nextInt(4)) * 20);
+                    this.cooldown = this.getTickCount((8 + TorturedPhantomEntity.this.random.nextInt(4)) * 2);
                     TorturedPhantomEntity.this.playSound(SoundEvents.ENTITY_PHANTOM_SWOOP, 10.0f, 0.95f + TorturedPhantomEntity.this.random.nextFloat() * 0.1f);
                 }
             }
@@ -357,10 +397,6 @@ implements Monster {
 
     class SwoopMovementGoal
     extends MovementGoal {
-        private static final int CAT_CHECK_INTERVAL = 20;
-        private boolean catsNearby;
-        private int nextCatCheckAge;
-
         SwoopMovementGoal() {
         }
 
@@ -418,6 +454,11 @@ implements Monster {
             TorturedPhantomEntity.this.targetPosition = new Vec3d(livingEntity.getX(), livingEntity.getBodyY(0.5), livingEntity.getZ());
             if (TorturedPhantomEntity.this.getBoundingBox().expand(0.2f).intersects(livingEntity.getBoundingBox())) {
                 TorturedPhantomEntity.this.tryAttack(livingEntity);
+                
+                if (!TorturedPhantomEntity.this.hasValidTarget()){
+                    TorturedPhantomEntity.this.getNewTarget();
+                }
+
                 TorturedPhantomEntity.this.movementType = PhantomMovementType.CIRCLE;
                 if (!TorturedPhantomEntity.this.isSilent()) {
                     TorturedPhantomEntity.this.getWorld().syncWorldEvent(WorldEvents.PHANTOM_BITES, TorturedPhantomEntity.this.getBlockPos(), 0);
@@ -493,7 +534,6 @@ implements Monster {
     class FindTargetGoal
     extends Goal {
         //private final TargetPredicate PLAYERS_IN_RANGE_PREDICATE = TargetPredicate.createAttackable().setBaseMaxDistance(64.0);
-        private final TargetPredicate ATTACKABLE_PREDICATE = TargetPredicate.createAttackable().setBaseMaxDistance(64.0).ignoreVisibility();
 
         private int delay = FindTargetGoal.toGoalTicks(20);
 
@@ -508,20 +548,22 @@ implements Monster {
             }
             this.delay = FindTargetGoal.toGoalTicks(60);
             
-            LivingEntity entity = TorturedPhantomEntity.this.getWorld().getClosestEntity(LivingEntity.class, ATTACKABLE_PREDICATE, null, TorturedPhantomEntity.this.getX(), TorturedPhantomEntity.this.getY(), TorturedPhantomEntity.this.getZ(), TorturedPhantomEntity.this.getBoundingBox().expand(16.0, 64.0, 16.0));
-
-            if (!(entity == null)){
-                TorturedPhantomEntity.this.setTarget(entity);
+            if (!TorturedPhantomEntity.this.hasValidTarget()){
+                return TorturedPhantomEntity.this.getNewTarget();
+            } else{
                 return true;
             }
-
-            return false;
         }
 
         @Override
         public boolean shouldContinue() {
             LivingEntity livingEntity = TorturedPhantomEntity.this.getTarget();
+
             if (livingEntity != null) {
+                if (!livingEntity.isAlive()){
+                    return false;
+                }
+
                 return TorturedPhantomEntity.this.isTarget(livingEntity, TargetPredicate.DEFAULT);
             }
             return false;

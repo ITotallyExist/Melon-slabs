@@ -125,20 +125,22 @@ public class TorturedSoulEntity extends ThrownItemEntity {
             return;
         }
 
-        //entity selection process
-            //create a target predicate that determines how the phantoms will decide their target
-        TargetPredicate targetPredicate = TargetPredicate.createAttackable();
-        targetPredicate.ignoreVisibility();
+        for (TorturedPhantomEntity phantom : phantoms){
+            //TODO: optimize by seperating predicate
 
-        //define box, will only target anything if there is a living entity in the box
-        //TODO: test with really small box to see behavior if null is returned from getClosestEntity
+                //entity selection process
+                //create a target predicate that determines how the phantoms will decide their target
+            TargetPredicate targetPredicate = TargetPredicate.createAttackable();
+            targetPredicate.ignoreVisibility();
 
-        Box box = phantoms.get(0).getBoundingBox();
+            //define box, will only target anything if there is a living entity in the box
+            //TODO: test with really small box to see behavior if null is returned from getClosestEntity
 
-        LivingEntity entity = this.getWorld().getClosestEntity(LivingEntity.class, targetPredicate, null, this.getX(), this.getY(), this.getZ(), box);
+            Box box = phantoms.get(0).getBoundingBox();
 
-        if (!(entity == null)){
-            angerPhantoms(phantoms, entity);
+            LivingEntity entity = this.getWorld().getClosestEntity(LivingEntity.class, targetPredicate, null, this.getX(), this.getY(), this.getZ(), box);
+            
+            phantom.setTarget(entity);
         }
     }
 
