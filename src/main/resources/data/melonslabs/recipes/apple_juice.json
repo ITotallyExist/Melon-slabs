@@ -6,11 +6,12 @@
     "inputB": {
       "item": "minecraft:apple"
     },
+    "inputC": [],
     "bottleInput": {
       "item": "minecraft:glass_bottle"
     },
     "output": {
       "id":"melonslabs:apple_juice",
-      "Count": "1"
+      "Count": 1
     }
 }

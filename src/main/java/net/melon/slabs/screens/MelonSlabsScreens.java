@@ -14,7 +14,7 @@ public class MelonSlabsScreens {
 
     public static void registerScreensAndRecipes(){
         Registry.register(Registries.RECIPE_SERIALIZER, JuicerRecipeSerializer.ID,JuicerRecipeSerializer.INSTANCE);
-        JUICER_RECIPE_TYPE = Registry.register(Registries.RECIPE_TYPE, new Identifier("melonslabs",JuicerRecipe.ID), new RecipeType<JuicerRecipe>(){
+        JUICER_RECIPE_TYPE = Registry.register(Registries.RECIPE_TYPE, new Identifier(JuicerRecipe.ID), new RecipeType<JuicerRecipe>(){
 
             public String toString() {
                 return JuicerRecipe.ID;

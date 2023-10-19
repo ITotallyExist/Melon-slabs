@@ -3,11 +3,13 @@
     "inputA" : {
       "item": "melonslabs:frankenmelon"
     },
+    "inputB": [],
+    "inputC": [],
     "bottleInput": {
       "item": "minecraft:glass_bottle"
     },
     "output": {
       "id":"melonslabs:tortured_soul",
-      "Count": "1"
+      "Count": 1
     }
 }
