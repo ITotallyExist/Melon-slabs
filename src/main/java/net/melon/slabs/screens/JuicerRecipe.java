@@ -64,11 +64,11 @@ public class JuicerRecipe implements Recipe<JuicerInventory> {
 	}
  
 	public ItemStack getOutput() {
-		return getOutput(null);
+		return getResult(null);
 	}
 
 	@Override
-	public ItemStack getOutput(DynamicRegistryManager manager) {
+	public ItemStack getResult(DynamicRegistryManager manager) {
 		return this.result;
 	}
  

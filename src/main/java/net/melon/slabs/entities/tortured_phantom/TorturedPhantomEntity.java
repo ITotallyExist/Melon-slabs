@@ -131,18 +131,18 @@ implements Monster {
     @Override
     public void tick() {
         super.tick();
-        if (this.getWorld().isClient) {
+        if (this.method_48926().isClient) {
             float f = MathHelper.cos((float)(this.getWingFlapTickOffset() + this.age) * 7.448451f * ((float)Math.PI / 180) + (float)Math.PI);
             float g = MathHelper.cos((float)(this.getWingFlapTickOffset() + this.age + 1) * 7.448451f * ((float)Math.PI / 180) + (float)Math.PI);
             if (f > 0.0f && g <= 0.0f) {
-                this.getWorld().playSound(this.getX(), this.getY(), this.getZ(), SoundEvents.ENTITY_PHANTOM_FLAP, this.getSoundCategory(), 0.95f + this.random.nextFloat() * 0.05f, 0.95f + this.random.nextFloat() * 0.05f, false);
+                this.method_48926().playSound(this.getX(), this.getY(), this.getZ(), SoundEvents.ENTITY_PHANTOM_FLAP, this.getSoundCategory(), 0.95f + this.random.nextFloat() * 0.05f, 0.95f + this.random.nextFloat() * 0.05f, false);
             }
             int i = this.getPhantomSize();
             float h = MathHelper.cos(this.getYaw() * ((float)Math.PI / 180)) * (1.3f + 0.21f * (float)i);
             float j = MathHelper.sin(this.getYaw() * ((float)Math.PI / 180)) * (1.3f + 0.21f * (float)i);
             float k = (0.3f + f * 0.45f) * ((float)i * 0.2f + 1.0f);
-            this.getWorld().addParticle(ParticleTypes.MYCELIUM, this.getX() + (double)h, this.getY() + (double)k, this.getZ() + (double)j, 0.0, 0.0, 0.0);
-            this.getWorld().addParticle(ParticleTypes.MYCELIUM, this.getX() - (double)h, this.getY() + (double)k, this.getZ() - (double)j, 0.0, 0.0, 0.0);
+            this.method_48926().addParticle(ParticleTypes.MYCELIUM, this.getX() + (double)h, this.getY() + (double)k, this.getZ() + (double)j, 0.0, 0.0, 0.0);
+            this.method_48926().addParticle(ParticleTypes.MYCELIUM, this.getX() - (double)h, this.getY() + (double)k, this.getZ() - (double)j, 0.0, 0.0, 0.0);
         }
     }
 
@@ -179,7 +179,7 @@ implements Monster {
     }
 
     private boolean getNewTarget(){
-        LivingEntity entity = TorturedPhantomEntity.this.getWorld().getClosestEntity(LivingEntity.class, ATTACKABLE_PREDICATE, TorturedPhantomEntity.this, TorturedPhantomEntity.this.getX(), TorturedPhantomEntity.this.getY(), TorturedPhantomEntity.this.getZ(), TorturedPhantomEntity.this.getBoundingBox().expand(16.0, 64.0, 16.0));
+        LivingEntity entity = TorturedPhantomEntity.this.method_48926().getClosestEntity(LivingEntity.class, ATTACKABLE_PREDICATE, TorturedPhantomEntity.this, TorturedPhantomEntity.this.getX(), TorturedPhantomEntity.this.getY(), TorturedPhantomEntity.this.getZ(), TorturedPhantomEntity.this.getBoundingBox().expand(16.0, 64.0, 16.0));
 
 
         if (!(entity == null)){
@@ -371,7 +371,7 @@ implements Monster {
 
         @Override
         public void stop() {
-            TorturedPhantomEntity.this.circlingCenter = TorturedPhantomEntity.this.getWorld().getTopPosition(Heightmap.Type.MOTION_BLOCKING, TorturedPhantomEntity.this.circlingCenter).up(10 + TorturedPhantomEntity.this.random.nextInt(20));
+            TorturedPhantomEntity.this.circlingCenter = TorturedPhantomEntity.this.method_48926().getTopPosition(Heightmap.Type.MOTION_BLOCKING, TorturedPhantomEntity.this.circlingCenter).up(10 + TorturedPhantomEntity.this.random.nextInt(20));
         }
 
         @Override
@@ -389,8 +389,8 @@ implements Monster {
 
         private void startSwoop() {
             TorturedPhantomEntity.this.circlingCenter = TorturedPhantomEntity.this.getTarget().getBlockPos().up(20 + TorturedPhantomEntity.this.random.nextInt(20));
-            if (TorturedPhantomEntity.this.circlingCenter.getY() < TorturedPhantomEntity.this.getWorld().getSeaLevel()) {
-                TorturedPhantomEntity.this.circlingCenter = new BlockPos(TorturedPhantomEntity.this.circlingCenter.getX(), TorturedPhantomEntity.this.getWorld().getSeaLevel() + 1, TorturedPhantomEntity.this.circlingCenter.getZ());
+            if (TorturedPhantomEntity.this.circlingCenter.getY() < TorturedPhantomEntity.this.method_48926().getSeaLevel()) {
+                TorturedPhantomEntity.this.circlingCenter = new BlockPos(TorturedPhantomEntity.this.circlingCenter.getX(), TorturedPhantomEntity.this.method_48926().getSeaLevel() + 1, TorturedPhantomEntity.this.circlingCenter.getZ());
             }
         }
     }
@@ -461,7 +461,7 @@ implements Monster {
 
                 TorturedPhantomEntity.this.movementType = PhantomMovementType.CIRCLE;
                 if (!TorturedPhantomEntity.this.isSilent()) {
-                    TorturedPhantomEntity.this.getWorld().syncWorldEvent(WorldEvents.PHANTOM_BITES, TorturedPhantomEntity.this.getBlockPos(), 0);
+                    TorturedPhantomEntity.this.method_48926().syncWorldEvent(WorldEvents.PHANTOM_BITES, TorturedPhantomEntity.this.getBlockPos(), 0);
                 }
             } else if (TorturedPhantomEntity.this.horizontalCollision || TorturedPhantomEntity.this.hurtTime > 0) {
                 TorturedPhantomEntity.this.movementType = PhantomMovementType.CIRCLE;
@@ -512,11 +512,11 @@ implements Monster {
             if (this.isNearTarget()) {
                 this.adjustDirection();
             }
-            if (TorturedPhantomEntity.this.targetPosition.y < TorturedPhantomEntity.this.getY() && !TorturedPhantomEntity.this.getWorld().isAir(TorturedPhantomEntity.this.getBlockPos().down(1))) {
+            if (TorturedPhantomEntity.this.targetPosition.y < TorturedPhantomEntity.this.getY() && !TorturedPhantomEntity.this.method_48926().isAir(TorturedPhantomEntity.this.getBlockPos().down(1))) {
                 this.yOffset = Math.max(1.0f, this.yOffset);
                 this.adjustDirection();
             }
-            if (TorturedPhantomEntity.this.targetPosition.y > TorturedPhantomEntity.this.getY() && !TorturedPhantomEntity.this.getWorld().isAir(TorturedPhantomEntity.this.getBlockPos().up(1))) {
+            if (TorturedPhantomEntity.this.targetPosition.y > TorturedPhantomEntity.this.getY() && !TorturedPhantomEntity.this.method_48926().isAir(TorturedPhantomEntity.this.getBlockPos().up(1))) {
                 this.yOffset = Math.min(-1.0f, this.yOffset);
                 this.adjustDirection();
             }
