@@ -22,11 +22,11 @@ public class JuicerRecipe implements Recipe<JuicerInventory> {
 	private final Ingredient inputC;
 	private final Ingredient bottleInput;
 	private final ItemStack result;
-	private final Identifier id;
+	//private final Identifier id;
 	public static final String ID = "juicer_recipe";
 
-	public JuicerRecipe(Identifier id, ItemStack result, Ingredient inputA, Ingredient inputB, Ingredient inputC, Ingredient bottleInput) {
-		this.id = id;
+	public JuicerRecipe(ItemStack result, Ingredient inputA, Ingredient inputB, Ingredient inputC, Ingredient bottleInput) {
+		//this.id = id;
 		this.inputA = inputA;
 		this.inputB = inputB;
 		this.inputC = inputC;
@@ -72,9 +72,10 @@ public class JuicerRecipe implements Recipe<JuicerInventory> {
 		return this.result;
 	}
  
-	@Override
+	//@Override
 	public Identifier getId() {
-		return this.id;
+		return null;
+		//return this.id;
 	}
 
     public ItemStack craft(JuicerInventory inventory) {

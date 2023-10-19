@@ -9,6 +9,7 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.math.BlockPos;
@@ -37,7 +38,7 @@ public class JuicerScreenHandler extends ScreenHandler  {
     public JuicerScreenHandler(int syncId, PlayerInventory playerInventory, JuicerInventory inventory, BlockPos pos) {
         
         super(MelonSlabsScreens.JUICER_SCREEN_HANDLER, syncId);
-        this.world = playerInventory.player.method_48926();
+        this.world = playerInventory.player.getWorld();
 
         this.blockPos = pos;
 
@@ -263,9 +264,9 @@ public class JuicerScreenHandler extends ScreenHandler  {
     private void doCrafting(){
         //System.out.println("crafting");
         //Optional<JuicerRecipe> match = (Optional<JuicerRecipe>) this.world.getRecipeManager().get(new Identifier("melonslabs",JuicerRecipe.ID)).stream().findFirst();
-        Optional<JuicerRecipe> match = this.world.getRecipeManager().getFirstMatch(MelonSlabsScreens.JUICER_RECIPE_TYPE, inventory, world);
+        Optional<RecipeEntry<JuicerRecipe>> match = this.world.getRecipeManager().getFirstMatch(MelonSlabsScreens.JUICER_RECIPE_TYPE, inventory, world);
         if (match.isPresent()){
-            this.slots.get(4).setStackNoCallbacks(match.get().getOutput().copy());
+            this.slots.get(4).setStackNoCallbacks(match.get().value().getOutput().copy());
             //System.out.println("match");
 
         } else {

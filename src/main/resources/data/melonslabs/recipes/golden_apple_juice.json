@@ -9,6 +9,8 @@
     "bottleInput": {
       "item": "minecraft:glass_bottle"
     },
-    "outputItem": "melonslabs:golden_apple_juice",
-    "outputAmount": "1"
+    "output": {
+      "id":"melonslabs:golden_apple_juice",
+      "Count": "1"
+    }
 }

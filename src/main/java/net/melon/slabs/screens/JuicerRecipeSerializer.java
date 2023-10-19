@@ -1,22 +1,32 @@
 package net.melon.slabs.screens;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 
 //Turns JSON into Recipe for Minecraft to load recipe JSON.
 //Turns PacketByteBuf to Recipe, and Recipe into PacketByteBuf for Minecraft to sync the recipe through the network.
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
+import com.mojang.datafixers.kinds.Applicative;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.melon.slabs.screens.JuicerRecipe.JuicerRecipeJsonFormat;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.dynamic.Codecs;
+
+import java.util.Optional;
+
 
 public class JuicerRecipeSerializer implements RecipeSerializer<JuicerRecipe>{
     // Define ExampleRecipeSerializer as a singleton by making its constructor private and exposing an instance.
@@ -28,43 +38,20 @@ public class JuicerRecipeSerializer implements RecipeSerializer<JuicerRecipe>{
     // This will be the "type" field in the json
     public static final Identifier ID = new Identifier("melonslabs:juicer_recipe");
 
+    private static final MapCodec<Ingredient> CODEC_IN_A = Ingredient.DISALLOW_EMPTY_CODEC.fieldOf("inputA");
+    private static final MapCodec<Ingredient> CODEC_IN_B = Ingredient.ALLOW_EMPTY_CODEC.fieldOf("inputB");
+    private static final MapCodec<Ingredient> CODEC_IN_C = Ingredient.ALLOW_EMPTY_CODEC.fieldOf("inputC");
+    private static final MapCodec<Ingredient> CODEC_IN_BOTTLE = Ingredient.ALLOW_EMPTY_CODEC.fieldOf("bottleInput");
+    private static final MapCodec<ItemStack> CODEC_OUT = ItemStack.CODEC.fieldOf("output");
 
-    @Override
-    // Turns json into Recipe
-    public JuicerRecipe read(Identifier id, JsonObject json) {
-        JuicerRecipe.JuicerRecipeJsonFormat recipeJson = new Gson().fromJson(json, JuicerRecipeJsonFormat.class);
-
-        // Validate all fields are there
-        if (recipeJson.inputA == null || recipeJson.outputItem == null) {
-            throw new JsonSyntaxException("A required attribute is missing!");
-        }
-        // We'll allow to not specify the output, and default it to 1.
-        if (recipeJson.outputAmount == 0) recipeJson.outputAmount = 1;
-
-        Ingredient inputA = Ingredient.fromJson(recipeJson.inputA);
-        //they dont need to have all three
-        Ingredient inputB = Ingredient.empty();
-        if (recipeJson.inputB != null){
-            inputB = Ingredient.fromJson(recipeJson.inputB);
-        }
-
-        Ingredient inputC = Ingredient.empty();
-        if (recipeJson.inputC != null){
-            inputC = Ingredient.fromJson(recipeJson.inputC);
-        }
-
-        Ingredient bottleInput = Ingredient.empty();
-        if (recipeJson.bottleInput != null){
-            bottleInput = Ingredient.fromJson(recipeJson.bottleInput);
-        }
-
-        Item outputItem = Registries.ITEM.getOrEmpty(new Identifier(recipeJson.outputItem))
-            // Validate the inputted item actually exists
-            .orElseThrow(() -> new JsonSyntaxException("No such item " + recipeJson.outputItem));
-        ItemStack output = new ItemStack(outputItem, recipeJson.outputAmount);
-
-        return new JuicerRecipe(id, output, inputA, inputB, inputC, bottleInput);
-    }
+    public static final Codec<JuicerRecipe> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+        CODEC_OUT.forGetter(JuicerRecipe::getOutput),
+        CODEC_IN_A.forGetter(JuicerRecipe::getInputA),
+        CODEC_IN_B.forGetter(JuicerRecipe::getInputB),
+        CODEC_IN_C.forGetter(JuicerRecipe::getInputC),
+        CODEC_IN_BOTTLE.forGetter(JuicerRecipe::getBottleInput)
+    ).apply(instance, JuicerRecipe::new));
+    
     @Override
     // Turns Recipe into PacketByteBuf
     public void write(PacketByteBuf packetData, JuicerRecipe recipe) {
@@ -75,15 +62,21 @@ public class JuicerRecipeSerializer implements RecipeSerializer<JuicerRecipe>{
         packetData.writeItemStack(recipe.getOutput());
     }
 
+
+    @Override
+    
+    public Codec<JuicerRecipe> codec() {
+        return CODEC;
+    }
+
     @Override
     // Turns PacketByteBuf into Recipe
-    public JuicerRecipe read(Identifier recipeId, PacketByteBuf packetData) {
-        // Make sure the read in the same order you have written!
+    public JuicerRecipe read(PacketByteBuf packetData) {
         Ingredient inputA = Ingredient.fromPacket(packetData);
         Ingredient inputB = Ingredient.fromPacket(packetData);
         Ingredient inputC = Ingredient.fromPacket(packetData);
         Ingredient bottleInput = Ingredient.fromPacket(packetData);
         ItemStack output = packetData.readItemStack();
-        return new JuicerRecipe(recipeId, output, inputA, inputB, inputC, bottleInput);
+        return new JuicerRecipe(output, inputA, inputB, inputC, bottleInput);
     }
 }
