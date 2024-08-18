@@ -7,3 +7,28 @@ try running ./gradlew clean
 and ./gradlew --refresh-dependencies
 
 restart your computer if it ever says resources are busy
+
+
+
+
+notes from fabricmc site:
+
+
+Importing a project
+Clone the project into a folder and then open the folder in Visual Studio Code. The IDE should then start importing the Gradle project (if it does not start after about 30 seconds, open the build.gradle file).
+
+
+Generating run configurations
+ Next, run ./gradlew vscode - this will automatically generate the necessary launch.json file containing the run configs.
+
+
+Generating minecraft source
+If you want to browse the Minecraft source you can use the Gradle genSources task. This can be done by running the following command in your terminal ./gradlew genSources.
+
+refresh your Java project, 
+this can be done by pressing Shift + Alt + U while having the build.gradle file open.
+
+To search for Minecraft classes 
+ Ctrl + P, 
+
+prefix your searches with # to search for the Minecraft classes.
