@@ -1,0 +1,6 @@
+{
+	"variants": {
+		"type=bottom": { "model": "melonslabs:block/melon_rind" },
+		"type=top": { "model": "melonslabs:block/melon_rind_top" }
+	}
+}

@@ -27,6 +27,9 @@ public class MelonSlabsItems {
         public static final Item JILL_O_LANTERN = registerItem("jill_o_lantern",new BlockItem(MelonSlabsBlocks.JILL_O_LANTERN, new Item.Settings()));
         public static final Item MELON_STAIRS = registerItem("melon_stairs",new BlockItem(MelonSlabsBlocks.MELON_STAIRS, new Item.Settings()));
         public static final Item MELON_SLAB = registerItem("melon_slab",new BlockItem(MelonSlabsBlocks.MELON_SLAB, new Item.Settings()));
+        public static final Item MELON_SLAB_ALMOST_FULL = registerItem("melon_slab_almost_full",new BlockItem(MelonSlabsBlocks.MELON_SLAB_ALMOST_FULL, new Item.Settings()));
+        public static final Item MELON_SLAB_ALMOST_EMPTY = registerItem("melon_slab_almost_empty",new BlockItem(MelonSlabsBlocks.MELON_SLAB_ALMOST_EMPTY, new Item.Settings()));
+        public static final Item MELON_RIND = registerItem("melon_rind",new BlockItem(MelonSlabsBlocks.MELON_RIND, new Item.Settings()));
         public static final Item CARVED_MELON_SLAB = registerItem("carved_melon_slab",new BlockItem(MelonSlabsBlocks.CARVED_MELON_SLAB, new Item.Settings()));
         public static final Item CARVED_MELON = registerItem("carved_melon", new BlockItem(MelonSlabsBlocks.CARVED_MELON, new Item.Settings()));
         public static final Item JILL_O_SLAB = registerItem("jill_o_slab",new BlockItem(MelonSlabsBlocks.JILL_O_SLAB, new Item.Settings()));
@@ -117,6 +120,9 @@ public class MelonSlabsItems {
             addItemToModGroup(CARVED_MELON);
             addItemToModGroup(MELON_STAIRS);
             addItemToModGroup(MELON_SLAB);
+            addItemToModGroup(MELON_SLAB_ALMOST_FULL);
+            addItemToModGroup(MELON_SLAB_ALMOST_EMPTY);
+            addItemToModGroup(MELON_RIND);
             addItemToModGroup(CARVED_MELON_SLAB);
             addItemToModGroup(JILL_O_SLAB);
             addItemToModGroup(PUMPKIN_STAIRS);
@@ -154,6 +160,9 @@ public class MelonSlabsItems {
             //Adding to building blocks group
             addItemToBuildingBlocksGroup(MELON_STAIRS);
             addItemToBuildingBlocksGroup(MELON_SLAB);
+            addItemToBuildingBlocksGroup(MELON_SLAB_ALMOST_FULL);
+            addItemToBuildingBlocksGroup(MELON_SLAB_ALMOST_EMPTY);
+            addItemToBuildingBlocksGroup(MELON_RIND);
             addItemToBuildingBlocksGroup(CARVED_MELON_SLAB);
             addItemToBuildingBlocksGroup(JILL_O_SLAB);
             addItemToBuildingBlocksGroup(PUMPKIN_STAIRS);

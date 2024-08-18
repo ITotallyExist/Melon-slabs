@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:block/slab",
   "textures": {
+    "particle": "melonslabs:block/melon_slab_middle",
     "bottom": "minecraft:block/melon_top",
     "top": "melonslabs:block/melon_slab_middle",
     "side": "minecraft:block/melon_side"

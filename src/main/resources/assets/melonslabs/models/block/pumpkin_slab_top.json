@@ -1,6 +1,7 @@
 {
     "parent": "minecraft:block/slab_top",
     "textures": {
+      "particle": "melonslabs:block/pumpkin_slab_middle",
       "bottom": "melonslabs:block/pumpkin_slab_middle",
       "top": "minecraft:block/pumpkin_top",
       "side": "minecraft:block/pumpkin_side"

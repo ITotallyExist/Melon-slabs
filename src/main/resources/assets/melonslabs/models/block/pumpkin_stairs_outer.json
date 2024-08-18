@@ -1,6 +1,7 @@
 {
   "parent": "melonslabs:block/template_outer_stairs",
   "textures": {
+    "particle": "melonslabs:block/pumpkin_slab_middle",
     "bottom": "minecraft:block/pumpkin_top",
     "top": "minecraft:block/pumpkin_top",
     "side": "minecraft:block/pumpkin_side",

@@ -1,0 +1,6 @@
+{
+	"variants": {
+		"type=bottom": { "model": "melonslabs:block/melon_slab_almost_empty" },
+		"type=top": { "model": "melonslabs:block/melon_slab_almost_empty_top" }
+	}
+}
