@@ -8,7 +8,7 @@ and ./gradlew --refresh-dependencies
 
 restart your computer if it ever says resources are busy
 
-
+delete everything in /users/greg/.gradle/caches
 
 
 notes from fabricmc site:
