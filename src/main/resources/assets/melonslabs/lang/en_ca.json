@@ -1,6 +1,9 @@
 {
     "block.melonslabs.melon_stairs": "Melon Stairs",
     "block.melonslabs.melon_slab": "Melon Slab",
+    "block.melonslabs.melon_slab_almost_full": "Just Started Melon Slab",
+    "block.melonslabs.melon_slab_almost_empty": "Almost Finished Melon Slab",
+    "block.melonslabs.melon_rind": "Melon Rind",
     "block.melonslabs.pumpkin_stairs": "Pumpkin Stairs",
     "block.melonslabs.pumpkin_slab": "Pumpkin Slab",
     "block.melonslabs.carved_pumpkin_slab": "Carved Pumpkin Slab",
