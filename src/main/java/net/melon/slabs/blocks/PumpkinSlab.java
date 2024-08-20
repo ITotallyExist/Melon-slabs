@@ -11,6 +11,7 @@ import net.minecraft.block.enums.SlabType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -30,6 +31,10 @@ public class PumpkinSlab extends SlabBlock{
         super(FabricBlockSettings.copy(Blocks.PUMPKIN));
     }
     
+    public Item asItem() {
+        return MelonSlabsItems.PUMPKIN_SLAB;
+    }
+
     @SuppressWarnings("all")
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         ItemStack itemStack = player.getStackInHand(hand);

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.melon.slabs.criteria.MelonSlabsCriteria;
+import net.melon.slabs.items.MelonSlabsItems;
 import net.melon.slabs.sounds.MelonSlabsSounds;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -16,6 +17,7 @@ import net.minecraft.entity.LightningEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.entity.projectile.TridentEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -39,6 +41,10 @@ public class FrankenMelon extends Block{
     public FrankenMelon() {
         super(FabricBlockSettings.copyOf(Blocks.MELON).ticksRandomly().sounds(BlockSoundGroup.WOOD).hardness(1.0f).resistance(1.0f));
         this.setDefaultState((BlockState)((BlockState)this.stateManager.getDefaultState()).with(LIT, true).with(FACING, Direction.NORTH));
+    }
+
+    public Item asItem() {
+        return MelonSlabsItems.FRANKENMELON;
     }
 
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {

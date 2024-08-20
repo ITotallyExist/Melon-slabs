@@ -2,6 +2,7 @@ package net.melon.slabs.blocks;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.melon.slabs.entities.JuicerBlockEntity;
+import net.melon.slabs.items.MelonSlabsItems;
 import net.melon.slabs.screens.JuicerScreenHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
@@ -12,6 +13,7 @@ import net.minecraft.block.HorizontalFacingBlock;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.state.StateManager;
@@ -49,6 +51,10 @@ public class Juicer extends BlockWithEntity  {
     public Juicer() {
         super(FabricBlockSettings.copy(Blocks.OAK_WOOD));
         this.setDefaultState((BlockState)((BlockState)this.stateManager.getDefaultState()).with(FACING, Direction.NORTH).with(HAS_BOTTLE, false));
+    }
+
+    public Item asItem() {
+        return MelonSlabsItems.JUICER;
     }
 
     @Override

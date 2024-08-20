@@ -3,6 +3,7 @@ package net.melon.slabs.blocks;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.block.enums.SlabType;
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -35,6 +36,10 @@ public class JillOSlab extends SlabBlock{
     public JillOSlab() {
         super(FabricBlockSettings.copy(Blocks.JACK_O_LANTERN));
         this.setDefaultState((BlockState)((BlockState)this.stateManager.getDefaultState()).with(FACING, Direction.NORTH));
+    }
+
+    public Item asItem() {
+        return MelonSlabsItems.JILL_O_SLAB;
     }
 
     @Override

@@ -1,13 +1,15 @@
 package net.melon.slabs.blocks;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-
+import net.melon.slabs.items.MelonSlabsItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.CactusBlock;
 import net.minecraft.block.ShapeContext;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
@@ -24,6 +26,11 @@ public class CactusSlab extends CactusBlock{
     public CactusSlab() {
         super(FabricBlockSettings.copy(Blocks.CACTUS));
         this.setDefaultState((BlockState)((BlockState)this.stateManager.getDefaultState()).with(AGE, 0));
+    }
+
+    @Override
+    public Item asItem() {
+        return MelonSlabsItems.CACTUS_SLAB;
     }
 
     @Override

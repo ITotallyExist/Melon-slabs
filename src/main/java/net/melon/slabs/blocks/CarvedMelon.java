@@ -1,11 +1,12 @@
 package net.melon.slabs.blocks;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-
+import net.melon.slabs.items.MelonSlabsItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.HorizontalFacingBlock;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
@@ -17,6 +18,11 @@ public class CarvedMelon extends Block{
     public CarvedMelon() {
         super(FabricBlockSettings.copy(Blocks.MELON));
         this.setDefaultState((BlockState)((BlockState)this.stateManager.getDefaultState()).with(FACING, Direction.NORTH));
+    }
+
+        @Override
+    public Item asItem() {
+        return MelonSlabsItems.CARVED_MELON;
     }
 
     @Override

@@ -21,6 +21,9 @@ public class ComposterMixin{
     private static void registerDefaultCompostableITems(final CallbackInfo info) {
         ITEM_TO_LEVEL_INCREASE_CHANCE.put(MelonSlabsItems.CARVED_MELON.asItem(), 0.65f);
         ITEM_TO_LEVEL_INCREASE_CHANCE.put(MelonSlabsItems.MELON_SLAB.asItem(), 0.55f);
+        ITEM_TO_LEVEL_INCREASE_CHANCE.put(MelonSlabsItems.MELON_SLAB_ALMOST_EMPTY.asItem(), 0.55f);
+        ITEM_TO_LEVEL_INCREASE_CHANCE.put(MelonSlabsItems.MELON_SLAB_ALMOST_EMPTY.asItem(), 0.55f);
+        ITEM_TO_LEVEL_INCREASE_CHANCE.put(MelonSlabsItems.MELON_RIND.asItem(), 0.55f);
         ITEM_TO_LEVEL_INCREASE_CHANCE.put(MelonSlabsItems.CARVED_MELON_SLAB.asItem(), 0.55f);
         ITEM_TO_LEVEL_INCREASE_CHANCE.put(MelonSlabsItems.MELON_STAIRS.asItem(), 0.6f);
         ITEM_TO_LEVEL_INCREASE_CHANCE.put(MelonSlabsItems.PUMPKIN_SLAB.asItem(), 0.55f);

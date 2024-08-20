@@ -4,6 +4,7 @@ import net.minecraft.block.SlabBlock;
 import net.minecraft.block.enums.SlabType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -30,6 +31,10 @@ public class CarvedPumpkinSlab extends SlabBlock{
         super(FabricBlockSettings.copy(Blocks.PUMPKIN));
         this.setDefaultState((BlockState)((BlockState)this.stateManager.getDefaultState()).with(FACING, Direction.NORTH));
     }
+
+    public Item asItem() {
+        return MelonSlabsItems.CARVED_PUMPKIN_SLAB;
+    }    
 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {

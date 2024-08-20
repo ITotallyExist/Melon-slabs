@@ -4,6 +4,7 @@ import net.minecraft.block.SlabBlock;
 import net.minecraft.block.enums.SlabType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -29,6 +30,10 @@ public class CarvedMelonSlab extends SlabBlock{
     public CarvedMelonSlab() {
         super(FabricBlockSettings.copy(Blocks.MELON));
         this.setDefaultState((BlockState)((BlockState)this.stateManager.getDefaultState()).with(FACING, Direction.NORTH));
+    }
+
+    public Item asItem() {
+        return MelonSlabsItems.CARVED_MELON_SLAB;
     }
 
     @Override
