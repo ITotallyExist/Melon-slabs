@@ -1,5 +1,6 @@
 package net.melon.slabs.blocks;
 
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -10,13 +11,27 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.block.enums.SlabType;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.function.BooleanBiFunction;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
+import net.minecraft.world.event.GameEvent;
 
 public class MelonSlabAlmostFull extends SlabBlock{
     protected static final VoxelShape OUTLINE_SHAPE_BOTTOM;
@@ -28,6 +43,32 @@ public class MelonSlabAlmostFull extends SlabBlock{
     
     public Item asItem() {
         return MelonSlabsItems.MELON_SLAB_ALMOST_FULL;
+    }
+
+    @SuppressWarnings("all")
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+        ItemStack itemStack = player.getStackInHand(hand);
+
+        if (state.get(TYPE) != SlabType.DOUBLE){
+            //if player can eat
+            if (!player.canConsume(false)) {
+                return ActionResult.PASS;
+            }
+
+            if (world.isClient) {
+                return ActionResult.SUCCESS;
+            }
+
+            //eat food
+            player.getHungerManager().add(MelonSlab.FOOD_POINTS, MelonSlab.SATURATION_FACTOR);
+            world.emitGameEvent((Entity)player, GameEvent.EAT, pos);
+            
+            //set the block state to an eaten one but with the same slabtype
+            world.setBlockState(pos, MelonSlabsBlocks.MELON_SLAB_ALMOST_EMPTY.getDefaultState().with(TYPE, state.get(TYPE)), Block.NOTIFY_ALL);
+
+            return ActionResult.SUCCESS;
+        }
+        return super.onUse(state, world, pos, player, hand, hit);
     }
 
     //used to make it so that we cant get a double slab melon rind

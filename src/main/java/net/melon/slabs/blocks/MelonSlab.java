@@ -4,10 +4,12 @@ import java.util.function.Consumer;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.melon.slabs.items.MelonSlabsItems;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.block.enums.SlabType;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -25,8 +27,11 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
+import net.minecraft.world.event.GameEvent;
 
 public class MelonSlab extends SlabBlock{
+    public static int FOOD_POINTS = 2;
+    public static float SATURATION_FACTOR = 1.0f;
 
     public MelonSlab() {
         super(FabricBlockSettings.copy(Blocks.MELON));
@@ -39,6 +44,7 @@ public class MelonSlab extends SlabBlock{
     @SuppressWarnings("all")
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         ItemStack itemStack = player.getStackInHand(hand);
+
         if (itemStack.getItem() == Items.SHEARS) {
             if (!world.isClient) {
                 if (!player.isCreative()){
@@ -63,7 +69,26 @@ public class MelonSlab extends SlabBlock{
   
            return ActionResult.success(world.isClient);
         } else {
-           return super.onUse(state, world, pos, player, hand, hit);
+            if (state.get(TYPE) != SlabType.DOUBLE){
+                //if player can eat
+                if (!player.canConsume(false)) {
+                    return ActionResult.PASS;
+                }
+
+                if (world.isClient) {
+                    return ActionResult.SUCCESS;
+                }
+
+                //eat food
+                player.getHungerManager().add(FOOD_POINTS, SATURATION_FACTOR);
+                world.emitGameEvent((Entity)player, GameEvent.EAT, pos);
+                
+                //set the block state to an eaten one but with the same slabtype
+                world.setBlockState(pos, MelonSlabsBlocks.MELON_SLAB_ALMOST_FULL.getDefaultState().with(TYPE, state.get(TYPE)), Block.NOTIFY_ALL);
+
+                return ActionResult.SUCCESS;
+            }
+            return super.onUse(state, world, pos, player, hand, hit);
         }
     }
 
