@@ -29,7 +29,7 @@ public class MelonSlabsItems {
         public static final Item MELON_SLAB = registerItem("melon_slab",new BlockItem(MelonSlabsBlocks.MELON_SLAB, new Item.Settings()));
         public static final Item MELON_SLAB_ALMOST_FULL = registerItem("melon_slab_almost_full",new BlockItem(MelonSlabsBlocks.MELON_SLAB_ALMOST_FULL, new Item.Settings()));
         public static final Item MELON_SLAB_ALMOST_EMPTY = registerItem("melon_slab_almost_empty",new BlockItem(MelonSlabsBlocks.MELON_SLAB_ALMOST_EMPTY, new Item.Settings()));
-        public static final Item MELON_RIND = registerItem("melon_rind",new BlockItem(MelonSlabsBlocks.MELON_RIND, new Item.Settings()));
+        public static final Item MELON_RIND = registerItem("melon_rind",new MelonRind(new Item.Settings().maxCount(5)));
         public static final Item CARVED_MELON_SLAB = registerItem("carved_melon_slab",new BlockItem(MelonSlabsBlocks.CARVED_MELON_SLAB, new Item.Settings()));
         public static final Item CARVED_MELON = registerItem("carved_melon", new BlockItem(MelonSlabsBlocks.CARVED_MELON, new Item.Settings()));
         public static final Item JILL_O_SLAB = registerItem("jill_o_slab",new BlockItem(MelonSlabsBlocks.JILL_O_SLAB, new Item.Settings()));

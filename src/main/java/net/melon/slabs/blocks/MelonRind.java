@@ -10,6 +10,8 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.block.enums.SlabType;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.item.Equipment;
 import net.minecraft.item.Item;
 import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.math.BlockPos;
@@ -18,7 +20,7 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldView;
 
-public class MelonRind extends SlabBlock{
+public class MelonRind extends SlabBlock {
     protected static final VoxelShape OUTLINE_SHAPE_BOTTOM;
     protected static final VoxelShape OUTLINE_SHAPE_TOP;
 
@@ -29,6 +31,8 @@ public class MelonRind extends SlabBlock{
     public Item asItem() {
         return MelonSlabsItems.MELON_RIND;
     }
+
+
 
     //used to make it so that we cant get a double slab melon rind
     @Override

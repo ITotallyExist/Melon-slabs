@@ -29,5 +29,7 @@
     "item.melonslabs.pumpkin_slice": "Pumpkin Slice",
     "item.melonslabs.cooked_pumpkin_slice": "Cooked Pumpkin Slice",
     "effect.melonslabs.intoxicated": "Intoxicated",
-    "melonslabs.alcohol_poisoning": "died of alcohol poisoning"
+    "melonslabs.alcohol_poisoning": "died of alcohol poisoning",
+    "melonslabs.melon_rind_tooltip_1": "Can be worn as a hard hat",
+    "melonslabs.melon_rind_tooltip_2": "Prevents damage from falling objects"
 }
