@@ -6,7 +6,7 @@
   "mixins": ["ComposterMixin",
     "CactusMixin",
     "MelonMixin",
-    "FallingBlockEntityMixin"
+    "EntityMixin"
   ],
   "client": [],
   "server": [],
