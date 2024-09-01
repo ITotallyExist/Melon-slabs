@@ -17,9 +17,11 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldEvents;
 
 @Mixin(FallingBlockEntity.class)
 public abstract class FallingBlockEntityMixin extends Entity{
@@ -30,7 +32,9 @@ public abstract class FallingBlockEntityMixin extends Entity{
 
     @Override
     public void onPlayerCollision(PlayerEntity player) {
-        if (player.getEquippedStack(EquipmentSlot.HEAD).isOf (MelonSlabsItems.MELON_RIND)){
+        if (player.getEquippedStack(EquipmentSlot.HEAD).isOf (MelonSlabsItems.MELON_HAT)){
+            
+            player.getWorld().syncWorldEvent(WorldEvents.ANVIL_LANDS, BlockPos.ofFloored(player.getPos()).up(), 0);
 
             //avoiding random here so we can do this on both the client and server sides to avoid desync
             double direction = 3.14159265*2*Math.sin(10*player.getPos().x*player.getPos().y*player.getPos().z);

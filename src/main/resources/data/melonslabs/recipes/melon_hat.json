@@ -1,0 +1,19 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "#",
+        "C"
+    ],
+    "key": {
+        "#": {
+            "item": "melonslabs:melon_rind"
+        },
+        "C": {
+            "item": "minecraft:string"
+        }
+    },
+    "result": {
+        "item": "melonslabs:melon_hat",
+        "count": 1
+    }
+}

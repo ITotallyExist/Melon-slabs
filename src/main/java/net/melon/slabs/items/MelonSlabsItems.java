@@ -29,7 +29,7 @@ public class MelonSlabsItems {
         public static final Item MELON_SLAB = registerItem("melon_slab",new BlockItem(MelonSlabsBlocks.MELON_SLAB, new Item.Settings()));
         public static final Item MELON_SLAB_ALMOST_FULL = registerItem("melon_slab_almost_full",new BlockItem(MelonSlabsBlocks.MELON_SLAB_ALMOST_FULL, new Item.Settings()));
         public static final Item MELON_SLAB_ALMOST_EMPTY = registerItem("melon_slab_almost_empty",new BlockItem(MelonSlabsBlocks.MELON_SLAB_ALMOST_EMPTY, new Item.Settings()));
-        public static final Item MELON_RIND = registerItem("melon_rind",new MelonRind(new Item.Settings().maxCount(5)));
+        public static final Item MELON_RIND = registerItem("melon_rind",new BlockItem(MelonSlabsBlocks.MELON_RIND, new Item.Settings()));
         public static final Item CARVED_MELON_SLAB = registerItem("carved_melon_slab",new BlockItem(MelonSlabsBlocks.CARVED_MELON_SLAB, new Item.Settings()));
         public static final Item CARVED_MELON = registerItem("carved_melon", new BlockItem(MelonSlabsBlocks.CARVED_MELON, new Item.Settings()));
         public static final Item JILL_O_SLAB = registerItem("jill_o_slab",new BlockItem(MelonSlabsBlocks.JILL_O_SLAB, new Item.Settings()));
@@ -55,6 +55,10 @@ public class MelonSlabsItems {
 
         //Magic Items
         public static final Item TORTURED_SOUL = registerItem("tortured_soul",new TorturedSoulItem(new Item.Settings().maxCount(1).rarity(Rarity.RARE).recipeRemainder(Items.GLASS_BOTTLE)));
+
+        //Armor Items
+        public static final Item MELON_HAT = registerItem("melon_hat",new MelonHat(new Item.Settings().maxCount(5)));
+
 
         private static Item registerItem(String name, Item item){
             return Registry.register(Registries.ITEM, new Identifier("melonslabs",name), item);
@@ -84,6 +88,10 @@ public class MelonSlabsItems {
 
         private static void addItemToBuildingBlocksGroup(Item item) {
             addItemToGroup (item, ItemGroups.BUILDING_BLOCKS);
+        }
+
+        private static void addItemToEquipmentGroup(Item item) {
+            addItemToGroup (item, ItemGroups.SEARCH);
         }
 
         private static void addItemToGroup (Item item, RegistryKey<ItemGroup> group){
@@ -145,6 +153,9 @@ public class MelonSlabsItems {
             addItemToModGroup(FRANKENMELON);
             addItemToModGroup(TORTURED_SOUL);
 
+            //Armor Items
+            addItemToModGroup(MELON_HAT);
+
             //Adding to food group
             addItemToFoodGroup(PUMPKIN_SLICE);
             addItemToFoodGroup(COOKED_PUMPKIN_SLICE);
@@ -172,5 +183,8 @@ public class MelonSlabsItems {
 
             //Adding to Functional Blocks group
             addItemToGroup(JUICER, ItemGroups.FUNCTIONAL);
+
+            //Adding items to equipment group
+            addItemToEquipmentGroup(MELON_HAT);
         }
 }

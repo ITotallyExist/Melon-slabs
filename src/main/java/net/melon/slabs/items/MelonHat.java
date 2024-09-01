@@ -9,6 +9,7 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Equipment;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.world.World;
@@ -29,7 +30,7 @@ import java.util.List;
 
 //this class exists to handle the intricacies of wearing a melon rind as a hard hat
 
-public class MelonRind extends BlockItem implements Equipment{
+public class MelonHat extends Item implements Equipment{
     public static final DispenserBehavior DISPENSER_BEHAVIOR = new ItemDispenserBehavior(){
         @Override
         protected ItemStack dispenseSilently(BlockPointer pointer, ItemStack stack) {
@@ -37,8 +38,8 @@ public class MelonRind extends BlockItem implements Equipment{
         }
     };
 
-    public MelonRind(Settings settings) {
-        super(MelonSlabsBlocks.MELON_RIND, settings);
+    public MelonHat(Settings settings) {
+        super(settings);
         DispenserBlock.registerBehavior(this, DISPENSER_BEHAVIOR);
     }
 
@@ -48,8 +49,8 @@ public class MelonRind extends BlockItem implements Equipment{
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        tooltip.add(Text.translatable("melonslabs.melon_rind_tooltip_1").setStyle(MelonSlabsText.ANNOTATION_STYLE));
-        tooltip.add(Text.translatable("melonslabs.melon_rind_tooltip_2").setStyle(MelonSlabsText.ANNOTATION_STYLE));
+        tooltip.add(Text.translatable("melonslabs.melon_hat_tooltip_1").setStyle(MelonSlabsText.ANNOTATION_STYLE));
+        tooltip.add(Text.translatable("melonslabs.melon_hat_tooltip_2").setStyle(MelonSlabsText.ANNOTATION_STYLE));
         super.appendTooltip(stack, world, tooltip, context);
     }
 
