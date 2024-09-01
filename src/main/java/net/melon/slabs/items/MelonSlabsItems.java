@@ -3,6 +3,7 @@ package net.melon.slabs.items;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.melon.slabs.blocks.MelonSlabsBlocks;
+import net.minecraft.block.Block;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.BlockItem;
@@ -24,22 +25,22 @@ public class MelonSlabsItems {
         
 
         //Block Items
-        public static final Item JILL_O_LANTERN = registerItem("jill_o_lantern",new BlockItem(MelonSlabsBlocks.JILL_O_LANTERN, new Item.Settings()));
-        public static final Item MELON_STAIRS = registerItem("melon_stairs",new BlockItem(MelonSlabsBlocks.MELON_STAIRS, new Item.Settings()));
-        public static final Item MELON_SLAB = registerItem("melon_slab",new BlockItem(MelonSlabsBlocks.MELON_SLAB, new Item.Settings()));
-        public static final Item MELON_SLAB_ALMOST_FULL = registerItem("melon_slab_almost_full",new BlockItem(MelonSlabsBlocks.MELON_SLAB_ALMOST_FULL, new Item.Settings()));
-        public static final Item MELON_SLAB_ALMOST_EMPTY = registerItem("melon_slab_almost_empty",new BlockItem(MelonSlabsBlocks.MELON_SLAB_ALMOST_EMPTY, new Item.Settings()));
-        public static final Item MELON_RIND = registerItem("melon_rind",new BlockItem(MelonSlabsBlocks.MELON_RIND, new Item.Settings()));
-        public static final Item CARVED_MELON_SLAB = registerItem("carved_melon_slab",new BlockItem(MelonSlabsBlocks.CARVED_MELON_SLAB, new Item.Settings()));
-        public static final Item CARVED_MELON = registerItem("carved_melon", new BlockItem(MelonSlabsBlocks.CARVED_MELON, new Item.Settings()));
-        public static final Item JILL_O_SLAB = registerItem("jill_o_slab",new BlockItem(MelonSlabsBlocks.JILL_O_SLAB, new Item.Settings()));
-        public static final Item CACTUS_SLAB = registerItem("cactus_slab",new BlockItem(MelonSlabsBlocks.CACTUS_SLAB, new Item.Settings()));
-        public static final Item PUMPKIN_STAIRS = registerItem("pumpkin_stairs",new BlockItem(MelonSlabsBlocks.PUMPKIN_STAIRS, new Item.Settings()));
-        public static final Item PUMPKIN_SLAB = registerItem("pumpkin_slab",new BlockItem(MelonSlabsBlocks.PUMPKIN_SLAB, new Item.Settings()));
-        public static final Item CARVED_PUMPKIN_SLAB = registerItem("carved_pumpkin_slab",new BlockItem(MelonSlabsBlocks.CARVED_PUMPKIN_SLAB, new Item.Settings()));
-        public static final Item JACK_O_SLAB = registerItem("jack_o_slab",new BlockItem(MelonSlabsBlocks.JACK_O_SLAB, new Item.Settings()));
-        public static final Item FRANKENMELON = registerItem("frankenmelon",new BlockItem(MelonSlabsBlocks.FRANKENMELON, new Item.Settings()));
-        public static final Item JUICER = registerItem("juicer",new BlockItem(MelonSlabsBlocks.JUICER, new Item.Settings()));
+        public static final Item JILL_O_LANTERN = registerBlockItem("jill_o_lantern",new BlockItem(MelonSlabsBlocks.JILL_O_LANTERN, new Item.Settings()),MelonSlabsBlocks.JILL_O_LANTERN);
+        public static final Item MELON_STAIRS = registerBlockItem("melon_stairs",new BlockItem(MelonSlabsBlocks.MELON_STAIRS, new Item.Settings()),MelonSlabsBlocks.MELON_STAIRS);
+        public static final Item MELON_SLAB = registerBlockItem("melon_slab",new BlockItem(MelonSlabsBlocks.MELON_SLAB, new Item.Settings()),MelonSlabsBlocks.MELON_SLAB);
+        public static final Item MELON_SLAB_ALMOST_FULL = registerBlockItem("melon_slab_almost_full",new BlockItem(MelonSlabsBlocks.MELON_SLAB_ALMOST_FULL, new Item.Settings()),MelonSlabsBlocks.MELON_SLAB_ALMOST_FULL);
+        public static final Item MELON_SLAB_ALMOST_EMPTY = registerBlockItem("melon_slab_almost_empty",new BlockItem(MelonSlabsBlocks.MELON_SLAB_ALMOST_EMPTY, new Item.Settings()),MelonSlabsBlocks.MELON_SLAB_ALMOST_EMPTY);
+        public static final Item MELON_RIND = registerBlockItem("melon_rind",new BlockItem(MelonSlabsBlocks.MELON_RIND, new Item.Settings()),MelonSlabsBlocks.MELON_RIND);
+        public static final Item CARVED_MELON_SLAB = registerBlockItem("carved_melon_slab",new BlockItem(MelonSlabsBlocks.CARVED_MELON_SLAB, new Item.Settings()),MelonSlabsBlocks.CARVED_MELON_SLAB);
+        public static final Item CARVED_MELON = registerBlockItem("carved_melon", new BlockItem(MelonSlabsBlocks.CARVED_MELON, new Item.Settings()),MelonSlabsBlocks.CARVED_MELON);
+        public static final Item JILL_O_SLAB = registerBlockItem("jill_o_slab",new BlockItem(MelonSlabsBlocks.JILL_O_SLAB, new Item.Settings()),MelonSlabsBlocks.JILL_O_SLAB);
+        public static final Item CACTUS_SLAB = registerBlockItem("cactus_slab",new BlockItem(MelonSlabsBlocks.CACTUS_SLAB, new Item.Settings()),MelonSlabsBlocks.CACTUS_SLAB);
+        public static final Item PUMPKIN_STAIRS = registerBlockItem("pumpkin_stairs",new BlockItem(MelonSlabsBlocks.PUMPKIN_STAIRS, new Item.Settings()),MelonSlabsBlocks.PUMPKIN_STAIRS);
+        public static final Item PUMPKIN_SLAB = registerBlockItem("pumpkin_slab",new BlockItem(MelonSlabsBlocks.PUMPKIN_SLAB, new Item.Settings()),MelonSlabsBlocks.PUMPKIN_SLAB);
+        public static final Item CARVED_PUMPKIN_SLAB = registerBlockItem("carved_pumpkin_slab",new BlockItem(MelonSlabsBlocks.CARVED_PUMPKIN_SLAB, new Item.Settings()),MelonSlabsBlocks.CARVED_PUMPKIN_SLAB);
+        public static final Item JACK_O_SLAB = registerBlockItem("jack_o_slab",new BlockItem(MelonSlabsBlocks.JACK_O_SLAB, new Item.Settings()),MelonSlabsBlocks.JACK_O_SLAB);
+        public static final Item FRANKENMELON = registerBlockItem("frankenmelon",new BlockItem(MelonSlabsBlocks.FRANKENMELON, new Item.Settings()),MelonSlabsBlocks.FRANKENMELON);
+        public static final Item JUICER = registerBlockItem("juicer",new BlockItem(MelonSlabsBlocks.JUICER, new Item.Settings()),MelonSlabsBlocks.JUICER);
 
         //Food Items
         public static final Item PUMPKIN_SLICE = registerItem("pumpkin_slice",new Item(new Item.Settings().food(new FoodComponent.Builder().hunger(1).saturationModifier(0.3f).snack().build())));
@@ -59,6 +60,12 @@ public class MelonSlabsItems {
         //Armor Items
         public static final Item MELON_HAT = registerItem("melon_hat",new MelonHat(new Item.Settings().maxCount(5)));
 
+
+        private static Item registerBlockItem(String name, Item item, Block block){
+            item = Registry.register(Registries.ITEM, new Identifier("melonslabs",name), item);
+            Item.BLOCK_ITEMS.put(block, item);
+            return item;
+        }
 
         private static Item registerItem(String name, Item item){
             return Registry.register(Registries.ITEM, new Identifier("melonslabs",name), item);
