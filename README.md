@@ -1,4 +1,5 @@
-Note: Incomplete,  
+A mod made by ITotallyExist, with Mandarin localizations by Kuma Sama
+
 For more details, check the (modrinth page)[https://modrinth.com/mod/melon-slabs] or the (wiki)[https://github.com/ITotallyExist/Melon-slabs/wiki]
 
 ### Lightweight vanilla+ mod for fabric.
