@@ -90,8 +90,8 @@ public class MelonSlabsItems {
             addItemToGroup (item, ItemGroups.BUILDING_BLOCKS);
         }
 
-        private static void addItemToEquipmentGroup(Item item) {
-            addItemToGroup (item, ItemGroups.SEARCH);
+        private static void addItemToToolsGroup(Item item) {
+            addItemToGroup (item, ItemGroups.TOOLS);
         }
 
         private static void addItemToGroup (Item item, RegistryKey<ItemGroup> group){
@@ -185,6 +185,6 @@ public class MelonSlabsItems {
             addItemToGroup(JUICER, ItemGroups.FUNCTIONAL);
 
             //Adding items to equipment group
-            addItemToEquipmentGroup(MELON_HAT);
+            addItemToToolsGroup(MELON_HAT);
         }
 }
