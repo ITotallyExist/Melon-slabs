@@ -31,11 +31,11 @@ import net.minecraft.world.World;
 import net.melon.slabs.blocks.CarvedMelon;
 import net.melon.slabs.blocks.MelonSlabsBlocks;
 
-@Mixin(AbstractBlock.AbstractBlockState.class)
+@Mixin(targets = "net.minecraft.block.AbstractBlock$AbstractBlockState")
 public class AbstractBlockStateMixin{
 
     @SuppressWarnings("all")
-    @Inject(method = "AbstractBlock$AbstractBlockState.onUse", at = @At("HEAD"))
+    @Inject(method = "onUse", at = @At("HEAD"), cancellable = true)
     private void makeMelonsShearable(World world, PlayerEntity player, Hand hand, BlockHitResult hit, CallbackInfoReturnable<ActionResult> cir) {
         if (((AbstractBlock.AbstractBlockState) (Object) this).isOf(Blocks.MELON)){
             BlockPos pos = hit.getBlockPos();

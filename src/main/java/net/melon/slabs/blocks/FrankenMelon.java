@@ -2,6 +2,7 @@ package net.melon.slabs.blocks;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.melon.slabs.criteria.MelonSlabsCriteria;
@@ -14,6 +15,7 @@ import net.minecraft.block.HorizontalFacingBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LightningEntity;
+import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.entity.projectile.TridentEntity;
@@ -30,6 +32,7 @@ import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
@@ -103,7 +106,11 @@ public class FrankenMelon extends Block{
                 lightningEntity.refreshPositionAfterTeleport(Vec3d.ofBottomCenter(blockPos.up()));
                 Entity ownerEntity = projectile.getOwner();
                 lightningEntity.setChanneler(ownerEntity instanceof ServerPlayerEntity ? (ServerPlayerEntity)ownerEntity : null);
-                MelonSlabsCriteria.CREATED_FRANKENMELON.trigger((ownerEntity instanceof ServerPlayerEntity ? (ServerPlayerEntity)ownerEntity : null));
+
+                if (ownerEntity instanceof ServerPlayerEntity){
+                    MelonSlabsCriteria.CREATED_FRANKENMELON.trigger((ServerPlayerEntity)ownerEntity);
+                }
+
                 world.spawnEntity(lightningEntity);
                 world.playSound(null, blockPos, SoundEvents.ITEM_TRIDENT_THUNDER, SoundCategory.WEATHER, 5.0f, 1.0f);
 
@@ -114,6 +121,21 @@ public class FrankenMelon extends Block{
 
     //Pos, world, and blockstate, are the places where this block is
     public void lightFrankenmelon (BlockPos pos, World world, BlockState state){
+        
+        int x = pos.getX();
+        int y = pos.getY();
+        int z = pos.getZ();
+
+        //gets players within a certain distance (128 blockes) and gives them the created_frankenmelon criterion TODO
+        List<PlayerEntity> players =  world.getPlayers(TargetPredicate.createNonAttackable(), null, new Box(x-256,y-256,z-256,x+256,y+256,z+256));
+        
+        players.forEach((PlayerEntity player) -> {
+            if (player instanceof ServerPlayerEntity){
+                MelonSlabsCriteria.CREATED_FRANKENMELON.trigger((ServerPlayerEntity) player);
+            }
+        });
+
+        
         world.setBlockState(pos, state.with(LIT, true).with(FACING, this.getRandomDirection()), Block.NOTIFY_LISTENERS);
     }
 
@@ -191,6 +213,9 @@ public class FrankenMelon extends Block{
 
     @Override
     public void onBlockBreakStart(BlockState state, World world, BlockPos pos, PlayerEntity player) {
+        if (player instanceof ServerPlayerEntity){
+            MelonSlabsCriteria.CREATED_FRANKENMELON.trigger((ServerPlayerEntity) player);
+        }
         this.getHurt(state, world, pos);
         super.onBlockBreakStart(state, world, pos, player);
     }
