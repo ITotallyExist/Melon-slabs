@@ -1,5 +1,7 @@
 package net.melon.slabs.blocks;
 
+import com.mojang.serialization.MapCodec;
+
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.melon.slabs.entities.JuicerBlockEntity;
 import net.melon.slabs.items.MelonSlabsItems;
@@ -9,16 +11,23 @@ import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.ChestBlock;
+import net.minecraft.block.DoubleBlockProperties.PropertyRetriever;
 import net.minecraft.block.HorizontalFacingBlock;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.block.entity.ChestBlockEntity;
+import net.minecraft.block.enums.ChestType;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
+import net.minecraft.state.property.EnumProperty;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
@@ -32,6 +41,10 @@ import net.minecraft.world.World;
 
 
 public class Juicer extends BlockWithEntity  {
+
+    public static final MapCodec<Juicer> CODEC = createCodec((settings) -> {
+      return new Juicer();
+    });
 
     public static final VoxelShape[] NORTH_SHAPES;
     public static final VoxelShape NORTH_SHAPE;
@@ -51,6 +64,10 @@ public class Juicer extends BlockWithEntity  {
     public Juicer() {
         super(FabricBlockSettings.copy(Blocks.OAK_WOOD));
         this.setDefaultState((BlockState)((BlockState)this.stateManager.getDefaultState()).with(FACING, Direction.NORTH).with(HAS_BOTTLE, false));
+    }
+
+    public MapCodec<? extends Juicer> getCodec() {
+        return CODEC;
     }
 
     public Item asItem() {

@@ -131,7 +131,7 @@ implements Monster {
     @Override
     public void tick() {
         super.tick();
-        if (this.getWorld().isClient) {
+        if (this.getWorld().isClient()) {
             float f = MathHelper.cos((float)(this.getWingFlapTickOffset() + this.age) * 7.448451f * ((float)Math.PI / 180) + (float)Math.PI);
             float g = MathHelper.cos((float)(this.getWingFlapTickOffset() + this.age + 1) * 7.448451f * ((float)Math.PI / 180) + (float)Math.PI);
             if (f > 0.0f && g <= 0.0f) {

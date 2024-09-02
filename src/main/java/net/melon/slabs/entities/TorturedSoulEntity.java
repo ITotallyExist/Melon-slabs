@@ -58,7 +58,7 @@ public class TorturedSoulEntity extends ThrownItemEntity {
     protected void onEntityHit(EntityHitResult entityHitResult) {
         //TODO: spawn phantoms targiting the entity that you hit
         super.onEntityHit(entityHitResult);
-        if(!this.getWorld().isClient){
+        if(!this.getWorld().isClient()){
             //create phantoms
             ArrayList<TorturedPhantomEntity> phantoms = createPhantoms();
 
@@ -82,7 +82,7 @@ public class TorturedSoulEntity extends ThrownItemEntity {
 
         //TODO: spawn phantoms targeting nearest entity if this didnt already hit an entity
         super.onCollision(hitResult);
-        if (!this.getWorld().isClient) {
+        if (!this.getWorld().isClient()) {
             this.getWorld().sendEntityStatus(this, EntityStatuses.PLAY_DEATH_SOUND_OR_ADD_PROJECTILE_HIT_PARTICLES);
 
             //if did not hit entity

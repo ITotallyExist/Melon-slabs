@@ -3,13 +3,16 @@ package net.melon.slabs.criteria;
 import java.util.Optional;
 
 import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
 
 import net.minecraft.advancement.criterion.AbstractCriterion;
-import net.minecraft.advancement.criterion.AbstractCriterionConditions;
-import net.minecraft.predicate.entity.AdvancementEntityPredicateDeserializer;
+import net.minecraft.advancement.criterion.AbstractCriterion.Conditions;
 import net.minecraft.predicate.entity.LootContextPredicate;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
+
+import net.minecraft.advancement.criterion.CriterionConditions;
+
 
 public class CreatedFrankenmelonCriterion extends AbstractCriterion<CreatedFrankenmelonCriterion.Conditions> {
     private final Identifier id;
@@ -26,14 +29,10 @@ public class CreatedFrankenmelonCriterion extends AbstractCriterion<CreatedFrank
         this.trigger(player, (conditions) -> conditions.matches(true));
     }
 
-    @Override
-    protected Conditions conditionsFromJson(JsonObject json, Optional<LootContextPredicate> lootCtxPredicate, AdvancementEntityPredicateDeserializer deserializer) {
-		return new CreatedFrankenmelonCriterion.Conditions(lootCtxPredicate);
-	}
 
-    public static class Conditions extends AbstractCriterionConditions {
+    public static class Conditions implements AbstractCriterion.Conditions {
         public Conditions(Optional<LootContextPredicate> lootCtxPredicate) {
-            super(lootCtxPredicate);
+
         }
 
         public static CreatedFrankenmelonCriterion.Conditions create(Optional<LootContextPredicate> lootContextPredicate) {
@@ -44,5 +43,17 @@ public class CreatedFrankenmelonCriterion extends AbstractCriterion<CreatedFrank
             return input;
         }
 
+        @Override
+        public Optional<LootContextPredicate> player() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'player'");
+        }
+
+    }
+
+    @Override
+    public Codec<Conditions> getConditionsCodec() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getConditionsCodec'");
     }
 }

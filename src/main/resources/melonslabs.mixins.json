@@ -5,7 +5,7 @@
   "compatibilityLevel": "JAVA_16",
   "mixins": ["ComposterMixin",
     "CactusMixin",
-    "MelonMixin",
+    "AbstractBlockStateMixin",
     "EntityMixin"
   ],
   "client": [],
