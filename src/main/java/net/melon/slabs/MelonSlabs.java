@@ -6,7 +6,7 @@ import net.melon.slabs.blocks.MelonSlabsBlocks;
 import net.melon.slabs.entities.MelonSlabsEntities;
 import net.melon.slabs.criteria.MelonSlabsCriteria;
 import net.melon.slabs.items.MelonSlabsItems;
-import net.melon.slabs.packets.MelonSlabsPackets;
+//import net.melon.slabs.packets.MelonSlabsPackets;
 import net.melon.slabs.screens.MelonSlabsScreens;
 import net.melon.slabs.sounds.MelonSlabsSounds;
 import net.melon.slabs.status_effects.MelonSlabsStatusEffects;
@@ -40,7 +40,7 @@ public class MelonSlabs implements ModInitializer {
         MelonSlabsScreens.registerScreensAndRecipes();
 
         //server client communications stuff
-        MelonSlabsPackets.registerServerPackets();
+        //MelonSlabsPackets.registerServerPackets();
 
         //status effects
         MelonSlabsStatusEffects.registerStatusEffects();

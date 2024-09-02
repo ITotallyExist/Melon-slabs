@@ -35,3 +35,5 @@ run/
 
 #bullshit
 notes.txt
+src\main\java\net\melon\slabs\rei_integration
+src\main\java\net\melon\slabs\packets
