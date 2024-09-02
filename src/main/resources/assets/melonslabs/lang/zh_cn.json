@@ -30,7 +30,7 @@
     "item.melonslabs.tortured_soul": "受折磨的灵魂",
     "effect.melonslabs.intoxicated": "醉酒",
     "melonslabs.alcohol_poisoning": "饮酒过度而死",
-    "melonslabs.melon_hat": "西瓜帽",
+    "item.melonslabs.melon_hat": "西瓜帽",
     "melonslabs.melon_hat_tooltip_1": "可做为安全帽",
     "melonslabs.melon_hat_tooltip_2": "防止从掉落物品造成的伤害"
 }
