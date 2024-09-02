@@ -48,8 +48,8 @@ import net.minecraft.util.dynamic.Codecs;
 
 public class CreatedFrankenmelonCriterion extends AbstractCriterion<net.melon.slabs.criteria.CreatedFrankenmelonCriterion.Conditions> {
     @Override
-    public Codec<Conditions> getConditionsCodec() {
-        return Conditions.CODEC;
+    public Codec<net.melon.slabs.criteria.CreatedFrankenmelonCriterion.Conditions> getConditionsCodec() {
+        return net.melon.slabs.criteria.CreatedFrankenmelonCriterion.Conditions.CODEC;
     }
 
     public void trigger(ServerPlayerEntity player) {
@@ -58,9 +58,9 @@ public class CreatedFrankenmelonCriterion extends AbstractCriterion<net.melon.sl
 
     public record Conditions(Optional<LootContextPredicate> player) implements AbstractCriterion.Conditions
     {
-        public static final Codec<Conditions> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            LootContextPredicate.CODEC.optionalFieldOf("player").forGetter(Conditions::player)
-        ).apply(instance, Conditions::new)
+        public static final Codec<net.melon.slabs.criteria.CreatedFrankenmelonCriterion.Conditions> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            LootContextPredicate.CODEC.optionalFieldOf("player").forGetter(net.melon.slabs.criteria.CreatedFrankenmelonCriterion.Conditions::player)
+        ).apply(instance, net.melon.slabs.criteria.CreatedFrankenmelonCriterion.Conditions::new)
         );
         
         public boolean matches(Collection<? extends LootContext> victims) {

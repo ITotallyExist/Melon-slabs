@@ -49,7 +49,7 @@ public class TorturedSoulEntity extends ThrownItemEntity {
         if (status == EntityStatuses.PLAY_DEATH_SOUND_OR_ADD_PROJECTILE_HIT_PARTICLES) {
             ParticleEffect particleEffect = this.getParticleParameters();
             for (int i = 0; i < 8; ++i) {
-                this.getWorld().addParticle(particleEffect, this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
+                this.method_48926().addParticle(particleEffect, this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
             }
         }
     }
@@ -58,7 +58,7 @@ public class TorturedSoulEntity extends ThrownItemEntity {
     protected void onEntityHit(EntityHitResult entityHitResult) {
         //TODO: spawn phantoms targiting the entity that you hit
         super.onEntityHit(entityHitResult);
-        if(!this.getWorld().isClient()){
+        if(!this.method_48926().isClient()){
             //create phantoms
             ArrayList<TorturedPhantomEntity> phantoms = createPhantoms();
 
@@ -78,12 +78,12 @@ public class TorturedSoulEntity extends ThrownItemEntity {
 
     @Override
     protected void onCollision(HitResult hitResult) {
-        this.getWorld().createExplosion(this, this.getX(), this.getY(), this.getZ(), 1.0f, World.ExplosionSourceType.NONE);
+        this.method_48926().createExplosion(this, this.getX(), this.getY(), this.getZ(), 1.0f, World.ExplosionSourceType.NONE);
 
         //TODO: spawn phantoms targeting nearest entity if this didnt already hit an entity
         super.onCollision(hitResult);
-        if (!this.getWorld().isClient()) {
-            this.getWorld().sendEntityStatus(this, EntityStatuses.PLAY_DEATH_SOUND_OR_ADD_PROJECTILE_HIT_PARTICLES);
+        if (!this.method_48926().isClient()) {
+            this.method_48926().sendEntityStatus(this, EntityStatuses.PLAY_DEATH_SOUND_OR_ADD_PROJECTILE_HIT_PARTICLES);
 
             //if did not hit entity
             if (hitResult.getType() != HitResult.Type.ENTITY){
@@ -102,14 +102,14 @@ public class TorturedSoulEntity extends ThrownItemEntity {
     //creates phantoms at the correct location
     //points them in random directions
     private ArrayList<TorturedPhantomEntity> createPhantoms(){
-        Random random = this.getWorld().getRandom();
+        Random random = this.method_48926().getRandom();
 
         int numSpawned = random.nextBetween(1,3);
 
         ArrayList<TorturedPhantomEntity> phantomArray = new ArrayList<TorturedPhantomEntity>();
 
         for (int i = 0; i<numSpawned; i++){
-            TorturedPhantomEntity torturedPhantomEntity = MelonSlabsEntities.TORTURED_PHANTOM.create(this.getWorld()); // EntityType.PHANTOM.create(this.getWorld());
+            TorturedPhantomEntity torturedPhantomEntity = MelonSlabsEntities.TORTURED_PHANTOM.create(this.method_48926()); // EntityType.PHANTOM.create(this.getWorld());
             torturedPhantomEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), random.nextFloat(), random.nextFloat());
             torturedPhantomEntity.setPhantomSize(random.nextBetween(1,2));
             phantomArray.add(torturedPhantomEntity); //out of bounds for length zero
@@ -138,7 +138,7 @@ public class TorturedSoulEntity extends ThrownItemEntity {
 
             Box box = phantoms.get(0).getBoundingBox();
 
-            LivingEntity entity = this.getWorld().getClosestEntity(LivingEntity.class, targetPredicate, null, this.getX(), this.getY(), this.getZ(), box);
+            LivingEntity entity = this.method_48926().getClosestEntity(LivingEntity.class, targetPredicate, null, this.getX(), this.getY(), this.getZ(), box);
             
             phantom.setTarget(entity);
         }
@@ -155,7 +155,7 @@ public class TorturedSoulEntity extends ThrownItemEntity {
     //only call on server
     private void spawnPhantoms(ArrayList<TorturedPhantomEntity> phantomArray){
         for (TorturedPhantomEntity entity : phantomArray){
-            this.getWorld().spawnEntity(entity);
+            this.method_48926().spawnEntity(entity);
         }
     }
     
