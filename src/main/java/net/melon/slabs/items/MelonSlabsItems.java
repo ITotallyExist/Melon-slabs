@@ -4,10 +4,10 @@ import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.melon.slabs.blocks.MelonSlabsBlocks;
 import net.minecraft.block.Block;
+import net.minecraft.component.type.FoodComponent;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.BlockItem;
-import net.minecraft.item.FoodComponent;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemGroups;
@@ -43,16 +43,16 @@ public class MelonSlabsItems {
         public static final Item JUICER = registerBlockItem("juicer",new BlockItem(MelonSlabsBlocks.JUICER, new Item.Settings()),MelonSlabsBlocks.JUICER);
 
         //Food Items
-        public static final Item PUMPKIN_SLICE = registerItem("pumpkin_slice",new Item(new Item.Settings().food(new FoodComponent.Builder().hunger(1).saturationModifier(0.3f).snack().build())));
-        public static final Item COOKED_PUMPKIN_SLICE = registerItem("cooked_pumpkin_slice",new Item(new Item.Settings().food(new FoodComponent.Builder().hunger(4).saturationModifier(0.6f).build())));
+        public static final Item PUMPKIN_SLICE = registerItem("pumpkin_slice",new Item(new Item.Settings().food(new FoodComponent.Builder().nutrition(1).saturationModifier(0.3f).snack().build())));
+        public static final Item COOKED_PUMPKIN_SLICE = registerItem("cooked_pumpkin_slice",new Item(new Item.Settings().food(new FoodComponent.Builder().nutrition(4).saturationModifier(0.6f).build())));
 
         //Juices
-        public static final Item MELON_JUICE = registerItem("melon_juice", new JuiceItem(new Item.Settings().maxCount(16).recipeRemainder(Items.GLASS_BOTTLE).food(new FoodComponent.Builder().hunger(6).saturationModifier(0.3f).build())));
-        public static final Item APPLE_JUICE = registerItem("apple_juice",new JuiceItem(new Item.Settings().maxCount(16).recipeRemainder(Items.GLASS_BOTTLE).food(new FoodComponent.Builder().hunger(8).saturationModifier(0.3f).build())));
+        public static final Item MELON_JUICE = registerItem("melon_juice", new JuiceItem(new Item.Settings().maxCount(16).recipeRemainder(Items.GLASS_BOTTLE).food(new FoodComponent.Builder().nutrition(6).saturationModifier(0.3f).build())));
+        public static final Item APPLE_JUICE = registerItem("apple_juice",new JuiceItem(new Item.Settings().maxCount(16).recipeRemainder(Items.GLASS_BOTTLE).food(new FoodComponent.Builder().nutrition(8).saturationModifier(0.3f).build())));
         //twice the absorption, regen lasts 1.5x as long                                                                                                                        
-        public static final Item GOLDEN_APPLE_JUICE = registerItem("golden_apple_juice",new JuiceItem(new Item.Settings().maxCount(4).recipeRemainder(Items.GLASS_BOTTLE).rarity(Rarity.RARE).food(new FoodComponent.Builder().hunger(8).saturationModifier(1.2f).statusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 150, 1), 1.0f).statusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 2400, 1), 1.0f).alwaysEdible().build())));
+        public static final Item GOLDEN_APPLE_JUICE = registerItem("golden_apple_juice",new JuiceItem(new Item.Settings().maxCount(4).recipeRemainder(Items.GLASS_BOTTLE).rarity(Rarity.RARE).food(new FoodComponent.Builder().nutrition(8).saturationModifier(1.2f).statusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 150, 1), 1.0f).statusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 2400, 1), 1.0f).alwaysEdible().build())));
         //1.5x the absorption, regen lasts twice as long, resistance 2 instead of 1, fire resistance last 1.5x as long, 33% chance of giving you wither that lasts as long as the regen
-        public static final Item ENCHANTED_GOLDEN_APPLE_JUICE = registerItem("enchanted_golden_apple_juice",new GlintedJuiceItem(new Item.Settings().maxCount(4).recipeRemainder(Items.GLASS_BOTTLE).rarity(Rarity.EPIC).food(new FoodComponent.Builder().hunger(8).saturationModifier(1.2f).statusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 800, 1), 1.0f).statusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 6000, 1), 1.0f).statusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 9000, 0), 1.0f).statusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 2400, 7), 1.0f).statusEffect(new StatusEffectInstance(StatusEffects.WITHER, 1600, 0), 0.33f).alwaysEdible().build())));
+        public static final Item ENCHANTED_GOLDEN_APPLE_JUICE = registerItem("enchanted_golden_apple_juice",new GlintedJuiceItem(new Item.Settings().maxCount(4).recipeRemainder(Items.GLASS_BOTTLE).rarity(Rarity.EPIC).food(new FoodComponent.Builder().nutrition(8).saturationModifier(1.2f).statusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 800, 1), 1.0f).statusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 6000, 1), 1.0f).statusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 9000, 0), 1.0f).statusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 2400, 7), 1.0f).statusEffect(new StatusEffectInstance(StatusEffects.WITHER, 1600, 0), 0.33f).alwaysEdible().build())));
 
         //Magic Items
         public static final Item TORTURED_SOUL = registerItem("tortured_soul",new TorturedSoulItem(new Item.Settings().maxCount(1).rarity(Rarity.RARE).recipeRemainder(Items.GLASS_BOTTLE)));

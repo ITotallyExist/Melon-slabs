@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.dispenser.DispenserBehavior;
 import net.minecraft.block.dispenser.ItemDispenserBehavior;
-import net.minecraft.client.item.TooltipContext;
+import net.minecraft.client.item.TooltipType;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.text.TextColor;
@@ -48,7 +48,7 @@ public class MelonHat extends Item implements Equipment{
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipType context) {
         tooltip.add(Text.translatable("melonslabs.melon_hat_tooltip_1").setStyle(MelonSlabsText.ANNOTATION_STYLE));
         tooltip.add(Text.translatable("melonslabs.melon_hat_tooltip_2").setStyle(MelonSlabsText.ANNOTATION_STYLE));
         super.appendTooltip(stack, world, tooltip, context);

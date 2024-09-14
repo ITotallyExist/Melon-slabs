@@ -28,7 +28,7 @@ public class EntityMixin {
         if (((Entity) (Object) this) instanceof FallingBlockEntity){
             if (player.getEquippedStack(EquipmentSlot.HEAD).isOf (MelonSlabsItems.MELON_HAT)){
                 //plays a sound as fallingblock hits player head
-                player.playSound(SoundEvents.ENTITY_ARMOR_STAND_HIT, SoundCategory.BLOCKS, 5.0f, 1.0f);
+                player.playSoundToPlayer(SoundEvents.ENTITY_ARMOR_STAND_HIT, SoundCategory.BLOCKS, 5.0f, 1.0f);
 
                 //avoiding random here so we can do this on both the client and server sides to avoid desync
                 //the time element is so that if multiple blocks fall on you in a row they dont all go to the same place
