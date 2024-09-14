@@ -19,6 +19,7 @@ public class JuicerDisplay extends BasicDisplay {
 
     //
     public JuicerDisplay(RecipeEntry<JuicerRecipe> recipe){
+        //specify itemstack in next line because we are trying to get it to not use the entryIngredients.of function that requires architectury fluidstacks
         this(EntryIngredients.ofIngredients(recipe.value().getInputs()), Collections.singletonList(EntryIngredients.of((ItemStack) recipe.value().getOutput())),
 		Optional.ofNullable(recipe.value().getId()));
     }
