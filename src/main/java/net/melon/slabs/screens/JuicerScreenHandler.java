@@ -38,7 +38,7 @@ public class JuicerScreenHandler extends ScreenHandler  {
     public JuicerScreenHandler(int syncId, PlayerInventory playerInventory, JuicerInventory inventory, BlockPos pos) {
         
         super(MelonSlabsScreens.JUICER_SCREEN_HANDLER, syncId);
-        this.world = playerInventory.player.method_48926();
+        this.world = playerInventory.player.getWorld();
 
         this.blockPos = pos;
 

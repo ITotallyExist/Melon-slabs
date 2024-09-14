@@ -1,6 +1,5 @@
 package net.melon.slabs.rei_integration;
 
-import Result;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -12,13 +12,14 @@ import net.melon.slabs.rei_integration.JuicerDisplay;
 import net.melon.slabs.rei_integration.JuicerTransferHandler;
 import net.melon.slabs.screens.JuicerRecipe;
 import net.melon.slabs.screens.MelonSlabsScreens;
+import net.minecraft.item.ItemStack;
 
 public class melonslabsClientPlugin implements REIClientPlugin {
     
     @Override
     public void registerCategories(CategoryRegistry registry) {
         registry.add(new JuicerCategory());
-        registry.addWorkstations(JuicerCategory.JUICER_DISPLAY, EntryStacks.of(MelonSlabsItems.JUICER));
+        registry.addWorkstations(JuicerCategory.JUICER_DISPLAY, EntryStacks.of(new ItemStack(MelonSlabsItems.JUICER)));
     }
 
     // @Override

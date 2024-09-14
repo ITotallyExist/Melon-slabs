@@ -34,7 +34,7 @@ public class JuicerCategory implements DisplayCategory<JuicerDisplay> {
 
     @Override
     public Renderer getIcon() {
-        return (EntryStacks.of(MelonSlabsItems.JUICER));
+        return (EntryStacks.of(new ItemStack(MelonSlabsItems.JUICER)));
     }
 
     // @Override

@@ -32,7 +32,7 @@ public class EntityMixin {
 
                 //avoiding random here so we can do this on both the client and server sides to avoid desync
                 //the time element is so that if multiple blocks fall on you in a row they dont all go to the same place
-                double direction = 3.14159265*2*Math.sin(10*player.getPos().x*player.getPos().y*player.getPos().z + player.method_48926().getTime()*2048);
+                double direction = 3.14159265*2*Math.sin(10*player.getPos().x*player.getPos().y*player.getPos().z + player.getWorld().getTime()*2048);
                 //do the bouncing
                 ((Entity) (Object) this).setVelocity(0.3*Math.sin(direction), 0.2, 0.3*Math.cos(direction));
                 ((Entity) (Object) this).tick();

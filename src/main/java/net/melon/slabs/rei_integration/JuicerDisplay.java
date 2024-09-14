@@ -19,7 +19,7 @@ public class JuicerDisplay extends BasicDisplay {
 
     //
     public JuicerDisplay(RecipeEntry<JuicerRecipe> recipe){
-        this(EntryIngredients.ofIngredients(recipe.value().getInputs()), Collections.singletonList(EntryIngredients.of(recipe.value().getOutput())),
+        this(EntryIngredients.ofIngredients(recipe.value().getInputs()), Collections.singletonList(EntryIngredients.of((ItemStack) recipe.value().getOutput())),
 		Optional.ofNullable(recipe.value().getId()));
     }
 

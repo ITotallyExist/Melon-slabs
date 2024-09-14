@@ -4,12 +4,13 @@ make sure you ran ./gradlew vscode
 and ./gradlew gensources
 
 try running ./gradlew clean
-and ./gradlew --refresh-dependencies
+and ./gradlew --refresh-dependencies 
+^
+especially if updating rei version, for example
 
 restart your computer if it ever says resources are busy
 
 delete everything in /users/greg/.gradle/caches
-
 
 notes from fabricmc site:
 
