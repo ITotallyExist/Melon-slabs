@@ -112,11 +112,11 @@ implements Monster {
     }
 
     @Override
-    public void method_5674(TrackedData<?> data) {
+    public void onTrackedDataSet(TrackedData<?> data) {
         if (SIZE.equals(data)) {
             this.onSizeChanged();
         }
-        super.method_5674(data);
+        super.onTrackedDataSet(data);
     }
 
     public int getWingFlapTickOffset() {
