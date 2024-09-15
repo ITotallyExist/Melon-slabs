@@ -42,7 +42,8 @@ public class MelonSlab extends SlabBlock{
         return MelonSlabsItems.MELON_SLAB;
     }
 
-    public ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    @Override
+    protected ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         ItemStack itemStack = player.getStackInHand(hand);
         if (itemStack.getItem() == Items.SHEARS) {
             if (!world.isClient) {
@@ -70,7 +71,8 @@ public class MelonSlab extends SlabBlock{
         }
     }
 
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
+    @Override
+    protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
         if (state.get(TYPE) != SlabType.DOUBLE){
             //if player can eat
             if (!player.canConsume(false)) {

@@ -45,7 +45,8 @@ public class MelonSlabAlmostFull extends SlabBlock{
         return MelonSlabsItems.MELON_SLAB_ALMOST_FULL;
     }
 
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
+    @Override
+    protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
         if (state.get(TYPE) != SlabType.DOUBLE){
             //if player can eat
             if (!player.canConsume(false)) {

@@ -36,7 +36,8 @@ public class PumpkinSlab extends SlabBlock{
         return MelonSlabsItems.PUMPKIN_SLAB;
     }
 
-    public ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    @Override
+    protected ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         ItemStack itemStack = player.getStackInHand(hand);
         if (itemStack.getItem() == Items.SHEARS) {
             if (!world.isClient) {

@@ -79,7 +79,8 @@ public class CarvedPumpkinSlab extends SlabBlock{
         }
     }
 
-    public ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    @Override
+    protected ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (stack.getItem() == Items.TORCH) {
 
             SlabType slabType = (SlabType)state.get(TYPE);
