@@ -45,10 +45,7 @@ public class MelonSlabAlmostFull extends SlabBlock{
         return MelonSlabsItems.MELON_SLAB_ALMOST_FULL;
     }
 
-    @SuppressWarnings("all")
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        ItemStack itemStack = player.getStackInHand(hand);
-
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
         if (state.get(TYPE) != SlabType.DOUBLE){
             //if player can eat
             if (!player.canConsume(false)) {
@@ -68,7 +65,7 @@ public class MelonSlabAlmostFull extends SlabBlock{
 
             return ActionResult.SUCCESS;
         }
-        return super.onUse(state, world, pos, player, hand, hit);
+        return super.onUse(state, world, pos, player, hit);
     }
 
     //used to make it so that we cant get a double slab melon rind

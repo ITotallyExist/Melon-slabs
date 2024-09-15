@@ -12,6 +12,7 @@ import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ItemActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -78,21 +79,20 @@ public class CarvedPumpkinSlab extends SlabBlock{
         }
     }
 
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        ItemStack itemStack = player.getStackInHand(hand);
-        if (itemStack.getItem() == Items.TORCH) {
+    public ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+        if (stack.getItem() == Items.TORCH) {
 
             SlabType slabType = (SlabType)state.get(TYPE);
 
             world.setBlockState(pos, (BlockState)(MelonSlabsBlocks.JACK_O_SLAB.getDefaultState().with(FACING, state.get(FACING)).with(TYPE, slabType)).with(WATERLOGGED, false));
             
             if (!player.isCreative()){
-                itemStack.decrement(1);
+                stack.decrement(1);
             }
-            return ActionResult.success(world.isClient);
+            return ItemActionResult.success(world.isClient);
   
         } else {
-            return super.onUse(state, world, pos, player, hand, hit);
+            return super.onUseWithItem(stack, state, world, pos, player, hand, hit);
         }
     }
     

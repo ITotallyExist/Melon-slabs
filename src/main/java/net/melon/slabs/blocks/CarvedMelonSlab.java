@@ -12,6 +12,7 @@ import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ItemActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -57,7 +58,7 @@ public class CarvedMelonSlab extends SlabBlock{
         }
     }
 
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    public ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         ItemStack itemStack = player.getStackInHand(hand);
         if (itemStack.getItem() == Items.TORCH) {
 
@@ -69,10 +70,10 @@ public class CarvedMelonSlab extends SlabBlock{
                 itemStack.decrement(1);
             }
             
-            return ActionResult.success(world.isClient);
+            return ItemActionResult.success(world.isClient);
   
         } else {
-            return super.onUse(state, world, pos, player, hand, hit);
+            return super.onUseWithItem(stack, state, world, pos, player, hand, hit);
         }
     }
     

@@ -19,6 +19,7 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ItemActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -35,15 +36,12 @@ public class PumpkinSlab extends SlabBlock{
         return MelonSlabsItems.PUMPKIN_SLAB;
     }
 
-    @SuppressWarnings("all")
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    public ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         ItemStack itemStack = player.getStackInHand(hand);
         if (itemStack.getItem() == Items.SHEARS) {
             if (!world.isClient) {
                 if (!player.isCreative()){
-                    itemStack.damage(1, (PlayerEntity)player, (Consumer)(PlayerEntity) -> {
-                        ((LivingEntity) PlayerEntity).sendToolBreakStatus(hand);
-                    });
+                    itemStack.damage(1, player, player.getSlotForHand(hand));
                 }
                 
                 Boolean waterlogged = state.get(WATERLOGGED);
@@ -60,9 +58,9 @@ public class PumpkinSlab extends SlabBlock{
                 world.spawnEntity(itemEntity);
             }
   
-           return ActionResult.success(world.isClient);
+           return ItemActionResult.success(world.isClient);
         } else {
-           return super.onUse(state, world, pos, player, hand, hit);
+           return super.onUseWithItem(stack, state, world, pos, player, hand, hit);
         }
     }
 

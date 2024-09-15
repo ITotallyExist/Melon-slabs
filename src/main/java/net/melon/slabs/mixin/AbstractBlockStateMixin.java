@@ -35,16 +35,15 @@ import net.melon.slabs.blocks.MelonSlabsBlocks;
 public class AbstractBlockStateMixin{
 
     @SuppressWarnings("all")
-    @Inject(method = "onUse", at = @At("HEAD"), cancellable = true)
-    private void makeMelonsShearable(World world, PlayerEntity player, Hand hand, BlockHitResult hit, CallbackInfoReturnable<ActionResult> cir) {
+    @Inject(method = "onUseWithItem", at = @At("HEAD"), cancellable = true)
+    private void makeMelonsShearable(ItemStack stack, World world, PlayerEntity player, Hand hand, BlockHitResult hit, CallbackInfoReturnable<ActionResult> cir) {
         if (((AbstractBlock.AbstractBlockState) (Object) this).isOf(Blocks.MELON)){
             BlockPos pos = hit.getBlockPos();
 
-            ItemStack itemStack = player.getStackInHand(hand);
-            if (itemStack.getItem() == Items.SHEARS) {
+            if (stack.getItem() == Items.SHEARS) {
                 if (!world.isClient) {
                     if (!player.isCreative()){
-                        itemStack.damage(1, player, player.getSlotForHand(hand));
+                        stack.damage(1, player, player.getSlotForHand(hand));
                     }
                     
                     Integer itemNum =  4;

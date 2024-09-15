@@ -23,6 +23,7 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ItemActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -41,16 +42,12 @@ public class MelonSlab extends SlabBlock{
         return MelonSlabsItems.MELON_SLAB;
     }
 
-    @SuppressWarnings("all")
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    public ItemActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         ItemStack itemStack = player.getStackInHand(hand);
-
         if (itemStack.getItem() == Items.SHEARS) {
             if (!world.isClient) {
                 if (!player.isCreative()){
-                    itemStack.damage(1, (PlayerEntity)player, (Consumer)(PlayerEntity) -> {
-                        ((LivingEntity) PlayerEntity).sendToolBreakStatus(hand);
-                    });
+                    itemStack.damage(1, player, player.getSlotForHand(hand));
                 }
                 
                 Boolean waterlogged = state.get(WATERLOGGED);
@@ -61,35 +58,39 @@ public class MelonSlab extends SlabBlock{
                 Direction direction = hit.getSide();
                 Direction direction2 = direction.getAxis() == Direction.Axis.Y ? player.getHorizontalFacing().getOpposite() : direction;
                 world.playSound((PlayerEntity)null, pos, SoundEvents.BLOCK_PUMPKIN_CARVE, SoundCategory.BLOCKS, 1.0F, 1.0F);
-                world.setBlockState(pos, (BlockState)MelonSlabsBlocks.CARVED_MELON_SLAB.getDefaultState().with(CarvedMelonSlab.FACING, direction2).with(TYPE, slabType).with(WATERLOGGED, waterlogged), 11);
+                world.setBlockState(pos, (BlockState)MelonSlabsBlocks.CARVED_MELON_SLAB.getDefaultState().with(CarvedPumpkinSlab.FACING, direction2).with(TYPE, slabType).with(WATERLOGGED, waterlogged), 11);
                 ItemEntity itemEntity = new ItemEntity(world, (double)pos.getX() + 0.5D + (double)direction2.getOffsetX() * 0.65D, (double)pos.getY() + 0.1D, (double)pos.getZ() + 0.5D + (double)direction2.getOffsetZ() * 0.65D, new ItemStack(Items.MELON_SEEDS, itemNum));
                 itemEntity.setVelocity(0.05D * (double)direction2.getOffsetX() + world.random.nextDouble() * 0.02D, 0.05D, 0.05D * (double)direction2.getOffsetZ() + world.random.nextDouble() * 0.02D);
                 world.spawnEntity(itemEntity);
             }
   
-           return ActionResult.success(world.isClient);
+           return ItemActionResult.success(world.isClient);
         } else {
-            if (state.get(TYPE) != SlabType.DOUBLE){
-                //if player can eat
-                if (!player.canConsume(false)) {
-                    return ActionResult.PASS;
-                }
+           return super.onUseWithItem(stack, state, world, pos, player, hand, hit);
+        }
+    }
 
-                if (world.isClient) {
-                    return ActionResult.SUCCESS;
-                }
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
+        if (state.get(TYPE) != SlabType.DOUBLE){
+            //if player can eat
+            if (!player.canConsume(false)) {
+                return ActionResult.PASS;
+            }
 
-                //eat food
-                player.getHungerManager().add(FOOD_POINTS, SATURATION_FACTOR);
-                world.emitGameEvent((Entity)player, GameEvent.EAT, pos);
-                
-                //set the block state to an eaten one but with the same slabtype
-                world.setBlockState(pos, MelonSlabsBlocks.MELON_SLAB_ALMOST_FULL.getDefaultState().with(TYPE, state.get(TYPE)), Block.NOTIFY_ALL);
-
+            if (world.isClient) {
                 return ActionResult.SUCCESS;
             }
-            return super.onUse(state, world, pos, player, hand, hit);
+
+            //eat food
+            player.getHungerManager().add(FOOD_POINTS, SATURATION_FACTOR);
+            world.emitGameEvent((Entity)player, GameEvent.EAT, pos);
+            
+            //set the block state to an eaten one but with the same slabtype
+            world.setBlockState(pos, MelonSlabsBlocks.MELON_SLAB_ALMOST_FULL.getDefaultState().with(TYPE, state.get(TYPE)), Block.NOTIFY_ALL);
+
+            return ActionResult.SUCCESS;
         }
+        return super.onUse(state, world, pos, player, hit);
     }
 
     //default but edited to allow frankenmelons if placed on a pumpkin slab
