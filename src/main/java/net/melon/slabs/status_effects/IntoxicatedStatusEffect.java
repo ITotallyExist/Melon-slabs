@@ -35,8 +35,7 @@ public class IntoxicatedStatusEffect extends StatusEffect {
     
     // This method is called when it applies the status effect. We implement custom functionality here.
     @Override
-    public void applyUpdateEffect(LivingEntity entity, int amplifier) {
-
+    public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
         if (amplifier == 0){
             //tipsy
 
@@ -50,7 +49,8 @@ public class IntoxicatedStatusEffect extends StatusEffect {
             //entity.damage(MelonSlabsDamageSources.ALCOHOL_POISONING_SOURCE, Float.MAX_VALUE);
             
            
-        }   
+        } 
+        return true;  
     }
     
 }
