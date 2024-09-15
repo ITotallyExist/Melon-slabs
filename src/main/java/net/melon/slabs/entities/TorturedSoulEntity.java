@@ -40,7 +40,7 @@ public class TorturedSoulEntity extends ThrownItemEntity {
     }
 
     private ParticleEffect getParticleParameters() {
-        ItemStack itemStack = this.getItem();
+        ItemStack itemStack = this.getStack();
         return itemStack.isEmpty() ? new ItemStackParticleEffect(ParticleTypes.ITEM,new  ItemStack(MelonSlabsItems.TORTURED_SOUL, 1)) : new ItemStackParticleEffect(ParticleTypes.ITEM, itemStack);
     }
 
