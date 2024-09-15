@@ -8,7 +8,6 @@ import net.melon.slabs.entities.MelonSlabsEntities;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityDimensions;
-import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -88,9 +87,9 @@ implements Monster {
     }
 
     @Override
-    protected void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking(SIZE, 0);
+    protected void initDataTracker(DataTracker.Builder builder) {
+        super.initDataTracker(builder);
+        builder.add(SIZE, 0);
     }
 
     public void setPhantomSize(int size) {
@@ -104,11 +103,6 @@ implements Monster {
 
     public int getPhantomSize() {
         return this.dataTracker.get(SIZE);
-    }
-
-    @Override
-    protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
-        return dimensions.height * 0.35f;
     }
 
     @Override
@@ -192,10 +186,10 @@ implements Monster {
     }
 
     @Override
-    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData) {
         this.circlingCenter = this.getBlockPos().up(5);
         this.setPhantomSize(0);
-        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+        return super.initialize(world, difficulty, spawnReason, entityData);
     }
 
     @Override
@@ -242,11 +236,6 @@ implements Monster {
     }
 
     @Override
-    public EntityGroup getGroup() {
-        return EntityGroup.UNDEAD;
-    }
-
-    @Override
     protected float getSoundVolume() {
         return 1.0f;
     }
@@ -260,16 +249,10 @@ implements Monster {
     }
 
     @Override
-    public EntityDimensions getDimensions(EntityPose pose) {
+    public EntityDimensions getBaseDimensions(EntityPose pose) {
         int i = this.getPhantomSize();
-        EntityDimensions entityDimensions = super.getDimensions(pose);
-        float f = (entityDimensions.width + 0.2f * (float)i) / entityDimensions.width;
-        return entityDimensions.scaled(f);
-    }
-
-    @Override
-    protected float getUnscaledRidingOffset(Entity vehicle) {
-        return -0.125f;
+		EntityDimensions entityDimensions = super.getBaseDimensions(pose);
+		return entityDimensions.scaled(1.0F + 0.15F * (float)i);
     }
 
     static enum PhantomMovementType {

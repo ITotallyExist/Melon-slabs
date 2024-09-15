@@ -33,8 +33,8 @@ extends MobEntityRenderer<TorturedPhantomEntity, TorturedPhantomEntityModel<Tort
     }
 
     @Override
-    protected void setupTransforms(TorturedPhantomEntity phantomEntity, MatrixStack matrixStack, float f, float g, float h) {
-        super.setupTransforms(phantomEntity, matrixStack, f, g, h);
+    protected void setupTransforms(TorturedPhantomEntity phantomEntity, MatrixStack matrixStack, float f, float g, float h, float i) {
+        super.setupTransforms(phantomEntity, matrixStack, f, g, h, i);
         matrixStack.multiply(RotationAxis.POSITIVE_X.rotationDegrees(phantomEntity.getPitch()));
     }
 }
