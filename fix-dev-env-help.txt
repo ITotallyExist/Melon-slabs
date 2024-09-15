@@ -1,4 +1,7 @@
-make sure java --version points to 1.17
+
+Make sure gradle can compile without build error, otherwise all the errors you are getting are irrelevant to the actual code because its using an older version of minecraft or something
+
+important to go to vscode extensions -> gradle -> settings -> open settings.json and make sure java_home is pointing to jdk 21
 
 make sure you ran ./gradlew vscode
 and ./gradlew gensources
