@@ -44,9 +44,7 @@ public class AbstractBlockStateMixin{
             if (itemStack.getItem() == Items.SHEARS) {
                 if (!world.isClient) {
                     if (!player.isCreative()){
-                        itemStack.damage(1, (PlayerEntity)player, (Consumer)(PlayerEntity) -> {
-                            ((LivingEntity) PlayerEntity).sendToolBreakStatus(hand);
-                        });
+                        itemStack.damage(1, player, player.getSlotForHand(hand));
                     }
                     
                     Integer itemNum =  4;
