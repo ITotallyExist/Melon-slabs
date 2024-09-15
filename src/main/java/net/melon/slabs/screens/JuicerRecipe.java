@@ -10,7 +10,7 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
-import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.registry.RegistryWrapper.WrapperLookup;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
@@ -75,7 +75,7 @@ public class JuicerRecipe implements Recipe<JuicerInventory> {
 	}
 
 	@Override
-	public ItemStack getResult(DynamicRegistryManager manager) {
+	public ItemStack getResult(WrapperLookup registriesLookup) {
 		return this.result;
 	}
  
@@ -90,7 +90,7 @@ public class JuicerRecipe implements Recipe<JuicerInventory> {
     }
 
 	@Override
-    public ItemStack craft(JuicerInventory inventory, DynamicRegistryManager manager) {
+    public ItemStack craft(JuicerInventory inventory, WrapperLookup lookup) {
         return ItemStack.EMPTY;
     }
  
@@ -142,5 +142,4 @@ public class JuicerRecipe implements Recipe<JuicerInventory> {
         String outputItem;
         int outputAmount;
     }
-
 }
